@@ -1,3 +1,7 @@
+GWAP2 is for storing experimental biological data, providing a high level of metadata curation
+to facilitate machine inference of regulatory networks and enable complex searching.
+
+
 == Welcome to Rails
 
 Rails is a web-application framework that includes everything needed to create 
