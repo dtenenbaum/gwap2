@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" applicationComplete="init()" pageTitle="Plotting experimental perturbations">
+<mx:Script>
+	<![CDATA[
+		import mx.graphics.Stroke;
+		import mx.rpc.events.ResultEvent;
+		import mx.rpc.events.FaultEvent;
+import com.adobe.serialization.json.JSON;
+import mx.charts.LegendItem;
+import mx.charts.chartClasses.Series;
+import mx.charts.HitData;
+import mx.charts.renderers.CircleItemRenderer;
+import mx.charts.Legend;
+import mx.charts.series.LineSeries;
+import mx.charts.LineChart;
+import mx.collections.ArrayCollection;
+ 
+ 	
+ 	private var arr:ArrayCollection;
+ 	
+ 	private function init():void {
+ 		plotDataService.send();
+ 	}
+ 
+ 
+ 	
+	private function getDataProvider():ArrayCollection {
+	 
+		var a:Array = [];
+		
+		
+		var obj:Object =   [[{time:10, data: [{name: "Cu", value: 5, units: "mM"},{name: "Mn", value: 50, units: "g"}]}], 
+					[{time:20, data: [{name: "Cu", value: 20, units: "mM"},{name: "Mn", value: 30, units: "g"}]}]] ;
+		var s:String = JSON.encode(obj);
+		trace ("json encoded data:");
+		trace(s);
+		obj = null;
+		obj = JSON.decode(s);
+				
+		//var obj:Object = JSON.decode(s);
+					
+		//var str:String = JSON.encode(obh
+					
+		//arr = new Array(obj);					
+		
+		for (var i:String in obj) {
+			//trace ("haha: " + i);
+			//trace("obj[i] is " + JSON.decode(obj[i])); 
+			a.push(obj[i][0]);
+		}
+
+		//arr.push({time:10, data: [{name: "Cu", value: 5, units: "mM"},{name: "Mn", value: 50, units: "g"}]});
+		//arr.push({time:20, data: [{name: "Cu", value: 20, units: "mM"},{name: "Mn", value: 30, units: "g"}]});
+		 
+		return new ArrayCollection(a);
+	}
+	 
+	private function dtFunc(hd:HitData):String {
+		var o:Object = new Object();
+		for (var i:String in hd.item.data) {
+			if (hd.item.data[i].name == hd.chartItem.element.name) {
+				o = hd.item.data[i];
+			}
+		}
+		var s:String = "<b>" + hd.chartItem.element.name + "</b><br/>";
+		s += hd.item.time + " min.<br/>";
+		s += o.value;
+		//trace ("units = " + o.units);
+		if (o.units != null) {
+			s += " " + o.units;
+		}
+		s += "<br/>";
+		s += "(normalized to " + o.nvalue + ")";
+		//return("Time: " + hd.item.time + "<br/>Observation name: " + hd.chartItem.element.name +"<br/>value: " + o.value); //todo add units
+		return s;
+	}
+	 
+	private function dataFunc(series:LineSeries, item:Object, fieldName:String):Object {
+		trace("fieldName = " + fieldName);
+		if (fieldName == "xValue") {
+			return(item.time);
+		} else if (fieldName == "yValue") {
+			trace("series id: " + series.id);
+			var pos:Number = new Number(series.id);
+			trace("pos = " + pos);
+			trace("returning " + item.data[pos].nvalue);
+			return(item.data[pos].nvalue);
+		}
+		return null;
+	}
+	 
+	private function lineChartF():void {
+	 
+		//var arr:ArrayCollection = new ArrayCollection;//
+		//arr = getDataProvider();//
+		 
+		var lineChart:LineChart = new LineChart();
+		
+		
+		lineChart.seriesFilters = [];
+		lineChart.dataProvider = arr;
+		
+		
+		//lineChart.percentWidth = 60;
+		//lineChart.percentHeight = 60;
+		
+		//lineChart.x = 100;
+		//lineChart.y = 85;
+		lineChart.showDataTips = true;
+		lineChart.dataTipFunction = dtFunc;
+		
+		var arr2:Array = new Array();
+
+
+		var legendLine:Legend = new Legend();
+		
+		var legendItems:Array = new Array();
+
+		
+		var l:int = arr[0].data.length;
+		trace("number of observations: " + l);
+		for(var c:int = 0; c < l; c++) {
+			var lineSeries:LineSeries = new LineSeries();
+			lineSeries.xField = "time";
+			lineSeries.yField = arr[0].data[c].name;
+			lineSeries.id = "" + c;
+			trace("yfield is = " + lineSeries.yField);
+			lineSeries.setStyle("itemRenderer", new ClassFactory(CircleItemRenderer));
+			lineSeries.dataFunction = dataFunc;
+			lineSeries.name = lineSeries.yField;
+			lineSeries.displayName = lineSeries.name;
+			arr2.push(lineSeries);
+			
+			
+			var legendItem:LegendItem = new LegendItem();
+			legendItem.label = lineSeries.name;
+			legendItems.push(legendItem);
+			legendLine.addChild(legendItem);
+		}
+		
+		lineChart.series = arr2;
+		 
+		//legendLine.dataProvider = legendItems;
+		
+		//legendLine.x = 700;
+		//legendLine.y = 140;
+		
+		legendLine.dataProvider = lineChart;
+		
+		lineContainer.addChild(lineChart);
+		//lineContainer.addChild(legendLine);
+		legendCanvas.addChild(legendLine);
+	}
+	
+	private function oops(event:FaultEvent):void {
+		trace("problem with http request: " + event.message);
+	}
+	
+	private function gotData(event:ResultEvent):void {
+		trace("result:");
+		trace(event.result.toString());
+		var obj:Object = JSON.decode(event.result.toString());
+		var a:Array = [];
+		for (var i:String in obj) {
+			a.push(obj[i][0]);
+		}
+		arr = new ArrayCollection(a);
+		lineChartF();
+	}
+
+	]]>
+	
+</mx:Script>
+	<mx:Canvas id="lineContainer" width="930" height="505">
+	</mx:Canvas>
+	<mx:Canvas x="19" y="523" width="231" height="211" id="legendCanvas">
+	</mx:Canvas>
+	
+	<mx:HTTPService id="plotDataService" fault="oops(event)" result="gotData(event)" resultFormat="text" url="/main/dynamic"/>
+	
+</mx:Application>

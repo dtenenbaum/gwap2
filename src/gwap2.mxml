@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" pageTitle="GWAP" applicationComplete="init()">
+<mx:Script>
+	<![CDATA[
+		import org.systemsbiology.gwap2.ui.TreeDataDescriptor;
+		import mx.binding.utils.BindingUtils;
+		import org.systemsbiology.gwap2.domain.User;
+		import org.systemsbiology.gwap2.event.LoginEvent;
+		import org.systemsbiology.gwap2.ui.LoginWindow;
+		import mx.managers.PopUpManager;
+		import mx.containers.Canvas;
+		import org.hasseg.externalMouseWheel.ExternalMouseWheelSupport;
+		import mx.rpc.events.ResultEvent;
+		import mx.rpc.events.FaultEvent;
+		import mx.events.ListEvent;
+		import com.adobe.serialization.json.JSON;
+		import mx.controls.Alert;
+		import mx.events.FlexEvent;
+	
+		import mx.collections.ArrayCollection;
+		
+		
+			
+
+			[Bindable]
+			private var user:User = new User();
+
+            [Bindable]
+            private var filteredWords:Array;
+            
+            private var allWords:Array = [{n:"apple"}, {n:"arrangement"}, {n:"boy"}, {n:"cat"}, {n:"milk"}, {n:"orange"}, {n:"pepper"}, {n:"recipe"}, {n:"truck"}];
+            private var regexp:RegExp;
+            private var _mwSupport:ExternalMouseWheelSupport = null;
+            
+            [Bindable]
+            private var treeHash:Object;
+            
+            
+            [Bindable]
+            private var initialTreeData:ArrayCollection;
+            
+            [Bindable]
+            private var treeDataDescriptor:TreeDataDescriptor = new TreeDataDescriptor();
+            
+            private function init():void {
+				
+				trace("making request for tree info");
+            	getTreeService.send();
+            	testSerialization();
+            	
+	            _mwSupport = ExternalMouseWheelSupport.getInstance(stage);
+	            trace("_mwSupport null? " + (_mwSupport == null));
+	            trace("_mwSupport initialized? " + _mwSupport.initialized);
+	            
+	            
+	            user.userName = User.GUEST_USERNAME;
+	            user.id = User.GUEST_USER_ID;
+	            
+
+
+	            BindingUtils.bindProperty(userNameTextArea, "text", user, "userName"); //this doesn't work - TODO, figure out why
+
+            	
+            	trace("attempting to give keyboard focus to search box...");
+            	//focusManager.setFocus(input);
+            	input.text = "nothing"
+            	input.setFocus();
+            	input.text = "";
+            	var urlLoader:URLLoader = new URLLoader();
+            	urlLoader.addEventListener(Event.COMPLETE, gotSearchTerms);
+            	urlLoader.addEventListener(IOErrorEvent.IO_ERROR, ioErrorHandler);
+            	var request:URLRequest = new URLRequest("/main/get_distinct_search_terms");
+            	try {
+            		urlLoader.load(request);
+            	} catch (error:Error) {
+            		Alert.show("Unable to make request to server", "Error");
+            	}
+            }
+            
+            private function testSerialization():void {
+            	var user:User = new User();
+            	user.id = 1;
+            	user.password = 'password';
+            	user.userName = 'myuser';
+            	var jsonUser:String = JSON.encode(user);
+            	trace("json user is:");
+            	trace(jsonUser);
+            }
+            
+            private function gotSearchTerms(event:Event):void {
+            	var loader:URLLoader = URLLoader(event.target);
+            	
+            	////allWords = JSON.decode(loader.data);
+            	////trace("got the list of search terms, allwords now has " + allWords.length + " items");
+            }
+            
+            private function ioErrorHandler(event:IOErrorEvent):void {
+            	Alert.show("The request to the server failed.", "error");
+            }
+
+            private function checkInput():void
+            {
+                var i:int = 0;
+                var temp:Array = allWords.filter(filter);
+                //input.text = temp[0];
+            }
+
+            private function filter(element:*, index:int, arr:Array):Boolean
+            {
+               return (element.n as String).toLowerCase().substring(0, input.text.length) == input.text.toLowerCase(); 
+            }
+
+			private function handleListChange():void {
+				if (input.text.length > 0) {
+					trace("user typed: " + input.text);
+					
+					filteredWords = allWords.filter(filter);
+					if (filteredWords.length > 0) {
+						suggestList.width += 30;
+						suggestList.visible = true;
+					} else {
+						suggestList.visible = false;
+					}
+					
+					trace("number of filtered items is " + filteredWords.length);
+					trace("suggest list has " + suggestList.numChildren + " items");
+					
+				} else {
+					//empty model 
+					suggestList.visible = false;
+				}
+			}
+			
+			private function handleEnter(event:FlexEvent):void {
+				suggestList.visible = false;
+				doSearch();
+			}
+			
+			private function handleSuggestClick(event:MouseEvent):void {
+				input.text = (suggestList.selectedItem.n as String);
+				suggestList.visible = false;
+			}
+			
+			private function doSearch():void {
+				trace("now is where we would do the search");
+				var parameters:Object = {'search_terms' : input.text};
+				trace("sending search with " + parameters.toString());
+				getSearchMatchesService.send(parameters);
+				
+			}
+			
+			private function setToolTip(event:ListEvent): void {
+				//trace("currently mousing over an item: at row " + event.rowIndex)
+				//suggestList.toolTip = "row " + event.rowIndex;
+				//suggestList.toolTip=(suggestList.selectedItem.n as String)
+			}
+			
+			private function handleFaultEvent(event:FaultEvent):void {
+				trace(event);
+				Alert.show("Error connecting to server", "Error");
+			}
+			
+			private function handleSearchResult(event:ResultEvent):void {
+				trace("got a search result");
+				if (event.result == "{}") {
+					Alert.show("No matches for your search");
+					return;
+				}
+				
+				trace("result is: " + event.result);
+				var resultObject:Object = JSON.decode(event.result.toString());
+				var c:int = 0;
+				//var a:Object = resultObject['result'];
+				for (var o:Object in resultObject) {
+					c++;
+				}
+				trace("there were " + c + " results");
+				Alert.show("There were " + c + " results.");
+			}
+			
+			private function logInOrOut():void {
+				if (loginButton.label == "Log Out") {
+					
+					userNameTextArea.text = user.userName; //todo: make binding work so this is not necessary
+					logoutService.resultFormat = "text";
+					logoutService.addEventListener(FaultEvent.FAULT, function(event:FaultEvent):void {
+						trace("there was a fault logging out");
+						trace(event.message);
+						Alert.show("Failed to log out!", "Error");
+						
+					});
+					logoutService.addEventListener(ResultEvent.RESULT, function(event:ResultEvent):void {
+						trace("ok, we got a result from logging out");
+						user.userName = User.GUEST_USERNAME;
+						user.id = User.GUEST_USER_ID;
+						loginButton.label = "Log In";
+					});
+					logoutService.send(); //todo - check if this returns an error
+					
+					//todo - tell server we have logged out
+				} else {
+					var loginWindow:LoginWindow = new LoginWindow();
+					loginWindow.addEventListener(LoginEvent.LOGIN_ATTEMPT,
+						function(event:LoginEvent):void {
+							if (event.success) {
+								user = event.user;
+								userNameTextArea.text = user.userName; //todo: make binding work so this is not necessary
+								trace("user is: " + user.userName + ", id = " + user.id); 
+								loginButton.label = "Log Out";
+							} else {
+								Alert.show("Login failed!", "Login Error");
+							}
+						});
+					PopUpManager.addPopUp(loginWindow, this, true);
+				}
+			}
+			
+			private function handleTreeResult(event:ResultEvent):void {
+				trace("got tree");
+				treeHash = JSON.decode(event.message.body.toString());
+				trace("got json object from tree");
+				var a:Array = treeHash["0"];
+				a = a.sortOn("label", [Array.CASEINSENSITIVE])
+				initialTreeData = new ArrayCollection(a);
+				treeDataDescriptor.treeData = treeHash;
+				
+				//for (var i:String in treeHash) {
+				//	trace("tree data key: " + i);
+				//}
+				
+			}
+	
+	]]>
+</mx:Script>
+	<mx:HTTPService id="getTreeService" showBusyCursor="true" url="/main/get_whole_tree" resultFormat="text" fault="handleFaultEvent(event)" result="handleTreeResult(event)"/>
+	<mx:HTTPService id="getSearchMatchesService" url="/main/get_matching_experiments" resultFormat="text" fault="handleFaultEvent(event)" result="handleSearchResult(event)" />
+    <mx:HTTPService id="logoutService" url="/login/logout"/>
+    <mx:TextInput id="input" change="handleListChange()" x="34" y="53"  enter="handleEnter(event)" width="331"/>
+    <mx:Tree x="34" y="109" id="tree" showRoot="false" dataProvider="{initialTreeData}"  dataDescriptor="{treeDataDescriptor}" width="404" height="203"></mx:Tree>
+    <mx:List x="34" y="83" labelField="n" id="suggestList" visible="false" 
+    	click="handleSuggestClick(event)" doubleClick="handleSuggestClick(event)" dataProvider="{filteredWords}"
+    	itemRollOver="setToolTip(event)"></mx:List>
+    <mx:Button x="373" y="53" label="Search" id="searchButton" click="doSearch()"/>
+    <mx:Label x="34" y="10" text="Currently logged in as:"/>
+    <mx:Text x="175" y="10" id="userNameTextArea" fontStyle="italic" text="{user.userName}"/> <!-- this binding doesn't work either - todo fix (and do it either in AS or MXML, not both) -->
+    <mx:Button x="276" y="8" label="Log In" id="loginButton" click="logInOrOut()"/>
+    <!--dataDescriptor="{ new TreeDataDescriptor()}"-->
+    
+
+    
+ 
+					  
+</mx:Application>

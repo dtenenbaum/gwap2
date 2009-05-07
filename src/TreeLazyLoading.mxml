@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" creationComplete="creationCompleteHandler()">
+	<mx:Script>
+		<![CDATA[
+			import mx.utils.ObjectProxy;
+			import mx.events.TreeEvent;
+			import mx.collections.ArrayCollection;
+			private var myEvent:TreeEvent;
+			
+            [Bindable]
+            private var acSiteTreeList:ArrayCollection;
+            
+            private function creationCompleteHandler():void {
+            	var obj:Object;
+                acSiteTreeList = new ArrayCollection ();
+                for(var i:int = 0; i < 3; i++) {
+                	obj= new Object();
+                    obj["type"] = "something";
+                    obj["children"] = new ArrayCollection();
+                    //fetch is a property in the dataprovider to check if I have fetched the child nodes previously
+                    obj["fetch"] = false;
+                    obj["label"] = "name " + i.toString();
+                    acSiteTreeList.addItem(obj);
+                }
+            }
+            
+			private function setView(event:TreeEvent):void {
+	            if(event.item.type == "something" && event.item.fetch == false) {
+	                myEvent = event; //(myEvent is of type TreeEvent)
+	                //update the dataprovider
+	                var obj:ObjectProxy;
+	                var item:Object;
+	                var children:ArrayCollection;
+	                for(var i:int = 0; i < acSiteTreeList.length; i++) {
+	                    obj= new ObjectProxy();
+	                    obj["type"] = "something";
+	                    //obj["children"] = new ArrayCollection(bloggersArray);
+	                    //fetch is a property in the dataprovider to check if I have fetched the child nodes previously
+	                    obj["fetch"] = false;
+	                    obj["label"] = "node " + i.toString();
+	                    item = myEvent.item;
+	                    children = item.children;
+	                    item.fetch = true;
+	                    children.addItem(obj);
+	                    acSiteTreeList.itemUpdated(item);
+	                }
+	            }
+	        }
+		]]>
+	</mx:Script>
+	<mx:Canvas width="100%" height="100%">
+		<mx:Tree id="treeSiteList" dataProvider="{acSiteTreeList}" x="204" y="10" height="582" width="394" itemOpen="setView(event)"></mx:Tree>
+		
+	</mx:Canvas>
+</mx:Application>

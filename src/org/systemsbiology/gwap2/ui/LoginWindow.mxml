@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" creationComplete="init()">
+<mx:Canvas  width="256" height="96">
+
+	<mx:Script>
+		<![CDATA[
+			import mx.controls.Alert;
+			import mx.rpc.events.ResultEvent;
+			import mx.rpc.events.FaultEvent;
+			import org.systemsbiology.gwap2.domain.User;
+			import org.systemsbiology.gwap2.event.LoginEvent;
+			import mx.logging.LogEvent;
+			import mx.managers.PopUpManager;
+			
+			public var user:User = new User();
+			
+			public function init():void {
+				usernameInput.setFocus();
+			}
+			
+			private function doLogin():void {
+				trace("doing login");
+				//todo - use binding to eliminate the need for the next 2 lines
+				user.userName = usernameInput.text;
+				user.password = passwordInput.text;
+				loginService.send(user);				
+			}
+			
+			private function handleFaultEvent(event:FaultEvent):void {
+				Alert.show("There was an error connecting to the server for login!");
+			}
+			
+			private function handleLoginResult(event:ResultEvent):void {
+				var loginEvent:LoginEvent = new LoginEvent();
+				trace("got this result from server when trying to log in: " + event.result.toString());
+				var userId:int = int(event.result.toString());
+				trace("integer value = " + userId);
+				loginEvent.user = new User();
+				if (userId == 0) {
+					loginEvent.success = false;
+					loginEvent.user.id = User.GUEST_USER_ID;
+					loginEvent.user.userName = User.GUEST_USERNAME;
+				} else {
+					loginEvent.success = true;
+					loginEvent.user.id = userId;
+					loginEvent.user.userName = user.userName;
+				}
+				
+					dispatchEvent(loginEvent);
+				PopUpManager.removePopUp(this);
+			}
+			
+			
+			
+			
+			
+		]]>
+	</mx:Script>
+
+	<mx:Label x="10" y="10" text="Username:"/>
+	<mx:Label x="10" y="36" text="Password:"/>
+	<mx:TextInput x="91" y="10" id="usernameInput" enter="doLogin()"/>
+	<mx:TextInput x="91" y="34" id="passwordInput" displayAsPassword="true" enter="doLogin()"/>
+	<mx:Button x="46" y="64" label="Login" id="loginButton" click="doLogin()"/>
+	<mx:Button x="119" y="64" label="Cancel" id="cancelButton" click="PopUpManager.removePopUp(this)"/>
+		
+</mx:Canvas>
+
+	<mx:HTTPService id="loginService" url="/login/login" resultFormat="text" fault="handleFaultEvent(event)" result="handleLoginResult(event)"  method="POST"/>
+
+	
+</mx:TitleWindow>

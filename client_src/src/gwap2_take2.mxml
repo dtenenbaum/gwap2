@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" applicationComplete="init()">
+	<mx:Script>
+		<![CDATA[
+			import mx.collections.ArrayCollection;
+			import com.adobe.serialization.json.JSON;
+			import com.adobe.serialization.json.JSONDecoder;
+			import mx.rpc.events.ResultEvent;
+			import mx.rpc.events.FaultEvent;
+			import mx.managers.BrowserManager;
+			import mx.managers.IBrowserManager;
+			import mx.events.BrowserChangeEvent;
+			import mx.utils.URLUtil;
+			
+			private var browserManager:IBrowserManager;
+
+
+		[Bindable]
+		private var tableData:ArrayCollection = new ArrayCollection();
+		
+		//[Bindable
+		
+			private function init():void {
+				browserManager = BrowserManager.getInstance();
+				//browserManager.setFragment("zizzy");
+				trace("fragment = " + browserManager.fragment);
+				browserManager.addEventListener(BrowserChangeEvent.BROWSER_URL_CHANGE, urlChangeHandler);
+				browserManager.addEventListener(BrowserChangeEvent.APPLICATION_URL_CHANGE, urlChangeHandler);
+				browserManager.addEventListener(BrowserChangeEvent.URL_CHANGE, urlChangeHandler);
+				browserManager.init("","");
+				//urlChangeHandler();			
+				//allExpsService.send();	
+			}
+			
+			private function urlChangeHandler(event:BrowserChangeEvent = null):void {
+				trace("url has changed, new fragment is: " + browserManager.fragment);
+			}
+			
+			private function oops(event:FaultEvent):void {
+				trace("there was a problem");
+			}
+			
+			private function gotExps(event:ResultEvent):void {
+				trace("got results");
+				//trace(event.message.body);
+				resultsTextArea.text = event.message.body.toString();
+				var data:Object = JSON.decode(event.message.body.toString());
+				//tableData.addItem({col1:"foo",col2:"bar",col3:"baz"});
+				var count:int =0;
+				for (var i:Object in data) {
+					trace(data[i]['experiment']['id']);
+					tableData.addItem({col1:data[i]['experiment']['id'],col2:data[i]['experiment']['name'],col3:data[i]['experiment']['description']});
+					
+					//trace(JSON.encode(i['experiment']));
+					//tableData.addItem({col1:i['name']});
+					count++;
+				}
+				//trace("count = " + count);
+				
+			}
+
+		]]>
+	</mx:Script>
+	<mx:DataGrid x="644" y="591" id="experimentGrid" dataProvider="{tableData}" width="235" height="118">
+		<mx:columns>
+			<mx:DataGridColumn headerText="ID" dataField="col1"/>
+			<mx:DataGridColumn headerText="Name" dataField="col2"/>
+			<mx:DataGridColumn headerText="Description" dataField="col3"/>
+		</mx:columns>
+	</mx:DataGrid>
+	
+	<mx:HTTPService id="allExpsService" url="/main/all_exps" fault="oops(event)" result="gotExps(event)" resultFormat="text"/>
+	<mx:TextArea x="23" y="593" height="138" width="259" id="resultsTextArea"/>
+
+	<mx:TextArea x="448" y="593" text="{tableData.getItemAt(experimentGrid.selectedIndex)}" id="expTextArea"/>
+	<mx:LineChart x="84" y="45" id="linechart1">
+		<mx:series>
+			<mx:LineSeries displayName="Series 1" yField=""/>
+		</mx:series>
+	</mx:LineChart>
+	<mx:Legend dataProvider="{linechart1}"/>
+		
+</mx:Application>

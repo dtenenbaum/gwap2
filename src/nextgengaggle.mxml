@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" xmlns:assets="assets.*" pageTitle="Explore your systems biology data"
+	applicationComplete="init()">
+		<assets:DragPanel width="400" height="238" x="24" y="33" title="Expression Data" >
+				<mx:AdvancedDataGrid id="adg1" designViewDataType="flat" width="373">
+						<mx:columns>
+								<mx:AdvancedDataGridColumn headerText="Condition1.sig" dataField="col1"/>
+								<mx:AdvancedDataGridColumn headerText="Condition2.sig" dataField="col2"/>
+								<mx:AdvancedDataGridColumn headerText="Condition3.sig" dataField="col3"/>
+						</mx:columns>
+				</mx:AdvancedDataGrid>
+				<mx:HBox width="100%">
+						<mx:Label text="Send data to:"/>
+						<mx:ComboBox id="expCombo" dataProvider="{targets}"></mx:ComboBox>
+				</mx:HBox>
+		</assets:DragPanel>
+        <assets:DragPanel width="353" height="235" x="10" y="420" title="Genome Viewer" >
+        <mx:Image width="375" height="193" scaleContent="false" autoLoad="true">
+                        <mx:source>images/gb_screengrab.jpg</mx:source>
+                </mx:Image>
+        </assets:DragPanel>
+        <assets:DragPanel width="391" height="290" x="474" y="33" title="Plots" >
+                <mx:PlotChart id="plotchart1" width="377" height="188">
+                        <mx:series>
+                                <mx:PlotSeries displayName="Series 1" yField=""/>
+                        </mx:series>
+                </mx:PlotChart>
+                <mx:Legend dataProvider="{plotchart1}"/>
+        </assets:DragPanel>
+        <assets:DragPanel x="850" y="352" title="Annotations" width="294" height="175">
+                <mx:AdvancedDataGrid id="adg2" designViewDataType="flat" width="267" height="134">
+                        <mx:columns>
+                                <mx:AdvancedDataGridColumn headerText="Column 1" dataField="col1"/>
+                                <mx:AdvancedDataGridColumn headerText="Column 2" dataField="col2"/>
+                                <mx:AdvancedDataGridColumn headerText="Column 3" dataField="col3"/>
+                        </mx:columns>
+                </mx:AdvancedDataGrid>
+        </assets:DragPanel>
+        <assets:DragPanel x="894" y="33" title="Interactions" width="277" height="274">
+                <mx:Image source="images/cy_grab.jpg" width="253" height="234" scaleContent="false"/>
+                
+        </assets:DragPanel>
+        <assets:DragPanel x="440.5" y="405" title="Data Analysis" width="316" height="219">
+                <mx:Image source="images/r_grab.jpg" width="296" height="176" scaleContent="false" autoLoad="true"/>
+        </assets:DragPanel>
+
+		<mx:Script>
+			<![CDATA[
+				import mx.collections.ArrayCollection;
+				import org.hasseg.externalMouseWheel.ExternalMouseWheelSupport;
+				
+				[Bindable]
+            	public var targets:ArrayCollection = new ArrayCollection(
+                [ {label:"Plots", data:1}, 
+                  {label:"Interactions", data:2}, 
+                  {label:"Genome Viewer", data:2}, 
+                  {label:"Data Analysis", data:2}, 
+                  {label:"Annotations", data:3},
+                  {label:"External Tools", data:2}, 
+                  
+                  
+                  ]);
+                  
+                  private var _mwSupport:ExternalMouseWheelSupport = null;
+                  
+                  private function init():void {
+                  	_mwSupport = ExternalMouseWheelSupport.getInstance(stage);
+                  }
+			]]>
+		</mx:Script>
+
+	
+</mx:Application>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" applicationComplete="init()" xmlns:ns1="flare.flex.*">
+<mx:Script>
+	<![CDATA[
+		private function init():void {
+			var t:Tutorial = new Tutorial();
+			flareVis.visualization = t.getVis();
+		}
+	]]>
+</mx:Script>
+<ns1:FlareVis id="flareVis" height="10000" width="10000">
+	
+</ns1:FlareVis>
+</mx:Application>
