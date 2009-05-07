@@ -1,6 +1,12 @@
 GWAP2 is for storing experimental biological data, providing a high level of metadata curation
 to facilitate machine inference of regulatory networks and enable complex searching.
+       
 
+Licensed under the LGPL:
+http://www.gnu.org/licenses/lgpl.html
+
+Copyright (C) 2003-2009 Institute for Systems Biology
+                        Seattle, Washington, USA.
 
 == Welcome to Rails
 
