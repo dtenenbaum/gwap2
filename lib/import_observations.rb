@@ -63,7 +63,7 @@ class ImportObservations
 
   float_pat =  /^-?[0-9]+\.?[0-9]+$/
   int_pat =  /^-?[0-9]+$/
-
+  sci_pat = /\*10\^/
   
   for ob in obs
     gwap1_cond_id = ob.condition_id
@@ -74,6 +74,12 @@ class ImportObservations
     new_ob.string_value = ob.value
     new_ob.int_value = ob.value.to_i if ob.value =~ int_pat
     new_ob.float_value = ob.value.to_f if ob.value =~ float_pat or ob.value =~ int_pat
+    if (ob.value =~ sci_pat)
+      #todo - find out why some #s end up as 0
+      num,exp = ob.value.split("*10^")
+      new_ob.float_value = num.to_f * (10 ** exp.to_i)
+      
+    end
     new_ob.units_id = ob_units_hash[ob.units]
     #is_measurement needs to be determined by a human
     new_ob.is_time_measurement = true if ob.name == 'time' #todo could now set time series flag in parent experiment

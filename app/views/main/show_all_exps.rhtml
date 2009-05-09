@@ -1,14 +1,15 @@
 <% for exp in @exps %>
 	<ul>
-		<li><%=exp.name%></li>
+		<li><a href="<%=url_for :action => 'sparktest', :id => exp.id %>"><%=exp.name%></a></li>
 		<% for cond in exp.conditions%>
 			<ul>
 				<li><%=cond.name%></li>
 				<% for obs in cond.observations %>
 					<ul>
-						<li><%= obs.name %></li>
+						<li><%= obs.name %>: <%=obs.string_value%> <%= obs.unit_name%></li>
 					</ul>
 				<% end %>
 			</ul>
 		<% end %>
+		</ul>
 <% end %>

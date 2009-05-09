@@ -7,8 +7,42 @@ class MainController < ApplicationController
   
   def all_exps
     render :text => Experiment.find(:all, :order => 'id').to_json
-  end     
-
+  end   
+  
+    
+ def sparktest
+   #@exp = Experiment.find(:first, :conditions => 'id = 5', :order => 'name', :include =>[{:conditions=>:observations}])
+   #@columns = get_columns(@exp)
+   #render :action => 'sparktest', :layout => false
+   
+   @exp = Experiment.find(:first, :conditions => "id = #{params[:id]}", :order => 'name', :include =>[{:conditions=>:observations}])
+   @columns = get_columns(@exp)
+   @h = {}
+   for col in @columns
+     row = []
+     for cond in @exp.conditions
+       for ob in cond.observations
+         if (ob.name == col)
+           row << ob.float_value #(ob.float_value.nil?) ? ob.int_value : ob.float_value
+         end
+       end
+     end
+     @h[col] = row
+     pp @h
+   end
+   render :action => 'sparktest', :layout => false
+ end                                              
+ 
+                              
+ def get_columns(exp)
+   cols = []
+   for ob in exp.conditions.first.observations
+     cols << ob.name unless (ob.float_value.nil? or ob.name == 'time')
+   end   
+   cols
+ end
+ 
+ 
  def show_all_exps
    @exps = Experiment.find(:all, :order => 'name', :include =>[{:conditions=>:observations}])
  end      
