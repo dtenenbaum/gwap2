@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090318213418) do
+ActiveRecord::Schema.define(:version => 20090508173905) do
 
   create_table "authorizations", :force => true do |t|
     t.integer  "user_id",       :limit => 11
@@ -48,13 +48,8 @@ ActiveRecord::Schema.define(:version => 20090318213418) do
     t.datetime "updated_at"
   end
 
-  create_table "data", :force => true do |t|
-    t.integer  "track_id",   :limit => 11
-    t.integer  "start",      :limit => 11
-    t.integer  "end",        :limit => 11
-    t.string   "strand"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+  create_table "data_types", :force => true do |t|
+    t.string "name"
   end
 
   create_table "environmental_perturbations", :force => true do |t|
@@ -108,6 +103,19 @@ ActiveRecord::Schema.define(:version => 20090318213418) do
     t.boolean  "is_time_series"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "uses_probe_numbers"
+  end
+
+  create_table "features", :force => true do |t|
+    t.integer  "track_id",   :limit => 11
+    t.integer  "start",      :limit => 11
+    t.integer  "end",        :limit => 11
+    t.string   "strand"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.float    "value"
+    t.integer  "data_type",  :limit => 11
+    t.integer  "gene_id",    :limit => 11
   end
 
   create_table "gene_to_position_maps", :force => true do |t|
@@ -122,6 +130,10 @@ ActiveRecord::Schema.define(:version => 20090318213418) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "gene_name"
+  end
+
+  create_table "genes", :force => true do |t|
+    t.string "name"
   end
 
   create_table "groups", :force => true do |t|

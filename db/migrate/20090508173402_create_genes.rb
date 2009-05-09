@@ -1,8 +1,7 @@
 class CreateGenes < ActiveRecord::Migration
   def self.up
     create_table :genes do |t|
-
-      t.timestamps
+      t.column :name, :string
     end
   end
 

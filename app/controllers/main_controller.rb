@@ -8,6 +8,15 @@ class MainController < ApplicationController
   def all_exps
     render :text => Experiment.find(:all, :order => 'id').to_json
   end     
+
+ def show_all_exps
+   @exps = Experiment.find(:all, :order => 'name', :include =>[{:conditions=>:observations}])
+ end      
+ 
+ def get_cond
+   @conds = Condition.find_by_sql(["select * from condi"])
+   render :text => @cond.nil?
+ end
   
   def static
     json = <<"EOF"

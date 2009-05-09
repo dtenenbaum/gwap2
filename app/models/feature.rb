@@ -1,2 +1,2 @@
-class Datum < ActiveRecord::Base
+class Feature < ActiveRecord::Base
 end

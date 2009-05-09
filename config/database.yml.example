@@ -25,9 +25,9 @@ development:
 legacy:
     adapter: mysql
     encoding: utf8
-    database: gaggle
-    username: gaggle
-    password: PSgag22
+    database: gfdgfd
+    username: 3g45vetl;h
+    password: .kgjdfklgjhfdlkgjdfhglkdfjhgldfkjh
     host: mysql
     socket: /tmp/mysql.sock
 

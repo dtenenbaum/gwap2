@@ -1,3 +1,14 @@
 <% for exp in @exps %>
-<%= exp.name %><br/>
+	<ul>
+		<li><%=exp.name%></li>
+		<% for cond in exp.conditions%>
+			<ul>
+				<li><%=cond.name%></li>
+				<% for obs in cond.observations %>
+					<ul>
+						<li><%= obs.name %></li>
+					</ul>
+				<% end %>
+			</ul>
+		<% end %>
 <% end %>

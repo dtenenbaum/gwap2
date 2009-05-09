@@ -1,2 +1,5 @@
-class Unit < ActiveRecord::Base
+class Unit < ActiveRecord::Base  
+  def unit_name
+    name
+  end
 end
