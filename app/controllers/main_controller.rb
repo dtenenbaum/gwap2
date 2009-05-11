@@ -18,17 +18,35 @@ class MainController < ApplicationController
    @exp = Experiment.find(:first, :conditions => "id = #{params[:id]}", :order => 'name', :include =>[{:conditions=>:observations}])
    @columns = get_columns(@exp)
    @h = {}
+   @minrange = []
+   @maxrange = []
+   @min = @max = nil
    for col in @columns
      row = []
+     nrow = []
+     all = []
+     @minrange << 0
+     @maxrange << 1 
      for cond in @exp.conditions
        for ob in cond.observations
-         if (ob.name == col)
+         if (ob.name == col) 
+           @min = @max = ob.float_value if @min.nil?
+           @min = ob.float_value if @min > ob.float_value
+           @max = ob.float_value if @max < ob.float_value
            row << ob.float_value #(ob.float_value.nil?) ? ob.int_value : ob.float_value
          end
        end
+     end       
+     row.each{|i| nrow << sprintf("%.3f", normalize(i,@min,@max))}
+     #puts "---"
+     nrow.each{|i|puts "WHOA " if i == 0.0 or i == 1.0}
+     
+     if (params['normalized'] == 'true')
+       @h[col] = nrow
+     else
+       @h[col] = row
      end
-     @h[col] = row
-     pp @h
+     #pp @h
    end
    render :action => 'sparktest', :layout => false
  end                                              
@@ -144,14 +162,13 @@ EOF
     max = max.to_f
     nscale_min = nscale_min.to_f
     nscale_min = nscale_min.to_f
-    #puts "nscale_min = #{nscale_min}, nscale_max =  #{nscale_max} "
-    #nscale_min = 0
-    #nscale_max = 1      
-    #
-    ((nscale_max-nscale_min)/(max-min))*(x-min) + nscale_min
-
-    #nscale_min + (x-min)*(nscale_max-1)/(max-min)
+    result = ((nscale_max-nscale_min)/(max-min))*(x-min) + nscale_min
+    #puts  "x = #{x}, min = #{min}, max = #{max}, result = #{result}"
+    result
   end   
+  
+
+  
 
   def self.norm(a)
     ret = []

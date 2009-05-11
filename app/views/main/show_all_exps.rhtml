@@ -1,6 +1,6 @@
 <% for exp in @exps %>
 	<ul>
-		<li><a href="<%=url_for :action => 'sparktest', :id => exp.id %>"><%=exp.name%></a></li>
+		<li><a href="<%=url_for :action => 'sparktest', :id => exp.id %>"><%=exp.name%></a> (<a href="<%=url_for :action => 'sparktest', :id => exp.id, :normalized => 'true' %>">Normalized</a>)</li>
 		<% for cond in exp.conditions%>
 			<ul>
 				<li><%=cond.name%></li>

@@ -3,7 +3,7 @@
 	<title>Sparkline Test</title>
     <script type="text/javascript" src="http://www.google.com/jsapi"></script>
     <script type="text/javascript">
-      google.load("visualization", "1", {packages:["imagesparkline"]});
+      google.load("visualization", "1", {packages:["imagesparkline","table"]});
       google.setOnLoadCallback(drawChart);
 
       function drawChart() {
@@ -20,34 +20,16 @@
 			<% end %>
 		<% end %>
 
-/*
-//        data.addColumn("number", "Revenue");
-//        data.addColumn("number", "Licenses");
-        data.addRows(10);
-        data.setValue(0,0,435.7);
-        data.setValue(1,0,438);
-        data.setValue(2,0,512);
-        data.setValue(3,0,460);
-        data.setValue(4,0,491);
-        data.setValue(5,0,487);
-        data.setValue(6,0,552);
-        data.setValue(7,0,511);
-        data.setValue(8,0,505);
-        data.setValue(9,0,509);
-
-        data.setValue(0,1,132);
-        data.setValue(1,1,131);
-        data.setValue(2,1,137);
-        data.setValue(3,1,142);
-        data.setValue(4,1,140);
-        data.setValue(5,1,139);
-        data.setValue(6,1,147);
-        data.setValue(7,1,146);
-        data.setValue(8,1,151);
-        data.setValue(9,1,149);
-*/
         var chart = new google.visualization.ImageSparkLine(document.getElementById('chart_div'));
-        chart.draw(data, {width: 120, height: 40, showAxisLines: false,  showValueLabels: false, labelPosition: 'left'});
+        chart.draw(data, {width: 120, height: 40, showAxisLines: false,  showValueLabels: false, labelPosition: 'left'
+		<% if params['normalized'] == 'true' %>
+		,min: [<%=@minrange.join(",")%>], max: [<%=@maxrange.join(",")%>]
+		<%end%>
+		});      
+
+		//var table = new google.visualization.Table(document.getElementById('table_div'));
+		//table.draw(data, {});
+
       }
     </script>
   </head>
@@ -57,5 +39,10 @@
 	<p>Metadata sparklines for experiment: <%=@exp.name%></p>
 	
     <div id="chart_div"></div>
+
+Normalized: <%= !params['normalized'].nil?%><br/>
+
+	<div id="table_div"></div>
+
   </body>
 </html>
