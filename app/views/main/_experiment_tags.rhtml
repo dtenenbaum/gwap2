@@ -1,0 +1,4 @@
+<% for tag in tags %>
+     <%= link_to tag.tag, :action => "find_experiments_by_tag", :id => tag.tag %>
+<% end %>
+<br/>

@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090508173905) do
+ActiveRecord::Schema.define(:version => 20090519193048) do
 
   create_table "authorizations", :force => true do |t|
     t.integer  "user_id",       :limit => 11
@@ -23,6 +23,11 @@ ActiveRecord::Schema.define(:version => 20090508173905) do
   create_table "citations", :force => true do |t|
     t.integer "paper_id",      :limit => 11
     t.integer "experiment_id", :limit => 11
+  end
+
+  create_table "condition_tags", :force => true do |t|
+    t.integer "condition_id", :limit => 11
+    t.string  "tag"
   end
 
   create_table "conditions", :force => true do |t|
@@ -53,14 +58,8 @@ ActiveRecord::Schema.define(:version => 20090508173905) do
   end
 
   create_table "environmental_perturbations", :force => true do |t|
-    t.integer  "experiment_id", :limit => 11
-    t.integer  "name",          :limit => 11
-    t.string   "string_value"
-    t.integer  "int_value",     :limit => 11
-    t.float    "float_value"
-    t.integer  "units_id",      :limit => 11
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.integer "experiment_id", :limit => 11
+    t.string  "perturbation"
   end
 
   create_table "experiment_properties", :force => true do |t|
@@ -72,6 +71,11 @@ ActiveRecord::Schema.define(:version => 20090508173905) do
     t.integer  "units_id",      :limit => 11
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "experiment_tags", :force => true do |t|
+    t.integer "experiment_id", :limit => 11
+    t.string  "tag"
   end
 
   create_table "experiments", :force => true do |t|
@@ -104,6 +108,7 @@ ActiveRecord::Schema.define(:version => 20090508173905) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "uses_probe_numbers"
+    t.integer  "growth_media_recipe_id",   :limit => 11
   end
 
   create_table "features", :force => true do |t|
@@ -158,10 +163,12 @@ ActiveRecord::Schema.define(:version => 20090508173905) do
 
   create_table "knockouts", :force => true do |t|
     t.integer  "experiment_id", :limit => 11
-    t.string   "parent_strain"
     t.string   "gene"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "ranking",       :limit => 11
+    t.string   "control_for"
+    t.integer  "parent_id",     :limit => 11
   end
 
   create_table "nav_tree_items", :force => true do |t|
@@ -193,6 +200,9 @@ ActiveRecord::Schema.define(:version => 20090508173905) do
     t.string   "position"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "ranking",       :limit => 11
+    t.string   "control_for"
+    t.float    "amount"
   end
 
   create_table "papers", :force => true do |t|

@@ -1,6 +1,8 @@
 class User < ActiveRecord::Base
   validates_uniqueness_of :email
   
+  #delegate :name,  :to => :experiment, :prefix => :owner
+  
   def self.authenticate(nick, pass)
     user = find(:first, :conditions => ['email = ?',nick])
 

@@ -1,5 +1,6 @@
 class MainController < ApplicationController
   require 'pp'
+
   
   def swf
     redirect_to "/gwap2_take2.html"
@@ -9,11 +10,11 @@ class MainController < ApplicationController
     render :text => Experiment.find(:all, :order => 'id').to_json
   end   
   
+ 
+ 
     
- def sparktest
-   #@exp = Experiment.find(:first, :conditions => 'id = 5', :order => 'name', :include =>[{:conditions=>:observations}])
-   #@columns = get_columns(@exp)
-   #render :action => 'sparktest', :layout => false
+ def sparkline()
+   normalized = true
    
    @exp = Experiment.find(:first, :conditions => "id = #{params[:id]}", :order => 'name', :include =>[{:conditions=>:observations}])
    @columns = get_columns(@exp)
@@ -38,18 +39,16 @@ class MainController < ApplicationController
        end
      end       
      row.each{|i| nrow << sprintf("%.3f", normalize(i,@min,@max))}
-     #puts "---"
-     nrow.each{|i|puts "WHOA " if i == 0.0 or i == 1.0}
      
-     if (params['normalized'] == 'true')
+     if (normalized)
        @h[col] = nrow
      else
        @h[col] = row
      end
-     #pp @h
    end
-   render :action => 'sparktest', :layout => false
+   render :partial => 'sparkline'
  end                                              
+ 
  
                               
  def get_columns(exp)
@@ -60,10 +59,33 @@ class MainController < ApplicationController
    cols
  end
  
+ def test
+   render :text => "hello"
+ end
  
- def show_all_exps
+ def show_all_exps  #default action
    @exps = Experiment.find(:all, :order => 'name', :include =>[{:conditions=>:observations}])
- end      
+   #@exps = Experiment.find(:all)
+ end
+ 
+ def add_experiment_tag
+   ExperimentTag.new(:experiment_id => params[:id], :tag => params['tag']).save
+   experiment_tags = ExperimentTag.find_all_by_experiment_id(params[:id], :all, :order => 'tag')
+   render :partial => "experiment_tags", :locals => {:tags => experiment_tags}
+ end
+ 
+ def find_experiments_by_tag
+   @exps = Experiment.find_by_sql(["select * from experiments where id in (select experiment_id from experiment_tags where tag = ?) order by name",
+     params[:id]])                  
+   @tag = params[:id]  
+   render :action => 'show_all_exps'
+ end
+
+ 
+ 
+ def edit_exp
+   @exp = Experiment.find(params[:id], :include =>[{:conditions=>:observations}]) 
+ end
  
  def get_cond
    @conds = Condition.find_by_sql(["select * from condi"])

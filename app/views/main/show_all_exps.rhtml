@@ -1,15 +1,12 @@
+<% if @tag.nil? %>
+	All Experiments:<br/>
+<% else %>
+	All Experiments with tag "<%=@tag%>":<br/>
+<% end %>
+
 <% for exp in @exps %>
 	<ul>
-		<li><a href="<%=url_for :action => 'sparktest', :id => exp.id %>"><%=exp.name%></a> (<a href="<%=url_for :action => 'sparktest', :id => exp.id, :normalized => 'true' %>">Normalized</a>)</li>
-		<% for cond in exp.conditions%>
-			<ul>
-				<li><%=cond.name%></li>
-				<% for obs in cond.observations %>
-					<ul>
-						<li><%= obs.name %>: <%=obs.string_value%> <%= obs.unit_name%></li>
-					</ul>
-				<% end %>
-			</ul>
-		<% end %>
-		</ul>
+		<li><a href="<%=url_for :action => 'edit_exp', :id => exp.id %>"><%=exp.name%></a></li>
+		<ul><% for cond in exp.conditions%><li><%=cond.name%></li><% end%></ul>
+	</ul>
 <% end %>

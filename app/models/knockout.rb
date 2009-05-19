@@ -1,2 +1,3 @@
-class Knockout < ActiveRecord::Base
+class Knockout < ActiveRecord::Base  
+#  acts_as_tree
 end
