@@ -1,0 +1,5 @@
+#!/bin/sh
+mysqldump -uroot gwap2_take2_development > db/dump/dump.sql
+gzip db/dump/dump.sql
+rm db/dump.*
+hdiutil create -encryption -stdinpass -srcfolder db/dump/ db/dump.dmg

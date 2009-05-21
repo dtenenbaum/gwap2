@@ -1,4 +1,11 @@
-<% for tag in tags %>
-     <%= link_to tag.tag, :action => "find_experiments_by_tag", :id => tag.tag %>
+<% for tag in tags %>         
+	<%
+	id = tag.tag
+	if ((!@selected_tags.nil?) and cumulative) 
+		id += ","
+		id += @selected_tags.join(",")
+	end
+	%>
+     <%= link_to tag.tag, :action => "find_experiments_by_tag", :id => id %>
 <% end %>
 <br/>

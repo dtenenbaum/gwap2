@@ -1,7 +1,22 @@
-<% if @tag.nil? %>
-	All Experiments:<br/>
+
+All Tags:<br/>
+
+<%= render :partial => "experiment_tags", :locals => {:tags => @all_tags, :cumulative => false}%><br/>
+
+
+
+<% if @selected_tags.nil? %>
+	All Experiments: (<%=@exps.size%>)<br/>
 <% else %>
-	All Experiments with tag "<%=@tag%>":<br/>
+
+
+Refine By:<br/>
+
+<%= render :partial => "experiment_tags", :locals => {:tags => @remaining_tags, :cumulative => true}%><br/>
+
+<%= link_to "[Reset Search]", :action => 'index' %><br/>
+
+	All Experiments with tags: "<%=@selected_tags.join(", ")%>" (<%=@exps.size%>):<br/>
 <% end %>
 
 <% for exp in @exps %>

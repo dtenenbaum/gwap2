@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090519193048) do
+ActiveRecord::Schema.define(:version => 20090520225550) do
 
   create_table "authorizations", :force => true do |t|
     t.integer  "user_id",       :limit => 11
@@ -76,6 +76,9 @@ ActiveRecord::Schema.define(:version => 20090519193048) do
   create_table "experiment_tags", :force => true do |t|
     t.integer "experiment_id", :limit => 11
     t.string  "tag"
+    t.boolean "auto"
+    t.boolean "is_alias"
+    t.string  "alias_for"
   end
 
   create_table "experiments", :force => true do |t|
@@ -97,7 +100,7 @@ ActiveRecord::Schema.define(:version => 20090519193048) do
     t.boolean  "has_knockouts"
     t.boolean  "has_overexpression"
     t.boolean  "has_environmental"
-    t.integer  "replicate",                :limit => 11
+    t.integer  "technical_replicate",      :limit => 11
     t.integer  "biological_replicate",     :limit => 11
     t.boolean  "conditions_on_x_axis",                   :default => true
     t.integer  "species_id",               :limit => 11

@@ -15,7 +15,10 @@ class ImportExperiments
      #todo reference sample
      #todo reference to
      new_exp.sbeams_project_id = old_exp.sbeams_project_id
+     
+     #this isn't working:
      new_exp.sbeams_project_timestamp = old_exp.sbeams_timestamp
+     
      new_exp.gwap1_id = old_exp.id
      new_exp.orig_filename = old_exp.orig_filename
      #todo some experiments are ChIP-chip - any other platforms?
@@ -25,7 +28,8 @@ class ImportExperiments
      # lab notebook page
      # date_performed
      new_exp.date_gwap1_imported = old_exp.date
-     
+                                                            
+     # this isn't working:
      luser = lusers.detect{|d| d.id == old_exp.owner_id}
      unless luser.nil?
        user = users.detect{|d| d.email == luser.email}

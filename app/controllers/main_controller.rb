@@ -63,21 +63,39 @@ class MainController < ApplicationController
    render :text => "hello"
  end
  
- def show_all_exps  #default action
+ def index
+   redirect_to :action => 'show_all_exps'
+ end
+ 
+ def show_all_exps  #default action  
+   @all_tags = ExperimentTag.find_by_sql("select distinct tag from experiment_tags order by tag")
+   @remaining_tags = @all_tags
    @exps = Experiment.find(:all, :order => 'name', :include =>[{:conditions=>:observations}])
    #@exps = Experiment.find(:all)
  end
  
  def add_experiment_tag
-   ExperimentTag.new(:experiment_id => params[:id], :tag => params['tag']).save
+   ExperimentTag.new(:experiment_id => params[:id], :tag => params['tag'], :auto => false, :is_alias => false, :alias_for => params['tag']).save
    experiment_tags = ExperimentTag.find_all_by_experiment_id(params[:id], :all, :order => 'tag')
    render :partial => "experiment_tags", :locals => {:tags => experiment_tags}
  end
  
  def find_experiments_by_tag
-   @exps = Experiment.find_by_sql(["select * from experiments where id in (select experiment_id from experiment_tags where tag = ?) order by name",
-     params[:id]])                  
-   @tag = params[:id]  
+   @all_tags = ExperimentTag.find_by_sql("select distinct tag, is_alias, alias_for from experiment_tags order by tag")
+   @selected_tags = params[:id].split(",")
+   sql =<<"EOF"
+   select * from experiments where id in
+   (
+   select experiment_id from experiment_tags 
+   where tag in (?)
+   group by experiment_id
+   having count(experiment_id) = ?
+   ) order by name
+              
+EOF
+   @exps = Experiment.find_by_sql([sql,@selected_tags,@selected_tags.size])                  
+   sql = "select distinct tag from experiment_tags where  alias_for not in (select distinct alias_for from experiment_tags where tag in (?)) order by tag"                                                                                                                     
+   @remaining_tags = Experiment.find_by_sql([sql,@selected_tags])
    render :action => 'show_all_exps'
  end
 

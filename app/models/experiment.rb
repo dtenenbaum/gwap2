@@ -3,7 +3,7 @@ class Experiment < ActiveRecord::Base
   has_many :papers, :through => :citations      
   has_many :citations     
   has_many :knockouts, :order => 'ranking'        
-  has_many :experiment_tags
+  has_many :experiment_tags, :order => 'tag'
   has_many :environmental_perturbations
 #  has_one :curation_status, :foreign_key => 'curation_status_id'  
   belongs_to :curation_status
