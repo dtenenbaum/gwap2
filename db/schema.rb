@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090520225550) do
+ActiveRecord::Schema.define(:version => 20090526230807) do
 
   create_table "authorizations", :force => true do |t|
     t.integer  "user_id",       :limit => 11
@@ -36,6 +36,7 @@ ActiveRecord::Schema.define(:version => 20090520225550) do
     t.integer  "sequence",      :limit => 11
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "has_data",                    :default => true
   end
 
   create_table "controlled_vocab_items", :force => true do |t|
@@ -112,18 +113,17 @@ ActiveRecord::Schema.define(:version => 20090520225550) do
     t.datetime "updated_at"
     t.boolean  "uses_probe_numbers"
     t.integer  "growth_media_recipe_id",   :limit => 11
+    t.boolean  "has_tracks"
+    t.boolean  "is_control",                             :default => false
   end
 
   create_table "features", :force => true do |t|
-    t.integer  "track_id",   :limit => 11
-    t.integer  "start",      :limit => 11
-    t.integer  "end",        :limit => 11
-    t.string   "strand"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.float    "value"
-    t.integer  "data_type",  :limit => 11
-    t.integer  "gene_id",    :limit => 11
+    t.integer "track_id",     :limit => 11
+    t.float   "value"
+    t.integer "data_type",    :limit => 11
+    t.integer "gene_id",      :limit => 11
+    t.integer "location_id",  :limit => 11
+    t.integer "condition_id", :limit => 11
   end
 
   create_table "gene_to_position_maps", :force => true do |t|
@@ -172,6 +172,13 @@ ActiveRecord::Schema.define(:version => 20090520225550) do
     t.integer  "ranking",       :limit => 11
     t.string   "control_for"
     t.integer  "parent_id",     :limit => 11
+  end
+
+  create_table "locations", :force => true do |t|
+    t.integer "start",       :limit => 11
+    t.integer "end",         :limit => 11
+    t.string  "strand"
+    t.integer "replicon_id", :limit => 11
   end
 
   create_table "nav_tree_items", :force => true do |t|
@@ -240,6 +247,11 @@ ActiveRecord::Schema.define(:version => 20090520225550) do
     t.date     "date_created"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "replicons", :force => true do |t|
+    t.integer "species_id", :limit => 11
+    t.string  "name"
   end
 
   create_table "search_terms", :force => true do |t|

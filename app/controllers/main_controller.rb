@@ -10,7 +10,9 @@ class MainController < ApplicationController
     render :text => Experiment.find(:all, :order => 'id').to_json
   end   
   
- 
+  def dmv_jnlp
+#    render 
+  end
  
     
  def sparkline()
@@ -78,11 +80,48 @@ class MainController < ApplicationController
    ExperimentTag.new(:experiment_id => params[:id], :tag => params['tag'], :auto => false, :is_alias => false, :alias_for => params['tag']).save
    experiment_tags = ExperimentTag.find_all_by_experiment_id(params[:id], :all, :order => 'tag')
    render :partial => "experiment_tags", :locals => {:tags => experiment_tags}
+ end 
+          
+ def old_tag_exps     
+   response.content_type = "text/javascript"
+   render :update do |page|
+     page.replace_html "test", "<h1>yowza!</h1>"
+   end
+ end
+ 
+ 
+ def tag_exps
+   url = params['url'].gsub(/\#$/,"")
+   segs = url.split("/")
+   constraints = segs.last.gsub(/,$/,"").split(",")
+   constraints << params['tag']      
+   
+   puts "constraints:"
+   pp constraints
+   
+   
+   
+   ids = params['ids'].gsub(/,$/,"").split(",");
+   for id in ids
+     ExperimentTag.new(:experiment_id => id, :tag => params['tag'], :auto => false, :is_alias => false, :alias_for => params['tag']).save     
+   end
+   all_tags = ExperimentTag.find_by_sql("select distinct tag from experiment_tags order by tag")
+   
+   selected_tags = ExperimentTag.find_by_sql(["select distinct tag from experiment_tags where tag in (?)",constraints])
+   
+   response.content_type = "text/javascript"
+#   render :partial => "tagged_exps.js"
+   render :update do |page|
+     #page.replace_html "test", params['url']
+     #page.replace_html "test", "<h1>yowza!</h1>"
+     page.replace_html "all_tags", :partial => "experiment_tags", :locals => {:tags => all_tags, :cumulative => false}
+     page.replace_html "selected_tags", :partial => "selected_tags", :locals => {:selected_tags => selected_tags.map{|i|i.tag}}
+   end
  end
  
  def find_experiments_by_tag
    @all_tags = ExperimentTag.find_by_sql("select distinct tag, is_alias, alias_for from experiment_tags order by tag")
-   @selected_tags = params[:id].split(",")
+   @selected_tags = params[:id].split(",")      
    sql =<<"EOF"
    select * from experiments where id in
    (
@@ -94,8 +133,10 @@ class MainController < ApplicationController
               
 EOF
    @exps = Experiment.find_by_sql([sql,@selected_tags,@selected_tags.size])                  
-   sql = "select distinct tag from experiment_tags where  alias_for not in (select distinct alias_for from experiment_tags where tag in (?)) order by tag"                                                                                                                     
+   sql = "select distinct tag from experiment_tags where alias_for not in (select distinct alias_for from experiment_tags where tag in (?)) order by tag"                                                                                                                     
    @remaining_tags = Experiment.find_by_sql([sql,@selected_tags])
+   puts "Selected tags: "
+   pp @selected_tags
    render :action => 'show_all_exps'
  end
 

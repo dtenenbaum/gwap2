@@ -21,9 +21,9 @@ class ImportObservations
   
   
   # warning: truncating!
-  ControlledVocabItem.connection.execute("truncate table controlled_vocab_items")
-  Observation.connection.execute("truncate table observations")  
-  Unit.connection.execute("truncate table units")
+#  ControlledVocabItem.connection.execute("truncate table controlled_vocab_items")
+#  Observation.connection.execute("truncate table observations")  
+#  Unit.connection.execute("truncate table units")
   
   exps = Experiment.find :all
   obs = Legacy.find_by_sql(["select * from properties where property_type = 2 and condition_id != 0 and condition_id in (?)",cond_ids])

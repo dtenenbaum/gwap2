@@ -1,3 +1,4 @@
+<%= javascript_include_tag "edit_exp" %>
 <script type="text/javascript" src="<%=url_for :action => "sparkline", :id => @exp.id %>"></script>
 
 <%= link_to "[All Experiments]", :action => "show_all_exps" %><br/>
@@ -59,7 +60,7 @@ Conditions:
 		<li><%=cond.name%></li>
 		<% for obs in cond.observations %>
 			<ul>
-				<li><%= obs.name %>: <%=obs.string_value%> <%= obs.unit_name%></li>
+				<li><%= obs.name %>: <%=obs.string_value%> <%= (obs.units_id.nil?) ? "" : obs.unit_name %></li>
 			</ul>
 		<% end %>
 	</ul>
