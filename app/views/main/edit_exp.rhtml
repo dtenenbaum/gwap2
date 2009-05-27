@@ -15,7 +15,7 @@ Description:<br/>
 <%=@exp.description%>
 <br/>
 Growth media recipe: <%= @exp.growth_media_recipe.name%> (TODO: click to show full recipe)<br/>
-Imported by: <%= (@exp.owner.nil?)  ? "undefined " : @exp.owner.name %><br/>
+Imported by: <%= (@exp.owner.nil?)  ? "undefined " : @exp.owner.email %><br/>
 Is Time Series: <%= @exp.is_time_series%><br/>
 Is Private: <%=@exp.is_private %><br/>
 Lab Notebook number: <%=@exp.lab_notebook_number%><br/>
@@ -34,8 +34,8 @@ Uses probe numbers: <%= @exp.uses_probe_numbers%><br/>
 	Environmental perturbations: <% for pert in @exp.environmental_perturbations %><%= @exp.environmental_perturbations.map{|i|i.perturbation}.join(", ") %><% end%><br/>
 <% end %>
 
-<% if @exp.has_knockouts  %>
-	Knockouts:  <% for ko in @exp.knockouts%> &Delta;<%=ko.gene%>  <% end %><br/>
+<% if @exp.has_knockouts  %> 
+	Knockouts:  <% for ko in @kos %> &Delta;<%=ko.gene%>  <% end %><br/>
 	                     
 	
 	<br/>

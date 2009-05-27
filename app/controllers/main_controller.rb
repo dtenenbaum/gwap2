@@ -14,6 +14,9 @@ class MainController < ApplicationController
 #    render 
   end
  
+ def spark
+   render(:template => "main/sparky", :layout => false) and return false
+ end
     
  def sparkline()
    normalized = true
@@ -41,7 +44,6 @@ class MainController < ApplicationController
        end
      end       
      row.each{|i| nrow << sprintf("%.3f", normalize(i,@min,@max))}
-     
      if (normalized)
        @h[col] = nrow
      else
@@ -144,6 +146,17 @@ EOF
  
  def edit_exp
    @exp = Experiment.find(params[:id], :include =>[{:conditions=>:observations}]) 
+   if (@exp.has_knockouts)
+     k = @exp.knockouts.first
+     @kos = [k] # just deal with single KOs for now
+     while (true)
+       k = k.parent
+       break if k.nil?
+       @kos << k
+     end
+     @kos.reverse!
+     @kos.shift
+   end
  end
  
  def get_cond
@@ -238,6 +251,7 @@ EOF
         
   
   def normalize(x, min, max, nscale_min=0.0, nscale_max=1.0)
+    return 0 if (min == 0 and max == 0)
     x = x.to_f
     min = min.to_f  
     max = max.to_f

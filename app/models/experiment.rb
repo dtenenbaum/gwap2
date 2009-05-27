@@ -2,7 +2,8 @@ class Experiment < ActiveRecord::Base
   has_many :conditions, :order => 'sequence'
   has_many :papers, :through => :citations      
   has_many :citations     
-  has_many :knockouts, :order => 'ranking'        
+  has_many :knockouts, :through => :knockout_associations#, :order => 'ranking'
+  has_many :knockout_associations
   has_many :experiment_tags, :order => 'tag'
   has_many :environmental_perturbations
 #  has_one :curation_status, :foreign_key => 'curation_status_id'  

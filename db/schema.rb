@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090526230807) do
+ActiveRecord::Schema.define(:version => 20090527215635) do
 
   create_table "authorizations", :force => true do |t|
     t.integer  "user_id",       :limit => 11
@@ -164,14 +164,18 @@ ActiveRecord::Schema.define(:version => 20090526230807) do
     t.datetime "updated_at"
   end
 
+  create_table "knockout_associations", :force => true do |t|
+    t.integer "knockout_id",   :limit => 11
+    t.integer "experiment_id", :limit => 11
+  end
+
   create_table "knockouts", :force => true do |t|
-    t.integer  "experiment_id", :limit => 11
     t.string   "gene"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "ranking",       :limit => 11
+    t.integer  "ranking",     :limit => 11
     t.string   "control_for"
-    t.integer  "parent_id",     :limit => 11
+    t.integer  "parent_id",   :limit => 11
   end
 
   create_table "locations", :force => true do |t|
@@ -219,7 +223,7 @@ ActiveRecord::Schema.define(:version => 20090526230807) do
     t.string "title"
     t.string "url"
     t.string "authors"
-    t.string "abstract"
+    t.text   "abstract"
   end
 
   create_table "platforms", :force => true do |t|
