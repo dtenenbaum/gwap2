@@ -52,7 +52,14 @@ Cited in papers:<br/>
 Sparkline:
 <br/>     
 <div id="sparkline"></div>
-<br/>
+<br/>       
+
+<% unless @non_numeric.empty?%>
+<font color="red">
+	Oops! The following observations do not have numeric values, so cannot be shown as a sparkline or used by Inferelator:<br/>
+	<%= @non_numeric.join(", ")%><br/>&nbsp;<br/>
+</font>	
+<% end%>
 
 Conditions:
 <% for cond in @exp.conditions%>

@@ -157,6 +157,13 @@ EOF
      @kos.reverse!
      @kos.shift
    end
+   obs = @exp.conditions.first.observations
+   @non_numeric = []
+   for ob in obs
+     @non_numeric << ob.name if ob.float_value.nil?
+   end                                             
+   @non_numeric.sort!
+   @non_numeric.uniq!
  end
  
  def get_cond
