@@ -97,10 +97,31 @@ String.prototype.rtrim = function() {
 	return this.replace(/\s+$/,"");
 }                                                       
 
+function logAjaxEvent(element, event, request, settings, status) {
+    if (status == "error") {
+        jQuery(element).html("<font color='red'>Error receiving data from remote server.</font>");
+    }
+    log("ajax event information:");
+    log("event: " + event);
+    log("request: " + request);
+    log("settings: " + settings);
+    log("status: " + status);
+}
 
 jQuery(document).ready(function(){       
     
     jQuery('span.sf-menu').superfish();
+
+    log("setting up ajax event handlers");
+    jQuery().ajaxError(function(event, request, settings){
+      logAjaxEvent("#search_results", event, request, settings, "error");
+    });
+
+    jQuery().ajaxComplete(function(event, request, settings){
+      logAjaxEvent("#search_results", event, request, settings, "complete");
+    });
+    log("done setting up ajax event handlers");
+
 	
     jQuery(".search_box").keypress(function(e){
         var code = (e.keyCode ? e.keyCode : e.which);
@@ -114,7 +135,7 @@ jQuery(document).ready(function(){
              log("id = " + this.id);
              var segs = this.id.split("_");
              var exps = segs[segs.length -1];   
-             jQuery("#search_results").html("Loading...");
+             jQuery("#search_results").html("Loading...");     
              jQuery.get("../search", {search : search, exps: exps}, function(data){
                  jQuery("#search_results").html(data);
                  FG_fireDataEvent();
