@@ -2,8 +2,18 @@
 <head>
 	<title><%= @page_title || "GWAP2" %></title>
 	<%= javascript_include_tag "jquery-1.3.2.min" %>
+	<%= javascript_include_tag "superfish" %>
 	<script type="text/javascript" src="http://www.google.com/jsapi"></script>     
 	<%= javascript_include_tag "gwap2" %>   
+	
+	<script type="text/javascript" src="../../js/bionetwork.js"></script>
+	<script type="text/javascript" src="../../js/bioheatmap.js"></script>
+	
+
+	<%= stylesheet_link_tag "superfish" %>
+	<%= stylesheet_link_tag "spiderweb" %>
+
+
 </head>
 <body>
 <div id="page">

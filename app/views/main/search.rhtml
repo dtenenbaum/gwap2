@@ -1,0 +1,40 @@
+<% if @proteins.nil? %>
+	No matches.
+<% else %>	
+	The following items matched:<br/>
+	<%= @matches.join(", ")%><br/>
+	The following proteins were returned:<br/>
+	<%= @proteins.join(", ")%><br/>
+	                                       
+	
+	<div style="display: none;">
+		<div class="gaggle-data">
+
+		  <span class="gaggle-name">ORF Names for Halobacterium sp. NRC-1</span>
+		     species=<span class="gaggle-species">Halobacterium sp. NRC-1</span>
+		     <span class="gaggle-size"><%= @proteins.size%></span>
+		  <div class="gaggle-namelist">
+		   <ol>
+				<% for protein in @proteins %>
+					<li><%=protein%></li>
+				<% end %>
+		   </ol>
+		  </div>
+		 </div>
+	</div>
+	
+	
+	<%= render :partial => "annotations", :locals => {:annotations => @annos }%>
+	
+	<%= render :partial => "heatmap", :locals => {:data => @heatmap} %>
+	
+	
+	<%= render :partial => "plot", :locals => {:data => @plot}%>    
+	
+	<%= render :partial => "network", :locals => {:data => @network}%>
+	
+	
+	
+	
+<% #  <input type="button" id="clear_search" class="clear_search" value="Clear Search"></input> %>
+<% end %>

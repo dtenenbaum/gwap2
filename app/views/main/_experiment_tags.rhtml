@@ -6,6 +6,12 @@
 		id += @selected_tags.join(",")
 	end
 	%>
+	 <% if tag.auto == "1" %>
+		<i>
+	 <% end %>
      <%= link_to tag.tag, :action => "find_experiments_by_tag", :id => id %>
+	 <% if tag.auto  == "1" %>
+		</i>
+	 <% end %>
 <% end %>
 <br/>

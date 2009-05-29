@@ -1,6 +1,10 @@
-google.setOnLoadCallback(setup);
+//google.setOnLoadCallback(setup);
 
-function setup() {                          
+jQuery(document).ready(function(){
+    setup();
+})
+
+function setup() { 
     var clickee;
     
     jQuery(".exp").click(function(){

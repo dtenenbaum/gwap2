@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090527215635) do
+ActiveRecord::Schema.define(:version => 20090528190845) do
 
   create_table "authorizations", :force => true do |t|
     t.integer  "user_id",       :limit => 11
@@ -143,6 +143,8 @@ ActiveRecord::Schema.define(:version => 20090527215635) do
   create_table "genes", :force => true do |t|
     t.string "name"
   end
+
+  add_index "genes", ["name"], :name => "index_genes_on_name"
 
   create_table "groups", :force => true do |t|
     t.string   "name"

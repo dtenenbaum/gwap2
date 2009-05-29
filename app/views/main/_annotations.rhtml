@@ -1,0 +1,59 @@
+<table>         
+		<tr>
+			<th>Locus Tag</th>
+			<th>Links</th>
+			<th>Locus</th>
+			<th>Product Name</th>
+			<th>Coordinates</th>
+			<th>Strand</th>
+			<th>Length</th>
+			<th>GI</th>
+			<th>Gene ID</th>
+			<th>COG(s)</th>
+		</tr>
+			<% for anno in annotations %>
+			<tr>
+				<td>
+					<div id="toggle_<%=anno.locus_tag%>" class="anno"><u><%= anno.locus_tag %></u></div><span id="<%=anno.locus_tag%>" class="vis_legend"></span>
+				</td>
+				<td>
+					<ul class="sf-menu">
+						<li class="current">
+							<a href="#a">links</a> 
+							<ul>
+								<li><a target="_blank" href="<%=	"https://db.systemsbiology.net/sbeams/cgi/ProteinStructure/GetHaloAnnotations" +
+																	"?search_scope=All" +
+																	"&search_key=#{anno.locus_tag}" +
+																	"&action=GO" +
+																	"&dna_biosequence_set_id=5" +            
+																	"&SBEAMSentrycode=DF45jasj23jh" +
+																	"&protein_biosequence_set_id=2" +
+																	"&apply_action=QUERY" %>">View Annotation</a>
+								<li><a href="https://db.systemsbiology.net/sbeams/cgi/ProteinStructure/BrowseBioSequence.cgi?project_id=150&biosequence_set_id=5&action=QUERYHIDE&display_options=SequenceFormat&display_mode=FASTA&biosequence_id_constraint=<%= anno.dna_biosequence_id %>&SBEAMSentrycode=DF45jasj23jh" target="sequence">DNA Sequences</a></li>
+								<li><a href="https://db.systemsbiology.net/sbeams/cgi/ProteinStructure/BrowseBioSequence.cgi?project_id=150&biosequence_set_id=2&action=QUERYHIDE&display_options=SequenceFormat&display_mode=FASTA&biosequence_id_constraint=<%= anno.protein_biosequence_id %>&SBEAMSentrycode=DF45jasj23jh" target="sequence">Protein Sequences</a></li>
+								<li><a href="https://db.systemsbiology.net/sbeams/cgi/ProteinStructure/ManageTable.cgi?TABLE_NAME=PS_biosequence_annotation&biosequence_annotation_id=<%=anno.annotation_id%>&ShowEntryForm=1" target="annotations">Edit Annotations</a></li>
+								<li><a href="https://db.systemsbiology.net/sbeams/cgi/ProteinStructure/GetHaloAnnotations?search_scope=All&search_key=<%= anno.locus_tag %>&action=GO&dna_biosequence_set_id=5&protein_biosequence_set_id=2&apply_action=QUERY&SBEAMSentrycode=DF45jasj23jh" target="sbeams">Redundant ORFs</a></li>
+								<li><a href="https://db.systemsbiology.net/sbeams/cgi/PeptideAtlas/GetProtein?atlas_build_id=91&protein_name=<%= anno.locus_tag %>&action=GO" target="peptide_atlas">Peptide Atlas</a></li>
+								<li><a href="http://gaggle.systemsbiology.net/projects/halo/transcript_structure/<%= anno.locus_tag %>.pdf" target="transcript_structure">Transcript Structure</a></li>
+								<li><a href="http://www.microbesonline.org/cgi-bin/keywordSearch.cgi?type=0&mapId=MAPID&term=1&locus=0&hit=0&disp=0&homolog=0&format=1&favorites=&taxTyping=halo&taxSelector=64091&taxId=64091&keyword=<%= anno.locus_tag %>" target="microbes_online">Microbes Online</a></li>
+								<li><a href="http://www.bioisis.net/search/search_results?searchquery=view%20<%=anno.locus_tag%>" target="_blank">BIOISIS</a></li>
+
+							</ul>
+						</li>
+					</ul>
+				</td>
+				<td><%= anno.locus  %></td>
+				<td><a title="View Domain Hits" target="_blank" href="https://db.systemsbiology.net/sbeams/cgi/ProteinStructure/GetDomainHits?project_id=150&biosequence_set_id=2&biosequence_accession_constraint=<%=anno.gi%>&action=QUERYHIDE&display_options=ApplyChilliFilter,ShowExtraProteinProps"><%= anno.product_name %></a></td>
+				<td>
+					<a title="View ORF in chromosomal context" target="_blank" href="https://db.systemsbiology.net/sbeams/cgi/ProteinStructure/SequenceViewer.cgi?biosequence_id=<%=anno.protein_biosequence_id %>">
+				<%= anno.start %>..<%= anno.end %>
+				</a>
+				</td>
+				<td><%= anno.strand %></td>
+				<td><%= anno.length %></td>
+				<td><a target="_blank" title="NCBI Protein Annotation" href="http://www.ncbi.nlm.nih.gov/sutils/blink.cgi?pid=<%= anno.gi %>"><%= anno.gi%></a></td>
+				<td><%= anno.gene_id%></td>
+				<td><%=cog_links(anno.cog)%></td>
+			</tr>
+			<% end %>
+</table>

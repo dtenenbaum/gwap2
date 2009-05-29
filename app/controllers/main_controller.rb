@@ -53,7 +53,16 @@ class MainController < ApplicationController
    render :partial => 'sparkline'
  end                                              
  
- 
+ def search                                                         
+   exp_ids = params['exps'].split(",")
+   @matches, @proteins = SearchHelper.full_search(params['search'])
+   @annos = AnnotationHelper.get_annotations(@proteins)
+   colnames, rows = ExpressionHelper.get_expr_data(@proteins, exp_ids)
+   @heatmap = VisHelper.matrix_as_google_response(colnames,rows, "gene_name","GENE")
+   colnames, rows = ExpressionHelper.get_expr_data(@proteins, exp_ids, false)
+   @plot = VisHelper.matrix_as_google_response(colnames, rows, "condition_name", "CONDITION")
+   @network = NetworkHelper.get_network(@proteins)
+ end
                               
  def get_columns(exp)
    cols = []
@@ -72,13 +81,15 @@ class MainController < ApplicationController
  end
  
  def show_all_exps  #default action  
-   @all_tags = ExperimentTag.find_by_sql("select distinct tag from experiment_tags order by tag")
+   @all_tags = ExperimentTag.find_by_sql("select distinct tag, auto from experiment_tags order by tag")
    @remaining_tags = @all_tags
    @exps = Experiment.find(:all, :order => 'name', :include =>[{:conditions=>:observations}])
    #@exps = Experiment.find(:all)
  end
  
  def add_experiment_tag
+   # todo - should show a warning, or disallow adding tag, if user tries to add tag with the same name as an auto-generated tag
+   # or does that not make sense? (it would complicate displaying auto tags differently from manual tags)
    ExperimentTag.new(:experiment_id => params[:id], :tag => params['tag'], :auto => false, :is_alias => false, :alias_for => params['tag']).save
    experiment_tags = ExperimentTag.find_all_by_experiment_id(params[:id], :all, :order => 'tag')
    render :partial => "experiment_tags", :locals => {:tags => experiment_tags}
@@ -135,7 +146,7 @@ class MainController < ApplicationController
               
 EOF
    @exps = Experiment.find_by_sql([sql,@selected_tags,@selected_tags.size])                  
-   sql = "select distinct tag from experiment_tags where alias_for not in (select distinct alias_for from experiment_tags where tag in (?)) order by tag"                                                                                                                     
+   sql = "select distinct tag, auto from experiment_tags where alias_for not in (select distinct alias_for from experiment_tags where tag in (?)) order by tag"                                                                                                                     
    @remaining_tags = Experiment.find_by_sql([sql,@selected_tags])
    puts "Selected tags: "
    pp @selected_tags
@@ -163,7 +174,8 @@ EOF
      @non_numeric << ob.name if ob.float_value.nil?
    end                                             
    @non_numeric.sort!
-   @non_numeric.uniq!
+   @non_numeric.uniq!     
+   @exps = [@exp]
  end
  
  def get_cond

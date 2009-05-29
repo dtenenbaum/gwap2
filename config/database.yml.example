@@ -18,18 +18,28 @@ development:
   adapter: mysql
   encoding: utf8
   database: gwap2_take2_development
-  username: root
-  password:
+  username: gjue95h549
+  password: flrksjgyeooi5uyvghoeih
   socket: /tmp/mysql.sock
 
 legacy:
     adapter: mysql
     encoding: utf8
-    database: gfdgfd
+    database: gaggle
     username: 3g45vetl;h
     password: .kgjdfklgjhfdlkgjdfhglkdfjhgldfkjh
     host: mysql
     socket: /tmp/mysql.sock
+
+mdv:
+    adapter: mysql
+    encoding: utf8
+    database: mdv
+    username: 3g45vetl;h
+    password: .kgjdfklgjhfdlkgjdfhglkdfjhgldfkjh
+    host: localhost
+    socket: /tmp/mysql.sock
+
 
      
 # Warning: The database defined as "test" will be erased and

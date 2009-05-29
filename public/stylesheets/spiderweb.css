@@ -1,0 +1,324 @@
+
+
+body 
+{
+/*background: #7AE57F;*/
+/*background: #D0ECB3; */
+margin: 0 auto;
+padding: 0;
+font-family: "Trebuchet MS", Verdana, Arial, Helvetica;
+font-size: 0.8em;
+}
+
+h4 
+{
+font-size: 1.3em;
+margin: 0 0 5px 0;
+padding: 2px 0px 0px 0px;
+}
+
+#top
+{
+padding-top: 20px;
+padding-bottom: 20px;
+}
+
+#wrapper
+{ 
+width: 800px;
+margin: 0 auto;
+height: 800px;
+padding: 6px 10px 0px 10px;
+background: #14C71C;
+padding-top: 10px;
+}
+
+#blank
+{
+/*width: 98%;*/
+width: auto;
+margin: 0 auto;
+/*height: 790px;*/
+height: auto;
+background: #ffffff;
+}
+
+#main 
+{
+padding: 3px 2px 1px 2px;
+	}
+
+
+.search_area {
+    background: #95E1E4;
+    width:6in; 
+}
+
+
+.string {
+    background: #3366CC;   
+    color: #ffffff;
+}                
+
+.egrin {
+    background: #A2627A;
+    color: #ffffff;
+}
+
+.tag_area {
+    background: #45DDAC;
+    width:6in; 
+}
+
+
+#search 
+{
+border-bottom: 2px solid #ECEBEB;
+text-align: right;
+padding: 20px 20px 0 0;
+margin: 0px 1px 3px 0;
+height: 40px;
+background: url(../images/search.jpg) repeat-x;
+clear: both;
+
+}
+
+#search submit
+{
+display: none;
+}
+
+
+#propr
+{
+border: none;
+background: url(../images/button.gif) no-repeat;
+padding: 1px;
+color: #ffffff;
+}
+
+#logo 
+{
+text-align: center;
+/*float: left;*/
+font-size: 1.8em;
+font-weight: bold;
+padding: 0 0 0 20px;
+color: #ffffff;
+}
+
+#logo a
+{
+text-decoration: none;
+color: #ffffff;
+}
+
+#logo a:hover
+{
+text-decoration: underline;
+color: #ffffff;
+}
+
+#menu
+{
+padding: 0;
+float: left;
+width: 150px;
+font-size: 0.9em;
+clear: left;
+margin: 0 0 10px 0;
+}
+
+#menu ul 
+{	
+list-style: none;
+width: 150px;
+margin: 0;
+padding: 0;
+border-right: 1px solid #D8F2FB;
+font-size: 1.1em;
+}	
+
+#menu li 
+{
+margin-bottom: 4px;
+padding: 0 5px 0 10px;
+}
+
+#menu li a 
+{
+text-align: center;
+font-size: 15px;
+font-weight: bold;
+height: 20px;
+text-decoration: none;
+color: #12B41A;
+padding: 6px 10px 0 10px;
+display: block;
+/*border-bottom: 1px solid #D8F2FB;*/
+}	
+
+#menu p
+{
+text-align: left;
+font-size: 15px;
+font-weight: bold;
+height: 20px;
+text-decoration: none;
+color: #0033ff;
+padding: 6px 10px 0 10px;
+display: block;
+border-bottom: 1px solid #D8F2FB;
+}	
+
+
+	
+#menu li a:hover 
+{
+color: #12B41A;
+text-decoration: underline;
+}
+
+#categories 
+{
+margin: 9px 0 10px 0;
+padding: 3px 10px 5px 10px;
+width: 135px;
+color: #6B6B6B;
+line-height: 1.6em;
+}
+
+#categories a 
+{
+text-decoration: underline;
+}
+
+#categories h4
+{
+background: url(../images/categ.jpg) no-repeat;
+padding-left: 5px;
+color: #ffffff;
+font-size: 12px;
+font-weight: bold;
+border-bottom: 2px solid #ECEBEB;
+}
+
+#categories ul 
+{
+font-size: 1.1em;	
+list-style: none;
+width: 143px;
+padding: 0;
+margin: 0;
+border-right: 1px solid #D8F2FB;
+}	
+
+#categories li 
+{
+margin-bottom: 4px;
+padding: 0 5px 0 10px;
+}
+
+#categories li a 
+{
+font-size: 11px;
+font-weight: normal;
+text-align: left;
+height: 18px;
+text-decoration: underline;
+color: #2B342B;
+display: block;
+padding: 6px 10px 0 2px;
+}	
+	
+#categories li a:hover 
+{
+color: #2B342B;
+text-decoration: none;
+}
+
+#archives h4
+{
+background: url(../images/categ.jpg) no-repeat;
+padding-left: 5px;
+color: #ffffff;
+font-size: 12px;
+font-weight: bold;
+border-bottom: 2px solid #ECEBEB;
+}
+
+#imgtop 
+{
+/*height: 168px;
+margin:  0 0 5px 156px;
+padding: 0px 10px 5px 1px;
+*/
+background: url(../images/maggie_logo.png) no-repeat;
+}
+
+#imgtop img
+{
+width: 630px;
+}
+
+#page 
+{
+color: #5B5A5A;
+margin: 0 20px 20px 45px;
+padding: 3px 7px 3px 125px;
+line-height: 1.6em;
+}
+
+#page h2
+{
+padding-left: 1px;
+border-bottom: 1px solid #D8F2FB;
+color: #585941;
+}
+
+#page p
+{
+padding-left: 10px;
+}
+
+#page a 
+{
+text-decoration: underline;	
+color: #2B342B;
+}
+
+#page a:visited
+{
+text-decoration: underline;	
+}
+
+#page a:hover
+{
+text-decoration: none;	
+}
+
+#legal
+{
+background: #E9EEF1;
+padding: 3px 3px 3px 3px;
+}
+
+#footer 
+{
+margin-bottom: 0px;
+background: url(../images/footer.jpg) repeat-x;
+text-align: center;
+font-size: 11px;
+font-family: "Trebuchet MS", Arial, Helvetica, sans-serif; 
+}
+
+#footer a 
+{
+text-decoration: underline;
+color: #444444;
+}
+
+#footer a:hover 
+{
+text-decoration: none;
+}

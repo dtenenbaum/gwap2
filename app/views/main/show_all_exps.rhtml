@@ -3,6 +3,8 @@
 
 
 
+                   
+<% if @selected_tags.nil? %>
 All Tags:<br/>
 
 <span id="all_tags">
@@ -14,8 +16,10 @@ All Tags:<br/>
       
 <div id="test"></div>
 
-<% if @selected_tags.nil? %>
 	All Experiments: (<%=@exps.size%>)<br/>
+	    <a href="http://gaggle.systemsbiology.net:/GWAP/dmv/dynamic.jnlp?host=gaggle.systemsbiology.net&port=&exps=<%=@exps.map{|i|i.gwap1_id}.join(",")%>">
+	Open In DMV</a><br/>
+
 <% else %>
 
 
@@ -36,14 +40,22 @@ All Experiments with tags:
 
 
 <% if @exps.empty? %>
-No Matches.<br/>
+No Matches.<br/>   
+<a href="javascript:history.go(-1);">[Back]</a>
 
 <% else %>
 
+	<%= render :partial => "search", :locals => {:exps => @exps} %>
+	
+    <a href="http://gaggle.systemsbiology.net:/GWAP/dmv/dynamic.jnlp?host=gaggle.systemsbiology.net&port=&exps=<%=@exps.map{|i|i.gwap1_id}.join(",")%>">
+Open In DMV</a><br/>
 
-	<a id="select_all" href="#">Select All</a> | <a id="clear_selections" href="#">Clear Selections</a><br/>    
-	<input id="tag"></input> Tag All Checked Experiments<br/>
 
+	<div class="tag_area">
+		<h2>Tagger</h2>
+		<a id="select_all" href="#">Select All</a> | <a id="clear_selections" href="#">Clear Selections</a><br/>    
+		<input id="tag"></input> Tag All Checked Experiments<br/>
+	</div>
 <% end %>
 
 <% end %>

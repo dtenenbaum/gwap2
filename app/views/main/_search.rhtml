@@ -1,0 +1,25 @@
+<div class="search_area">
+<h2>Gene Search</h2>
+Search for genes from this set of conditions. Search using all or part of a protein name, annotation, COG ID, GI or Gene ID number<br/>
+
+Example searches:<br/>
+<p align="center">
+tfbA copper<br/>
+vng117 vesicle<br/>
+glycerate<br/>
+COG0778C<br/>
+peroxidase<br/>
+1467836<br/>
+<input class="search_box" id="search_box_<%=@exps.map{|i|i.id}.join(",")%>"></input><br/>
+</p>
+</div>
+
+<p>
+<div id="search_results"></div>
+</p>
+
+<div id="heatmap"></div>
+<div id="table"></div>
+<div id="plot"></div>   
+<div id="net_legend"></div>
+<div id="network"></div>
