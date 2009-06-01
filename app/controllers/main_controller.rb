@@ -1,6 +1,6 @@
 class MainController < ApplicationController
   require 'pp'
-
+#  require 'CGI'
   
   def swf
     redirect_to "/gwap2_take2.html"
@@ -105,28 +105,30 @@ class MainController < ApplicationController
  
  def tag_exps
    url = params['url'].gsub(/\#$/,"")
-   segs = url.split("/")
+   segs = url.split("=")
    constraints = segs.last.gsub(/,$/,"").split(",")
+   constraints = constraints.split("?id=").last
+   #constraints = [params['id']]
    constraints << params['tag']      
    
    puts "constraints:"
    pp constraints
-   
+   puts "url = #{params['url']}"
    
    
    ids = params['ids'].gsub(/,$/,"").split(",");
    for id in ids
      ExperimentTag.new(:experiment_id => id, :tag => params['tag'], :auto => false, :is_alias => false, :alias_for => params['tag']).save     
    end
-   all_tags = ExperimentTag.find_by_sql("select distinct tag from experiment_tags order by tag")
+   all_tags = ExperimentTag.find_by_sql("select distinct tag, auto from experiment_tags order by tag")
    
-   selected_tags = ExperimentTag.find_by_sql(["select distinct tag from experiment_tags where tag in (?)",constraints])
+   selected_tags = ExperimentTag.find_by_sql(["select distinct tag, auto from experiment_tags where tag in (?)",constraints])
    
    response.content_type = "text/javascript"
-#   render :partial => "tagged_exps.js"
+#   render :partial => "experiment_tags", :locals => {:tags => all_tags, :cumulative => false} 
+#    render :partial => "selected_tags", :locals => {:selected_tags => selected_tags.map{|i|i.tag}}
+#   return if true
    render :update do |page|
-     #page.replace_html "test", params['url']
-     #page.replace_html "test", "<h1>yowza!</h1>"
      page.replace_html "all_tags", :partial => "experiment_tags", :locals => {:tags => all_tags, :cumulative => false}
      page.replace_html "selected_tags", :partial => "selected_tags", :locals => {:selected_tags => selected_tags.map{|i|i.tag}}
    end

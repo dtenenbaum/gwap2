@@ -45,7 +45,8 @@ jQuery(document).ready(function(){
                  }
              });        
              var data = {ids: exps, tag: tag, url: location.href}
-             var options = {type: "GET", url: "../tag_exps", data: data, dataType: "script",
+             // BAD HARDCODING TODO FIX
+             var options = {type: "GET", url: "/main/tag_exps", data: data, dataType: "script",
                 success: function(data, textStatus){
                     log("in success function");
                     //log("data = " + data + "\nstatus =" + textStatus);

@@ -116,12 +116,13 @@ jQuery(document).ready(function(){
     jQuery().ajaxError(function(event, request, settings){
       logAjaxEvent("#search_results", event, request, settings, "error");
     });
-
+    
+/*
     jQuery().ajaxComplete(function(event, request, settings){
       logAjaxEvent("#search_results", event, request, settings, "complete");
     });
     log("done setting up ajax event handlers");
-
+*/
 	
     jQuery(".search_box").keypress(function(e){
         var code = (e.keyCode ? e.keyCode : e.which);
@@ -136,7 +137,7 @@ jQuery(document).ready(function(){
              var segs = this.id.split("_");
              var exps = segs[segs.length -1];   
              jQuery("#search_results").html("Loading...");     
-             jQuery.get("../search", {search : search, exps: exps}, function(data){
+             jQuery.get("search", {search : search, exps: exps}, function(data){
                  jQuery("#search_results").html(data);
                  FG_fireDataEvent();
              });

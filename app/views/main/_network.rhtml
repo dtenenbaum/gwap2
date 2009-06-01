@@ -1,3 +1,4 @@
+<% unless data.nil? %>
 <script type="text/javascript">         
 	var data = new google.visualization.DataTable(<%=network_as_google_response_helper(data)%>,0.5);
 	data.insertColumn(0, "string");
@@ -6,4 +7,4 @@
 	jQuery("#net_legend").html("<span class='string'>STRING</span><br/><span class='egrin'>EGRIN</span><br/>");
 	
 </script>
-
+<% end %>

@@ -5,13 +5,14 @@
 		id += ","
 		id += @selected_tags.join(",")
 	end
-	%>
-	 <% if tag.auto == "1" %>
+	%>    
+	<% auto =  (tag.auto == "1"  or tag.auto == "true" or (tag.auto.is_a?(TrueClass))) %>
+	 <% if auto  %>
 		<i>
-	 <% end %>   
-	 <a href="<%=url_for :action => "find_experiments_by_tag"%>?id=<%=id%>"><%=tag.tag%></a>
+	 <% end %> 
+	 <a href="<%=url_for :controller => "main", :action => "find_experiments_by_tag"%>?id=<%=id%>"><%=tag.tag%></a>
      <%#= link_to tag.tag, :action => "find_experiments_by_tag", :id => id %>
-	 <% if tag.auto  == "1" %>
+	 <% if auto %>
 		</i>
 	 <% end %>
 <% end %>
