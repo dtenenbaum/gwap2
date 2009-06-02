@@ -1,6 +1,6 @@
 <script type="text/javascript">         
-	var data = new google.visualization.DataTable(<%=data%>,0.5);
-	heatmap.draw(data, heatmap_options);
-	table.draw(data, {});   
+	heatmap_data = new google.visualization.DataTable(<%=data%>,0.5);
+	heatmap.draw(heatmap_data, heatmap_options);
+	table.draw(heatmap_data, {});   
 </script>
 

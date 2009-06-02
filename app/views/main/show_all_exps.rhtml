@@ -35,7 +35,7 @@ Refine By:<br/>
 <%= link_to "[Reset Search]", :action => 'index' %><br/>
 
 All Experiments with tags: 
-<span id="selected_tags">"<%=@selected_tags.join(", ")%>" (<%=@exps.size%>)</span>
+<span id="selected_tags">"<%=@selected_tags.reverse.join(", ")%>" (<%=@exps.size%>)</span>
 	:<br/>
 
 

@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090528190845) do
+ActiveRecord::Schema.define(:version => 20090602220615) do
 
   create_table "authorizations", :force => true do |t|
     t.integer  "user_id",       :limit => 11
@@ -124,6 +124,7 @@ ActiveRecord::Schema.define(:version => 20090528190845) do
     t.integer "gene_id",      :limit => 11
     t.integer "location_id",  :limit => 11
     t.integer "condition_id", :limit => 11
+    t.integer "sequence_id",  :limit => 11
   end
 
   create_table "gene_to_position_maps", :force => true do |t|
@@ -226,6 +227,7 @@ ActiveRecord::Schema.define(:version => 20090528190845) do
     t.string "url"
     t.string "authors"
     t.text   "abstract"
+    t.string "short_name"
   end
 
   create_table "platforms", :force => true do |t|
@@ -266,6 +268,11 @@ ActiveRecord::Schema.define(:version => 20090528190845) do
     t.integer  "condition_id",  :limit => 11
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "sequences", :force => true do |t|
+    t.string  "name"
+    t.integer "species_id", :limit => 11
   end
 
   create_table "species", :force => true do |t|

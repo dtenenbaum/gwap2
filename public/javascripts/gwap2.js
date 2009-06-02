@@ -14,7 +14,8 @@ jQuery.noConflict();
 
 var heatmap_options;  
 var plot_options;
-var heatmap;
+var heatmap;      
+var heatmap_data;
 var table;   
 var plot; 
 var network;    
@@ -45,7 +46,24 @@ function googleVisInit() {
 	heatmap = new org.systemsbiology.visualization.BioHeatMap(document.getElementById("heatmap"));
 	table = new google.visualization.Table(document.getElementById("table"));   
 	plot = new google.visualization.LineChart(document.getElementById("plot"));
-	network = new org.systemsbiology.visualization.BioNetwork(document.getElementById("network"));
+	network = new org.systemsbiology.visualization.BioNetwork(document.getElementById("network"));  
+	
+	google.visualization.events.addListener(heatmap, 'select', function() {
+	    //heatmap.getSelection()
+		var obj = heatmap.getSelection();
+		var me = obj[0];
+		/*
+		log("rows x cols = " + me['row'] + " x " + me['col']);
+		log("heatmap value is " + heatmap_data.getValue(me['row'],me['col'])); 
+		log("column label = " + heatmap_data.getColumnLabel(me['col']));
+		log("row label = " + heatmap_data.getValue(me['row'],0));
+		*/
+		jQuery("#heatmap_info").html("Gene: " + heatmap_data.getValue(me['row'],0) + "<br/>"  +
+		    "Condition: " + heatmap_data.getColumnLabel(me['col']) + "<br/>" + 
+		    "Value: " + heatmap_data.getValue(me['row'],me['col']) + "<br/>");
+	    
+    });
+	
 }
 
 
@@ -136,6 +154,7 @@ jQuery(document).ready(function(){
              log("id = " + this.id);
              var segs = this.id.split("_");
              var exps = segs[segs.length -1];   
+             jQuery("#search_results").empty();
              jQuery("#search_results").html("Loading...");     
              jQuery.get("search", {search : search, exps: exps}, function(data){
                  jQuery("#search_results").html(data);

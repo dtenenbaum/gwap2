@@ -37,7 +37,7 @@ EOF
          and g.name in (?)
          and f.condition_id in (?)
          and f.data_type = 1
-         order by c.sequence, g.name
+         order by c.name, c.sequence, g.name
 EOF
          values = Feature.find_by_sql([sql,gene_list, conds.collect{|i|i.id}])
          colnames = values.map{|v|v.gene_name}.sort.uniq

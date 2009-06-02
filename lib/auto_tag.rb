@@ -42,7 +42,14 @@ class AutoTag
         end                           
         add_tag(exp, exp.species.name)
         add_tag(exp, exp.species.alternate_name)
-        add_tag(exp, 'published') if ((!exp.papers.nil?) and exp.papers.size > 0)
+        add_tag(exp, 'published') if ((!exp.papers.nil?) and exp.papers.size > 0)     
+        unless (exp.papers.nil?)
+          for paper in exp.papers
+            add_tag(exp, paper.short_name)
+          end
+        end
+        add_tag(exp, exp.growth_media_recipe.name)
+        
       end
       
     rescue Exception => ex

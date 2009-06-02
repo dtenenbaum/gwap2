@@ -2,8 +2,8 @@
 	<%
 	id = tag.tag
 	if ((!@selected_tags.nil?) and cumulative) 
-		id += ","
-		id += @selected_tags.join(",")
+		id += "::"
+		id += @selected_tags.join("::")
 	end
 	%>    
 	<% auto =  (tag.auto == "1"  or tag.auto == "true" or (tag.auto.is_a?(TrueClass))) %>

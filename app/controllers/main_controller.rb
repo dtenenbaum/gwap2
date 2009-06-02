@@ -106,7 +106,7 @@ class MainController < ApplicationController
  def tag_exps
    url = params['url'].gsub(/\#$/,"")
    segs = url.split("=")
-   constraints = segs.last.gsub(/,$/,"").split(",")
+   constraints = segs.last.gsub(/,$/,"").split("::")
    constraints = constraints.split("?id=").last
    #constraints = [params['id']]
    constraints << params['tag']      
@@ -136,7 +136,7 @@ class MainController < ApplicationController
  
  def find_experiments_by_tag
    @all_tags = ExperimentTag.find_by_sql("select distinct tag, is_alias, alias_for from experiment_tags order by tag")
-   @selected_tags = params[:id].split(",")      
+   @selected_tags = params[:id].split("::")      
    sql =<<"EOF"
    select * from experiments where id in
    (
