@@ -1,3 +1,6 @@
+<% if tags.empty? %>
+<i>(Can't refine any more)</i>
+<% end %>
 <% for tag in tags %>         
 	<%
 	id = tag.tag

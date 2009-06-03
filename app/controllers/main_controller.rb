@@ -147,14 +147,22 @@ class MainController < ApplicationController
    ) order by name
               
 EOF
-   @exps = Experiment.find_by_sql([sql,@selected_tags,@selected_tags.size])                  
-   #sql = "select distinct tag, auto from experiment_tags where alias_for not in (select distinct alias_for from experiment_tags where tag in (?)) order by tag"                                                                                                                     
+   @exps = Experiment.find_by_sql([sql,@selected_tags,@selected_tags.size])  
+   same_results = []
+   @exps.inject do |memo, exp|
+     a = exp.experiment_tags.map{|i|i.tag}.sort
+     b = memo.experiment_tags.map{|i|i.tag}.sort
+     same_results.push((a == b))
+     exp
+   end
+   different = (same_results.detect{|i|i == false})
+   
    sql =<<"EOF"
    select distinct tag, auto from experiment_tags where alias_for not in (select distinct alias_for from experiment_tags where tag in (?)) 
    and experiment_id in (?)
    order by tag
 EOF
-   if (@exps.size == 1)
+   if (@exps.size == 1 or !different)
      @remaining_tags = []
    else
      @remaining_tags = Experiment.find_by_sql([sql,@selected_tags,@exps.map{|i|i.id}])
