@@ -154,9 +154,10 @@ jQuery(document).ready(function(){
              log("id = " + this.id);
              var segs = this.id.split("_");
              var exps = segs[segs.length -1];   
-             jQuery("#search_results").empty();
-             jQuery("#search_results").html("Loading...");     
-             jQuery.get("search", {search : search, exps: exps}, function(data){
+             jQuery(".vis").empty();
+             jQuery("#load_status").html("Loading...");     
+             jQuery.get("search", {search : search, exps: exps}, function(data){    
+                 jQuery("#load_status").empty();
                  jQuery("#search_results").html(data);
                  FG_fireDataEvent();
              });

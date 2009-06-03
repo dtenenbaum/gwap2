@@ -162,7 +162,7 @@ EOF
    and experiment_id in (?)
    order by tag
 EOF
-   if (@exps.size == 1 or !different)
+   if (@exps.size == 1 or !different) # if you can't refine any more
      @remaining_tags = []
    else
      @remaining_tags = Experiment.find_by_sql([sql,@selected_tags,@exps.map{|i|i.id}])
