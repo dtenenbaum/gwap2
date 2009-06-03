@@ -148,8 +148,17 @@ class MainController < ApplicationController
               
 EOF
    @exps = Experiment.find_by_sql([sql,@selected_tags,@selected_tags.size])                  
-   sql = "select distinct tag, auto from experiment_tags where alias_for not in (select distinct alias_for from experiment_tags where tag in (?)) order by tag"                                                                                                                     
-   @remaining_tags = Experiment.find_by_sql([sql,@selected_tags])
+   #sql = "select distinct tag, auto from experiment_tags where alias_for not in (select distinct alias_for from experiment_tags where tag in (?)) order by tag"                                                                                                                     
+   sql =<<"EOF"
+   select distinct tag, auto from experiment_tags where alias_for not in (select distinct alias_for from experiment_tags where tag in (?)) 
+   and experiment_id in (?)
+   order by tag
+EOF
+   if (@exps.size == 1)
+     @remaining_tags = []
+   else
+     @remaining_tags = Experiment.find_by_sql([sql,@selected_tags,@exps.map{|i|i.id}])
+   end
    puts "Selected tags: "
    pp @selected_tags
    render :action => 'show_all_exps'
