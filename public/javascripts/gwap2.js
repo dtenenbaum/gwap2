@@ -21,6 +21,7 @@ var plot;
 var network;    
 var net_options;
 
+var available_tags;
 
 
 function googleVisInit() {
@@ -125,23 +126,64 @@ function logAjaxEvent(element, event, request, settings, status) {
     log("settings: " + settings);
     log("status: " + status);
 }
+     
+var enterDetect = function(elem, func) {
+    jQuery(elem).keypress(function(e){
+        var code = (e.keyCode ? e.keyCode : e.which);
+         if(code == 13) { //Enter keycode 
+             var search = this.value.trim();
+             if (search == "") {
+                 alert("You must enter some text to search on.");
+                 jQuery(elem).focus();
+                 return;
+             }
+             log("id = " + this.id);
+             func();
+        }
+    });
+}     
+
+var addSearchBoxValueToCart = function(item) {
+    addToCart(document.getElementById("tag_search_box").value);
+}
+
+var addToCart = function(item) {
+    jQuery("#my_search").append("<li>" + item  + "</li>");
+}
+                  
+var onSearchResultsLoaded = function() {
+    jQuery("#check_all").click(function(){    
+        jQuery(".experiment_checkbox").each(function(){
+            this.checked = true;
+        });
+    });
+
+    jQuery("#uncheck_all").click(function(){
+        jQuery(".experiment_checkbox").each(function(){
+            this.checked = false;
+        });
+    });
+    
+    jQuery("#tag_selected").click(function(){
+            jQuery("#dialog").dialog();
+    });
+}
 
 jQuery(document).ready(function(){       
-    
     jQuery('span.sf-menu').superfish();
+                                              
+    
+    jQuery("#dialog").hide();
+
+    
 
     log("setting up ajax event handlers");
     jQuery().ajaxError(function(event, request, settings){
       logAjaxEvent("#search_results", event, request, settings, "error");
     });
     
-/*
-    jQuery().ajaxComplete(function(event, request, settings){
-      logAjaxEvent("#search_results", event, request, settings, "complete");
-    });
-    log("done setting up ajax event handlers");
-*/
 	
+	// this is for the condition chooser box not the tag search box
     jQuery(".search_box").keypress(function(e){
         var code = (e.keyCode ? e.keyCode : e.which);
          if(code == 13) { //Enter keycode 
@@ -164,9 +206,69 @@ jQuery(document).ready(function(){
          }
     });
     
-    jQuery(".clear_search").click(function(){
-        log("clear search pressed");
-        jQuery("#search_results").html("");
+    //autocomplete handler for tag search box
+    jQuery("#tag_search_box").autocomplete(available_tags, {matchContains: true});
+    
+    jQuery("#tag_search_button").click(function(){
+        addSearchBoxValueToCart();
+    });
+          
+    jQuery("#clear_selections").click(function(){
+        jQuery("#my_search").children().remove();
+        jQuery("#top").focus();
     });
     
+    jQuery().ajaxError(function(event, request, settings){
+        log("AJAX ERROR!");
+    });
+               
+    
+    jQuery("#search_button").click(function(){ 
+        var tags = "";
+        var i = 0;
+        jQuery("#my_search").children().each(function(item){
+            tags += jQuery(this).html();
+            tags += "##"
+            log("added " + jQuery(this).html() + " at position " + i);
+            i++;
+        });      
+        if (i == 0) {
+            alert("Nothing to search for.");
+            return;
+        }                              
+        jQuery("#inclusive_search_results").html("Loading...")
+        
+        
+        jQuery.get("inclusive_search", {tags: tags}, function(data){
+            jQuery("#inclusive_search_results").html(data);
+        });
+    });
+    
+    
+    jQuery(".selected_menu_item").click(function(){  
+        //log("before hide");
+        //jQuery('#nav li.sfHover').hideSuperfishUl(jQuery('#nav')[o].o);
+        //jQuery('#nav li.sfHover').hideSuperfishUl(jQuery(this));
+        //jQuery(this).parent().parent().hideSuperfishUl();
+        //jQuery(this).parents('li.sfHover').hideSuperfishUl(); 
+        //jQuery('ul.sf-menu').hideSuperfishUl();
+        //jQuery(this).find("ul").hide(); 
+        //jQuery(this).hideSuperfishUl(); 
+        //log("after hide");
+        addToCart(jQuery(this).html());
+        //return false;
+    });                        
+    
+    enterDetect("#tag_search_box", function(){ 
+        addSearchBoxValueToCart();
+    }); 
+    
+    jQuery("#clear_tag_search_box_button").click(function(){
+        document.getElementById("tag_search_box").value = "";
+        jQuery("#tag_search_box").focus();
+     });    
+     
+     
+
+
 });

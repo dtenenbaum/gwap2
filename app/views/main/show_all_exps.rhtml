@@ -5,68 +5,48 @@
 
                    
 <% if @selected_tags.nil? %>
-All Tags:<br/>
 
-<span id="all_tags">
-<%= render :partial => "experiment_tags", :locals => {:tags => @all_tags, :cumulative => false}%>
+<span id="all_tags">    
+    
+<%= render :partial => "experiment_tags", :locals => {:tags => @all_tags, :categories => @tag_categories, :cumulative => false, 
+    :selected_tags => @selected_tags }%>
 </span>
 <br/>
 
 
       
-<div id="test"></div>
-
-	All Experiments: (<%=@exps.size%>)<br/>
-	    <a href="http://gaggle.systemsbiology.net:/GWAP/dmv/dynamic.jnlp?host=gaggle.systemsbiology.net&port=&exps=<%=@exps.map{|i|i.gwap1_id}.join(",")%>">
-	Open In DMV</a><br/>
 
 <% else %>
 
 <div id="all_tags" style="display: none;">ALL_TAGS</div>
 
 
-Refine By:<br/>
-
-
-<%= render :partial => "experiment_tags", :locals => {:tags => @remaining_tags, :cumulative => true}%>
-<br/>
-
-
-<%= link_to "[Reset Search]", :action => 'index' %><br/>
-
-All Experiments with tags: 
-<span id="selected_tags">"<%=@selected_tags.reverse.join(", ")%>" (<%=@exps.size%>)</span>
-	:<br/>
 
 
 <% if @exps.empty? %>
 No Matches.<br/>   
 <a href="javascript:history.go(-1);">[Back]</a>
 
-<% else %>
-
-	<%= render :partial => "search", :locals => {:exps => @exps} %>
-	
-    <a href="http://gaggle.systemsbiology.net:/GWAP/dmv/dynamic.jnlp?host=gaggle.systemsbiology.net&port=&exps=<%=@exps.map{|i|i.gwap1_id}.join(",")%>">
-Open In DMV</a><br/>
 
 
-	<div class="tag_area">
-		<h2>Tagger</h2>
-		<a id="select_all" href="#">Select All</a> | <a id="clear_selections" href="#">Clear Selections</a><br/>    
-		<input id="tag"></input> Tag All Checked Experiments<br/>
-	</div>
 <% end %>
 
 <% end %>
 
-<% for exp in @exps %>
-	<ul>
-		<li>
-			<% unless @selected_tags.nil? %>
-				<input type="checkbox" id="<%=exp.id%>" value="<%=exp.id%>"></input>
-			<% end %>
-			<a href="<%=url_for :action => 'edit_exp', :id => exp.id %>"><%=exp.name%></a></li>
-		<ul><% for cond in exp.conditions%><li><%=cond.name%></li><% end%></ul>
-	</ul>
-<% end %>
+<div id="inclusive_search_results">
+</div>
+
+<div id="dialog" title="Tag Checked Experiments ">
+
+	<form>
+	<fieldset>
+		<label for="name">Tag:</label>
+		<input type="text" name="tag" id="name" class="text ui-widget-content ui-corner-all" />
+		<select name="tag_category" id="tag_category">
+		    <option>category1</option>
+		    <option>category2</option>
+		</select>
+		<input type="submit" value="Tag"/>
+	</fieldset>
+	</form>
+</div>

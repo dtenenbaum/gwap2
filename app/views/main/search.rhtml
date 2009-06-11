@@ -26,13 +26,14 @@
 	
 	<%= render :partial => "annotations", :locals => {:annotations => @annos }%>
 	
+	<div id="vis">
 	<%= render :partial => "heatmap", :locals => {:data => @heatmap} %>
 	
 	<%= render :partial => "plot", :locals => {:data => @plot}%>    
 	
 	
 	<%= render :partial => "network", :locals => {:data => @network}%>
-	
+	</div>
 	
 <% #  <input type="button" id="clear_search" class="clear_search" value="Clear Search"></input> %>
 <% end %>

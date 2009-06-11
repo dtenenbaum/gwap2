@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090602220615) do
+ActiveRecord::Schema.define(:version => 20090609172624) do
 
   create_table "authorizations", :force => true do |t|
     t.integer  "user_id",       :limit => 11
@@ -75,11 +75,12 @@ ActiveRecord::Schema.define(:version => 20090602220615) do
   end
 
   create_table "experiment_tags", :force => true do |t|
-    t.integer "experiment_id", :limit => 11
+    t.integer "experiment_id",   :limit => 11
     t.string  "tag"
     t.boolean "auto"
     t.boolean "is_alias"
     t.string  "alias_for"
+    t.integer "tag_category_id", :limit => 11
   end
 
   create_table "experiments", :force => true do |t|
@@ -280,6 +281,10 @@ ActiveRecord::Schema.define(:version => 20090602220615) do
     t.string "alternate_name"
   end
 
+  create_table "tag_categories", :force => true do |t|
+    t.string "category_name"
+  end
+
   create_table "tracks", :force => true do |t|
     t.integer  "condition_id", :limit => 11
     t.integer  "type",         :limit => 11
@@ -301,6 +306,7 @@ ActiveRecord::Schema.define(:version => 20090602220615) do
     t.date     "last_login_date"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "approved"
   end
 
   create_table "users_groups", :id => false, :force => true do |t|

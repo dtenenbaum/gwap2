@@ -1,22 +1,31 @@
-var sparkline = function() {
-        var data = new google.visualization.DataTable();
+<script type="text/javascript">
+<% has_nan = false %>
+var sparkline_<%=exp.id%> = function() {
+        var data_<%=exp.id%> = new google.visualization.DataTable();
 
-		<% for col in @columns %>
-			data.addColumn("number", "<%=col%>");
+		<% for col in columns %>
+			data_<%=exp.id%>.addColumn("number", "<%=col%>");
 		<% end %>
 
-        data.addRows(<%= @columns.size * @exp.conditions.size %>);
-		<% @columns.each_with_index do |col,i| %>
-			<% @h[col].each_with_index do |value,j| %>
-				data.setValue(<%=j%>,<%=i%>,<%=value%>);
+        data_<%=exp.id%>.addRows(<%= columns.size * exp.conditions.size %>);
+		<% columns.each_with_index do |col,i| %>
+			<% h[col].each_with_index do |value,j| %>  
+			    <% if value == 'nan' %>
+			       <% has_nan = true %>
+				<% else %>
+			        data_<%=exp.id%>.setValue(<%=j%>,<%=i%>,<%=value%>);
+				<% end %>
 			<% end %>
 		<% end %>
 
-        var chart = new google.visualization.ImageSparkLine(document.getElementById('sparkline'));
-        chart.draw(data, {width: 120, height: 40, showAxisLines: false,  showValueLabels: false, labelPosition: 'left',min: [<%=@minrange.join(",")%>], max: [<%=@maxrange.join(",")%>]	});
+        var chart_<%=exp.id%> = new google.visualization.ImageSparkLine(document.getElementById('sparkline_<%=exp.id%>'));
+        chart_<%=exp.id%>.draw(data_<%=exp.id%>, {width: 120, height: 40, showAxisLines: false,  showValueLabels: false, labelPosition: 'left',min: [<%=minrange.join(",")%>], max: [<%=maxrange.join(",")%>]	});
 
 }
 
-jQuery(document).ready(function(){
-	sparkline();
-});
+	sparkline_<%=exp.id%>();
+</script>
+<div id="sparkline_<%=exp.id%>"></div>
+<% if has_nan %>
+    Warning: there was no data for some points.<br/>
+<% end %>

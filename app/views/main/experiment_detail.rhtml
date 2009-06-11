@@ -1,14 +1,6 @@
-<%= javascript_include_tag "edit_exp" %>
+<%#= javascript_include_tag "edit_exp" %>
  <script type="text/javascript" src="<%=url_for :action => "sparkline", :id => @exp.id %>"></script>
 
-<%= link_to "[All Experiments]", :action => "show_all_exps" %><br/>
-<div class="tag_area">
-	Add tag:<br/>
-	<input class="add_tag_to_experiment" id="add_tag_to_experiment_<%=@exp.id%>"><br/>
-</div>
-Tags:<br/>                                           
-<div id="experiment_tags"><%= render :partial => "experiment_tags", :locals => {:tags => @exp.experiment_tags, :categories => @tag_categories, :cumulative => false, :selected_tags => @selected_tags }%> </div>
-<% # ["biological_replicate", "conditions_on_x_axis", "created_at", "curation_status_id", "date_gwap1_imported", "date_performed", "description", "growth_media_recipe_id", "gwap1_id", "has_environmental", "has_knockouts", "has_overexpression", "id", "importer_id", "is_private", "is_time_series", "lab_notebook_number", "lab_notebook_page", "name", "orig_filename", "owner_id", "parent_strain_id", "platform_id", "reference_sample_id", "reference_to", "replicate", "sbeams_project_id", "sbeams_project_timestamp", "species_id", "updated_at", "uses_probe_numbers"]%>
 Name = <%= @exp.name%><br/>       
 Curation status:  <%= @exp.curation_status.name%><br/>
 Date performed: <%= @exp.date_performed%><br/>
@@ -64,7 +56,7 @@ Sparkline:
 <% end%>  
 
 
-<%= render :partial => "search", :locals => {:exps => @exps} %>
+<%#= render :partial => "search", :locals => {:exps => @exps} %>
 
 
 Conditions:

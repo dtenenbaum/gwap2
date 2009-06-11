@@ -1,4 +1,14 @@
 class MainController < ApplicationController
+  
+  before_filter :authenticate
+
+  def authenticate
+  end
+  
+  def logout
+    
+  end
+  
   require 'pp'
 #  require 'CGI'
   
@@ -19,38 +29,11 @@ class MainController < ApplicationController
  end
     
  def sparkline()
-   normalized = true
-   
-   @exp = Experiment.find(:first, :conditions => "id = #{params[:id]}", :order => 'name', :include =>[{:conditions=>:observations}])
-   @columns = get_columns(@exp)
-   @h = {}
-   @minrange = []
-   @maxrange = []
-   @min = @max = nil
-   for col in @columns
-     row = []
-     nrow = []
-     all = []
-     @minrange << 0
-     @maxrange << 1 
-     for cond in @exp.conditions
-       for ob in cond.observations
-         if (ob.name == col) 
-           @min = @max = ob.float_value if @min.nil?
-           @min = ob.float_value if @min > ob.float_value
-           @max = ob.float_value if @max < ob.float_value
-           row << ob.float_value #(ob.float_value.nil?) ? ob.int_value : ob.float_value
-         end
-       end
-     end       
-     row.each{|i| nrow << sprintf("%.3f", normalize(i,@min,@max))}
-     if (normalized)
-       @h[col] = nrow
-     else
-       @h[col] = row
-     end
-   end
-   render :partial => 'sparkline'
+   exp = Experiment.find params[:id]
+     columns, maxrange, minrange, h, rejected_columns = SparklineHelper.get_sparkline_info(exp.id)
+     render (:partial => "single_sparkline", :locals => {
+       :exp => exp, :columns => columns, :h => h, :maxrange => maxrange, :minrange => minrange
+     })
  end                                              
  
  def search                                                         
@@ -84,6 +67,7 @@ class MainController < ApplicationController
    @all_tags = ExperimentTag.find_by_sql("select distinct tag, auto from experiment_tags order by tag")
    @remaining_tags = @all_tags
    @exps = Experiment.find(:all, :order => 'name', :include =>[{:conditions=>:observations}])
+   @tag_categories = TagCategory.find :all, :order => 'category_name'
    #@exps = Experiment.find(:all)
  end
  
@@ -93,7 +77,50 @@ class MainController < ApplicationController
    ExperimentTag.new(:experiment_id => params[:id], :tag => params['tag'], :auto => false, :is_alias => false, :alias_for => params['tag']).save
    experiment_tags = ExperimentTag.find_all_by_experiment_id(params[:id], :all, :order => 'tag')
    render :partial => "experiment_tags", :locals => {:tags => experiment_tags}
- end 
+ end   
+ 
+ def experiment_detail
+   @exp = Experiment.find(params[:id], :include =>[{:conditions=>:observations}]) 
+   if (@exp.has_knockouts)
+     k = @exp.knockouts.first
+     @kos = [k] # just deal with single KOs for now
+     while (true)
+       k = k.parent
+       break if k.nil?
+       @kos << k
+     end
+     @kos.reverse!
+     @kos.shift
+   end
+   obs = @exp.conditions.first.observations
+   @non_numeric = []
+   for ob in obs
+     @non_numeric << ob.name if ob.float_value.nil?
+   end                                             
+   @non_numeric.sort!
+   @non_numeric.uniq!     
+   @exps = [@exp]
+ end
+ 
+ def inclusive_search
+   raw_tags = params['tags'].gsub(/\#\#$/,"")
+   tags = raw_tags.split("##")
+   sql = <<"EOF"
+   select * from experiments where id in (
+       select experiment_id from experiment_tags where tag in (?)
+   ) order by name
+EOF
+   @exps = Experiment.find_by_sql([sql,tags])
+   @sparklines = []                   
+   for exp in @exps
+     columns, maxrange, minrange, h, rejected_columns = SparklineHelper.get_sparkline_info(exp.id)
+     sparkline = render_to_string(:partial => "sparkline", :locals => {
+       :exp => exp, :columns => columns, :h => h, :maxrange => maxrange, :minrange => minrange
+     })
+     @sparklines << sparkline
+   end
+   render :partial => "inclusive_search", :locals => {:exps => @exps, :sparklines => @sparklines, :rejected_columns => rejected_columns}
+ end
           
  def old_tag_exps     
    response.content_type = "text/javascript"
@@ -136,6 +163,7 @@ class MainController < ApplicationController
  
  def find_experiments_by_tag
    @all_tags = ExperimentTag.find_by_sql("select distinct tag, is_alias, alias_for from experiment_tags order by tag")
+   @tag_categories = TagCategory.find :all, :order => 'category_name'
    @selected_tags = params[:id].split("::")      
    sql =<<"EOF"
    select * from experiments where id in
@@ -152,17 +180,18 @@ EOF
    @exps.inject do |memo, exp|
      a = exp.experiment_tags.map{|i|i.tag}.sort
      b = memo.experiment_tags.map{|i|i.tag}.sort
-     same_results.push((a == b))
+     same_results.push((a == b))  
      exp
    end
-   different = (same_results.detect{|i|i == false})
+   different = (same_results.detect{|i|i == false})    
+   
    
    sql =<<"EOF"
    select distinct tag, auto from experiment_tags where alias_for not in (select distinct alias_for from experiment_tags where tag in (?)) 
    and experiment_id in (?)
    order by tag
 EOF
-   if (@exps.size == 1 or !different) # if you can't refine any more
+   if (@exps.size == 1 or different) # if you can't refine any more
      @remaining_tags = []
    else
      @remaining_tags = Experiment.find_by_sql([sql,@selected_tags,@exps.map{|i|i.id}])

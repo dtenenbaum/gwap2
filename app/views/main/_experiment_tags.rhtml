@@ -1,22 +1,39 @@
-<% if tags.empty? %>
-<i>(Can't refine any more)</i>
-<% end %>
-<% for tag in tags %>         
-	<%
-	id = tag.tag
-	if ((!@selected_tags.nil?) and cumulative) 
-		id += "::"
-		id += @selected_tags.join("::")
-	end
-	%>    
-	<% auto =  (tag.auto == "1"  or tag.auto == "true" or (tag.auto.is_a?(TrueClass))) %>
-	 <% if auto  %>
-		<i>
-	 <% end %> 
-	 <a href="<%=url_for :controller => "main", :action => "find_experiments_by_tag"%>?id=<%=id%>"><%=tag.tag%></a>
-     <%#= link_to tag.tag, :action => "find_experiments_by_tag", :id => id %>
-	 <% if auto %>
-		</i>
-	 <% end %>
-<% end %>
-<br/>
+
+<script type="text/javascript">
+    available_tags = <%= tags.map{|i|i.tag}.to_json %>;
+</script>
+
+
+<table>
+    <tr>
+        <td>
+        <% unless categories.nil? %>
+        <% for category in categories %>
+            <td>
+                <ul class="sf-menu">
+                    <li class="current">
+                        <a><%= category.category_name%></a>
+                            <ul>
+                                <% for tag in category.experiment_tags.map{|i|i.tag}.sort.uniq %>
+                                    <li class="menu_item_holder">
+                                        <a class="selected_menu_item"><%= tag %></a>
+                                    </li>
+                                <% end %>
+                            </ul>
+                 </ul>
+        <% end %>
+        <% end%>
+        </td>
+        <td>
+            My Search
+            <ul id="my_search">
+            </ul>
+            <button type="button" id="search_button">Search</button>
+            <button type="button" id="clear_selections">Clear Selections</button>
+        </td>
+    </tr>
+</table>
+
+
+
+

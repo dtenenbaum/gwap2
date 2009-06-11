@@ -3,15 +3,19 @@ class AutoTag
   require 'pp'
   
   #todo - real synonyms
-  @synonyms = {'VNG0149G' => ['zntA'], "VNG6373G" => ["phr1"], "VNG1673G" => ["pyrF","ura3"], "VNG0700G" => ["yvgX"], "CuSO4.5H2O" => ["copper","Cu","CuSO4"], "ZnSO4.7H2O" => ["zinc", "Zn", "ZnSO4"]}
+  @synonyms = {'VNG0149G' => ['zntA'], "VNG6373G" => ["phr1"], "VNG1673G" => ["pyrF","ura3"], "VNG0700G" => ["yvgX"], "CuSO4.5H2O" => ["copper sulfate"], "ZnSO4.7H2O" => ["zinc sulfate"]}
   
-  def self.add_tag(exp, tag)
-    e = ExperimentTag.new(:experiment_id => exp.id, :tag => tag, :auto => true, :is_alias => false, :alias_for => tag)
+  @categories = {}
+  
+  def self.add_tag(exp, tag, type)
+    e = ExperimentTag.new(:experiment_id => exp.id, :tag => tag, :auto => true, :is_alias => false, :alias_for => tag,
+    :tag_category_id => @categories[type])
     pp e                
     e.save
     if @synonyms.has_key?(tag)
       for item in @synonyms[tag]
-        e = ExperimentTag.new(:experiment_id => exp.id, :tag => item, :auto => true, :is_alias => true, :alias_for => tag)
+        e = ExperimentTag.new(:experiment_id => exp.id, :tag => item, :auto => true, :is_alias => true, :alias_for => tag,
+          :tag_category_id => @categories[type])
         pp e                                                                        
         e.save
       end
@@ -19,36 +23,40 @@ class AutoTag
   end
   
   exps = Experiment.find :all
-
+  cats = TagCategory.find :all
+  for cat in cats
+    @categories[cat.category_name] = cat.id
+  end
 
   ExperimentTag.transaction do
     begin              
       Experiment.connection.execute("delete from experiment_tags where auto = true")
 
       for exp in exps    
-        add_tag(exp, "control") if exp.is_control
-        add_tag(exp, "not control") unless exp.is_control
-        add_tag(exp, 'time series') if exp.is_time_series
-        add_tag(exp, 'knockout') if exp.has_knockouts
-        add_tag(exp, 'overexpression') if exp.has_overexpression
-        add_tag(exp, exp.reference_sample.name) unless exp.reference_sample.nil?
-        add_tag(exp, 'genetic') if exp.has_knockouts or exp.has_overexpression
-        add_tag(exp, 'environmental') if exp.has_environmental
+        add_tag(exp, "control", "Experiment Type") if exp.is_control
+        add_tag(exp, "not control", "Experiment Type") unless exp.is_control    
+        ts = (exp.is_time_series) ? "time series" : "steady state"
+        add_tag(exp, ts, "Experiment Type")
+        #add_tag(exp, 'knockout', "Genetic") if exp.has_knockouts
+        #add_tag(exp, 'overexpression', "Genetic") if exp.has_overexpression
+        add_tag(exp, exp.reference_sample.name, "Other") unless exp.reference_sample.nil?
+        #add_tag(exp, 'genetic') if exp.has_knockouts or exp.has_overexpression
+        #add_tag(exp, 'environmental') if exp.has_environmental
         for gp in exp.knockouts
-          add_tag(exp, gp.gene)
+          add_tag(exp, gp.gene, "Genetic")
         end
         for ep in exp.environmental_perturbations
-          add_tag(exp, ep.perturbation)
+          add_tag(exp, ep.perturbation, "Environmental")
         end                           
-        add_tag(exp, exp.species.name)
-        add_tag(exp, exp.species.alternate_name)
-        add_tag(exp, 'published') if ((!exp.papers.nil?) and exp.papers.size > 0)     
+        add_tag(exp, exp.species.name, "Other")
+        add_tag(exp, exp.species.alternate_name, "Other")
+        #add_tag(exp, 'published') if ((!exp.papers.nil?) and exp.papers.size > 0)     
         unless (exp.papers.nil?)
           for paper in exp.papers
-            add_tag(exp, paper.short_name)
+            add_tag(exp, paper.short_name, "Papers")
           end
         end
-        add_tag(exp, exp.growth_media_recipe.name)
+        add_tag(exp, exp.growth_media_recipe.name, "Other")
         
       end
       
