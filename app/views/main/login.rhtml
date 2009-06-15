@@ -1,0 +1,13 @@
+Please log in.<br/>
+Your password is probably "changeme". You'll be able to change it soon.<br/>
+    
+
+<font color="red">
+    <%= flash[:notice]%><br/>
+</font>
+
+<form method="POST" action="login">
+Email address: <input id="email" name="email"/><br/>
+Password: <input id="password" type="password" name="password"/><br/>
+<input type="submit" value="Log In"/>
+</form>

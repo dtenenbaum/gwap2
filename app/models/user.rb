@@ -18,7 +18,13 @@ class User < ActiveRecord::Base
   protected
 
   # Hash the password before saving the record
-  def before_create
+  def update_password
     self.password = Password::update(self.password)
-  end  
+  end
+  
+  
+  def before_save
+    update_password
+  end
+  
 end

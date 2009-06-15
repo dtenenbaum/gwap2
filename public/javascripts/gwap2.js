@@ -256,7 +256,7 @@ jQuery(document).ready(function(){
         //jQuery(this).hideSuperfishUl(); 
         //log("after hide");
         addToCart(jQuery(this).html());
-        //return false;
+        return false;
     });                        
     
     enterDetect("#tag_search_box", function(){ 

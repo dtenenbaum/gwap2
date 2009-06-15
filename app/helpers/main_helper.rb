@@ -47,7 +47,15 @@ module MainHelper
     table['rows'] = rows
 
     table.to_json
-  end   
+  end
+  
+  def logged_in
+    !session[:user].nil?
+  end
+  
+  def email
+    session[:user].email
+  end
 
   
 end

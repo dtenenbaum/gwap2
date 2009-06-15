@@ -1,12 +1,39 @@
 class MainController < ApplicationController
   
-  before_filter :authenticate
+  before_filter :authenticate, :except => :login
+  filter_parameter_logging "password"
 
   def authenticate
+    if cookies[:gwap2_sucka].nil? or cookies[:gwap2_sucka].empty?
+      redirect_to :action => "login" and return false
+    else                            
+      if (session[:user].nil?)
+        session[:user] = User.find_by_email(cookies[:gwap2_sucka])
+      end
+    end
+  end                              
+
+  # todo make more secure
+  def login
+    if request.post?
+      user = User.authenticate(params['email'],params['password'])     
+      #render :text => user.email and return false
+      if (user == false)
+        flash[:notice] = "Invalid login, try again"
+        render :action => "login" and return false
+      else              
+        cookies[:gwap2_sucka] = {:value => user.email,
+          :expires => 1000.days.from_now }
+        session[:user] = user
+        redirect_to :action => "index"
+      end
+    end
   end
   
   def logout
-    
+    cookies.delete(:gwap2_sucka)
+    session[:user] = nil  
+    redirect_to :action => "login"
   end
   
   require 'pp'
