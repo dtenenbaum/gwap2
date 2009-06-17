@@ -27,11 +27,13 @@
 <body>           
 <div id="top"></div>
 <div id="page">  
+    <!--
     <% if logged_in() %>
         <p>Logged in as <i><%= email() %></i> | <a href="<%= url_for :action => "logout"%>">Log Out </p>
     <% else %>
         <p>Not logged in</p>
     <% end %>
+    -->
 <%= yield :layout %> 
 
 </div>

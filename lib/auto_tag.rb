@@ -2,8 +2,11 @@ class AutoTag
   
   require 'pp'
   
-  #todo - real synonyms
-  @synonyms = {'VNG0149G' => ['zntA'], "VNG6373G" => ["phr1"], "VNG1673G" => ["pyrF","ura3"], "VNG0700G" => ["yvgX"], "CuSO4.5H2O" => ["copper sulfate"], "ZnSO4.7H2O" => ["zinc sulfate"]}
+  #todo - real synonyms         
+  
+  
+  
+  @synonyms = {'VNG0149G' => ['zntA'], "VNG6373G" => ["phr1"], "VNG1673G" => ["pyrF","ura3"], "VNG0700G" => ["yvgX"], "CuSO4.5H2O" => ["copper sulfate"], "ZnSO4.7H2O" => ["zinc sulfate"], "VNG2579G" => ["idr1"], "VNG0835G" => ["idr2"], "VNG0536G" => ["sirR"]}
   
   @categories = {}
   
@@ -56,6 +59,7 @@ class AutoTag
             add_tag(exp, paper.short_name, "Papers")
           end
         end
+        add_tag(exp, "Not Published", "Papers") if exp.papers.empty?
         add_tag(exp, exp.growth_media_recipe.name, "Other")
         
       end

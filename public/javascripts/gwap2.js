@@ -165,7 +165,9 @@ var onSearchResultsLoaded = function() {
     });
     
     jQuery("#tag_selected").click(function(){
-            jQuery("#dialog").dialog();
+            jQuery("#dialog").dialog({modal: true});//, 
+//                buttons: {"Tag": function(){}, "Cancel", function(){}}
+//            });
     });
 }
 

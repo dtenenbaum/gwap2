@@ -1,15 +1,14 @@
 class MainController < ApplicationController
   
-  before_filter :authenticate, :except => :login
+#  before_filter :authenticate, :except => :login
   filter_parameter_logging "password"
 
   def authenticate
     if cookies[:gwap2_sucka].nil? or cookies[:gwap2_sucka].empty?
       redirect_to :action => "login" and return false
-    else                            
-      if (session[:user].nil?)
-        session[:user] = User.find_by_email(cookies[:gwap2_sucka])
-      end
+    end
+    if (session[:user].nil?)
+      session[:user] = User.find_by_email(cookies[:gwap2_sucka])
     end
   end                              
 
