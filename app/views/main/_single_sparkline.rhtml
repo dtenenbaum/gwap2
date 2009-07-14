@@ -20,5 +20,8 @@ var sparkline = function() {
         chart.draw(data, {width: 120, height: 40, showAxisLines: false,  showValueLabels: false, labelPosition: 'left',min: [<%=minrange.join(",")%>], max: [<%=maxrange.join(",")%>]	});
 
 }
+   jQuery()
 
-	sparkline();
+   jQuery(document).ready(function(){       
+	   sparkline();
+    });

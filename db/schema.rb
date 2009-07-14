@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090609172624) do
+ActiveRecord::Schema.define(:version => 20090714204010) do
 
   create_table "authorizations", :force => true do |t|
     t.integer  "user_id",       :limit => 11
@@ -144,6 +144,7 @@ ActiveRecord::Schema.define(:version => 20090609172624) do
 
   create_table "genes", :force => true do |t|
     t.string "name"
+    t.string "alias"
   end
 
   add_index "genes", ["name"], :name => "index_genes_on_name"

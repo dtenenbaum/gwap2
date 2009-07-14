@@ -5,8 +5,15 @@ class AutoTag
   #todo - real synonyms         
   
   
-  
   @synonyms = {'VNG0149G' => ['zntA'], "VNG6373G" => ["phr1"], "VNG1673G" => ["pyrF","ura3"], "VNG0700G" => ["yvgX"], "CuSO4.5H2O" => ["copper sulfate"], "ZnSO4.7H2O" => ["zinc sulfate"], "VNG2579G" => ["idr1"], "VNG0835G" => ["idr2"], "VNG0536G" => ["sirR"]}
+  raw_genes_with_aliases = Gene.find_by_sql("select name, alias from genes where alias is not null")
+  raw_genes_with_aliases.each do |record|
+    pp record
+    ary = [record.alias]
+    @synonyms[record.name] = ary unless @synonyms.has_key?(record.name)
+  end
+  
+#  exit if true
   
   @categories = {}
   
