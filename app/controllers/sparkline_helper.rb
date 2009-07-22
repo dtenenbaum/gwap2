@@ -1,11 +1,12 @@
-class SparklineHelper
+class SparklineHelper      
+  
   
 
   def self.get_columns_for_sparkline(exp)
     cols = []    
     all_cols = []
     for ob in exp.conditions.first.observations
-      cols << ob.name unless (ob.float_value.nil? or ob.name == 'time')
+      cols << ob.name unless (ob.float_value.nil? or  !ob.float_value.is_a?(Numeric) or  ob.name == 'time')
       all_cols << ob.name
     end   
     rejected_cols = all_cols - cols   
@@ -15,6 +16,14 @@ class SparklineHelper
 
 
   def self.get_sparkline_info(exp_id, normalized=true)         
+    puts "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+    puts "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+    puts "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+    puts "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+    puts "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+    puts "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+    puts "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+    puts "exp_id == #{exp_id}"
     has_nan = false
     exp = Experiment.find(:first, :conditions => "id = #{exp_id}", :order => 'name', :include =>[{:conditions=>:observations}])
     columns, rejected_columns = get_columns_for_sparkline(exp)
@@ -30,7 +39,9 @@ class SparklineHelper
       maxrange << 1 
       for cond in exp.conditions
         for ob in cond.observations
-          if (ob.name == col) 
+          if (ob.name == col)                     
+            puts "~~~~~~~~~~~~~"
+            puts "#{cond.id} name = #{ob.name}"
             min = max = ob.float_value if min.nil?
             min = ob.float_value if min > ob.float_value
             max = ob.float_value if max < ob.float_value

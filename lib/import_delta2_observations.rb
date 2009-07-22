@@ -7,12 +7,15 @@ class ImportDelta2Observations
   cond_names = []
   while line = f.gets
     line.chomp!
-    next if line.empty?     
+    next if line.strip.empty? or line.nil?
     segs = line.split("\t")
      cond_names << segs.first
   end 
   conds = Legacy.find_by_sql(["select * from conditions where name in (?)",cond_names])
   cond_ids = conds.map{|i|i.id}
+                                     
+  
+  
   
   
   # warning: truncating!
@@ -22,7 +25,10 @@ class ImportDelta2Observations
   
   exps = Experiment.find :all
   obs = Legacy.find_by_sql(["select * from properties where property_type = 2 and condition_id != 0 and condition_id in (?)",cond_ids])
-  obs.each{|i|i.units = "molar" if i.units == "M"}
+  obs.each{|i|i.units = "molar" if i.units == "M"}          
+  
+#  pp obs
+#  exit if true
   
   oldconds = Legacy.find_by_sql(["select * from conditions where id in (?)",cond_ids])
   newconds = Condition.find :all
@@ -51,11 +57,17 @@ class ImportDelta2Observations
   ob_units_hash  = {}
 
   
+  new_cond_ids = Condition.find_by_sql(["select id from conditions where name in (?)",cond_names])
+  ids_to_delete = new_cond_ids.map{|i|i.id}.reject{|i|i.nil?}
   
   Observation.transaction do
     begin            
+
+      Condition.connection.execute("delete from observations where condition_id in (#{ids_to_delete.join(",")})")
+      #exit if true
+      
       for ob_name in obs_names
-        next if ob_name == "knockout"
+        next if ob_name == "knockout" # why do we do this exactly?
         item = ControlledVocabItem.new(:name => ob_name, :approved => false, :parent_id => vocab_parent.id)
         next if existing_vocab_items.detect{|i|i.name == ob_name} 
         pp item    
@@ -92,8 +104,8 @@ class ImportDelta2Observations
 #        next if ob.name == "oxygen"
 #        next if ob.value.downcase =~ /vng|sirr|idr|ura3/# i think this should be commented out ... ?
         ob.units = nil if ob.name == 'Optical density (600nm)'    
-        if ob.units = 'micromolar' 
-          puts "converting from uM to M"
+        if ob.units == 'micromolar' 
+          puts "converting #{ob.name} from uM to M"
           ob.units = 'molar'
           num = ob.value.to_f * 1000000
           ob.value = num.to_s
@@ -104,7 +116,12 @@ class ImportDelta2Observations
         new_ob = Observation.new()
         new_ob[:condition_id] = newconds.detect{|c|c.name == gwap1_cond.name}.id          
         existing_cond = Condition.find(new_ob[:condition_id])
-        next unless existing_cond.observations.empty? or existing_cond.observations.nil?
+        #if (new_ob[:condition_id] == 2894)
+        #  puts "!!!!!!"
+        #  pp ob
+        #  puts "^^^^^^"
+        #end
+        ####next unless existing_cond.observations.empty? or existing_cond.observations.nil?
         puts ob.name
         puts "condition id:  #{new_ob[:condition_id]}" 
         new_ob[:name_id] = ob_name_hash[ob.name]   
@@ -124,7 +141,7 @@ class ImportDelta2Observations
         new_ob.units_id = ob_units_hash[ob.units]
         #is_measurement needs to be determined by a human
         new_ob.is_time_measurement = true if ob.name == 'time' #todo could now set time series flag in parent experiment
-        pp new_ob
+        #pp new_ob
         new_ob.save
       end
       

@@ -7,8 +7,26 @@
 <table>
     <tr>
         <td>
-        <% unless categories.nil? %>
+        <% unless categories.nil? %>  
+        
+        <table>
+            <tr>
         <% for category in categories %>
+            <td>
+            <%= category.category_name%><br/>
+            <select class="tag_select">
+                <option>-</option>
+                <% for tag in category.experiment_tags.map{|i|i.tag}.sort{|a,b|a.downcase <=> b.downcase}.uniq %>
+                <option><%= tag%></option>
+                <% end %>
+            </select>
+            </td>
+        <% end %>
+            </tr>
+        </table>
+        
+        
+        <% for category in [] #for category in categories %>
             <td>
                 <ul class="sf-menu">
                     <li class="current">

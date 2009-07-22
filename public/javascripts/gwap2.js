@@ -24,6 +24,10 @@ var net_options;
 var available_tags;
 
 
+function clearAjaxError() {
+    jQuery("#ajax_error").empty();
+}
+
 function googleVisInit() {
     //heatmap_options = {cellWidth: 30, cellHeight: 30}; 
     /*
@@ -119,6 +123,7 @@ String.prototype.rtrim = function() {
 function logAjaxEvent(element, event, request, settings, status) {
     if (status == "error") {
         jQuery(element).html("<font color='red'>Error receiving data from remote server.</font>");
+        jQuery("#ajax_error").html("<font color='red'>Error receiving data from remote server.</font>");
     }
     log("ajax event information:");
     log("event: " + event);
@@ -240,7 +245,7 @@ jQuery(document).ready(function(){
         }                              
         jQuery("#inclusive_search_results").html("Loading...")
         
-        
+        clearAjaxError();
         jQuery.get("inclusive_search", {tags: tags}, function(data){
             jQuery("#inclusive_search_results").html(data);
         });
@@ -260,6 +265,13 @@ jQuery(document).ready(function(){
         addToCart(jQuery(this).html());
         return false;
     });                        
+    
+    
+    jQuery(".tag_select").change(function(){   
+        if (this.value != "-") {
+            addToCart(this.value);
+        }
+    })
     
     enterDetect("#tag_search_box", function(){ 
         addSearchBoxValueToCart();

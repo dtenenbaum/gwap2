@@ -1,0 +1,591 @@
+1451_+glu_a_OD0.2_vs_NRC1e.sig	Schmid, 2009
+1451_+glu_a_OD0.6repl_vs_NRC1e.sig	Schmid, 2009
+1451_+glu_a_OD0.6_vs_NRC1e.sig	Schmid, 2009
+1451_+glu_a_OD1.2repl_vs_NRC1e.sig	Schmid, 2009
+1451_+glu_b_OD0.2_vs_NRC1g.sig	Schmid, 2009
+1451_+glu_b_OD0.6repl_vs_NRC1g.sig	Schmid, 2009
+1451_+glu_b_OD1.2repl_vs_NRC1g.sig	Schmid, 2009
+1451_-glu_ab_OD0.2_vs_NRC1e.sig	Schmid, 2009
+1451_-glu_a_OD0.6repl_vs_NRC1e.sig	Schmid, 2009
+1451_-glu_a_OD0.6_vs_NRC1e.sig	Schmid, 2009
+1451_-glu_a_OD1.2repl_vs_NRC1g.sig	Schmid, 2009
+1451_-glu_b_OD0.6repl_vs_NRC1g.sig	Schmid, 2009
+1451_-glu_b_OD1.2repl_vs_NRC1g.sig	Schmid, 2009
+1451_growth_t1exp1_0.2OD_vs_NRC1e.sig	Schmid, 2009
+1451_growth_t1_exp2_0.1OD_vs_NRC1f.sig	Schmid, 2009
+1451_growth_t1_exp3_0.1OD_vs_NRC1f.sig	Schmid, 2009
+1451_growth_t2exp1_0.3OD_vs_NRC1e.sig	Schmid, 2009
+1451_growth_t2_exp2_0.2OD_vs_NRC1f.sig	Schmid, 2009
+1451_growth_t2_exp3_0.2OD_vs_NRC1f.sig	Schmid, 2009
+1451_growth_t3exp1_0.4OD_vs_NRC1e.sig	Schmid, 2009
+1451_growth_t3_exp2_0.3OD_vs_NRC1f.sig	Schmid, 2009
+1451_growth_t3_exp3_0.3OD_vs_NRC1f.sig	Schmid, 2009
+1451_growth_t4_exp2_0.5OD_vs_NRC1f.sig	Schmid, 2009
+1451_growth_t4_exp3_0.6OD_vs_NRC1f.sig	Schmid, 2009
+20060818_NRC1_rep1_0.195_vs_NRC-1e.sig	unpublished
+20060818_NRC1_rep1_0.430_vs_NRC-1e.sig	unpublished
+20060818_NRC1_rep1_0.816_vs_NRC-1e.sig	unpublished
+20060818_NRC1_rep2_0.194_vs_NRC-1e.sig	unpublished
+20060818_NRC1_rep2_0.424_vs_NRC-1e.sig	unpublished
+20060818_NRC1_rep2_0.821_vs_NRC-1e.sig	unpublished
+afsQ2__HO_D_vs_NRC-1	Bonneau, 2007
+afsQ2__HO_L_vs_NRC-1	Bonneau, 2007
+afsQ2__LO_D_vs_NRC-1	Bonneau, 2007
+afsQ2__LO_L_vs_NRC-1	Bonneau, 2007
+ark__HO_D_vs_NRC-1	Bonneau, 2007
+ark__HO_L_vs_NRC-1	Bonneau, 2007
+ark__LO_D_vs_NRC-1	Bonneau, 2007
+ark__LO_L_vs_NRC-1	Bonneau, 2007
+boa1__HO_D_vs_NRC-1	Bonneau, 2007
+boa1__HO_L_vs_NRC-1	Bonneau, 2007
+boa1__LO_D_vs_NRC-1	Bonneau, 2007
+boa1__LO_L_vs_NRC-1	Bonneau, 2007
+boa4__HO_D_vs_NRC-1	Bonneau, 2007
+boa4__HO_L_vs_NRC-1	Bonneau, 2007
+boa4__LO_D_vs_NRC-1	Bonneau, 2007
+boa4__LO_L_vs_NRC-1	Bonneau, 2007
+bop__HO_D_vs_NRC-1	Bonneau, 2007
+bop__HO_L_vs_NRC-1	Bonneau, 2007
+bop__LO_D_vs_NRC-1	Bonneau, 2007
+bop__LO_L_vs_NRC-1	Bonneau, 2007
+circadian__dark_cycling_125w/m2_42C_1440min_vs_NRC-1d.sig	Whitehead, 2009
+circadian__dark_cycling_125w/m2_42C_1615min_vs_NRC-1d.sig	Whitehead, 2009
+circadian__dark_cycling_125w/m2_42C_1800min_vs_NRC-1d.sig	Whitehead, 2009
+circadian__dark_cycling_125w/m2_42C_1985min_vs_NRC-1d.sig	Whitehead, 2009
+circadian__dark_cycling_125w/m2_42C_2160min_vs_NRC-1d.sig	Whitehead, 2009
+circadian__dark_cycling_125w/m2_42C_2340min_vs_NRC-1d.sig	Whitehead, 2009
+circadian__dark_cycling_125w/m2_42C_2515min_vs_NRC-1d.sig	Whitehead, 2009
+circadian__dark_cycling_125w/m2_42C_2705min_vs_NRC-1d.sig	Whitehead, 2009
+circadian__dark_cycling_125w/m2_42C_2880min_vs_NRC-1d.sig	Whitehead, 2009
+cspD1_-0001_L_H_vs_NRC1d.sig	unpublished
+cspD1_0005_H_vs_NRC1d.sig	unpublished
+cspD1_0010_H_vs_NRC1d.sig	unpublished
+cspD1_0020_H_vs_NRC1d.sig	unpublished
+cspD1_0045_H_vs_NRC1d.sig	unpublished
+cspD1_0180_H_vs_NRC1d.sig	unpublished
+Dun_F2_000minb_vs_NRC-1g.sig	unpublished
+Dun_F2_005minb_vs_NRC-1g.sig	unpublished
+Dun_F2_010minb_vs_NRC-1g.sig	unpublished
+Dun_F2_020minb_vs_NRC-1g.sig	unpublished
+Dun_F2_040minb_vs_NRC-1g.sig	unpublished
+Dun_F2_080minb_vs_NRC-1g.sig	unpublished
+Dun_F2_160minb_vs_NRC-1g.sig	unpublished
+Dun_F2_320minb_vs_NRC-1g.sig	unpublished
+Dun_Supernat._000minb_vs_NRC-1g.sig	unpublished
+Dun_Supernat._005minb_vs_NRC-1g.sig	unpublished
+Dun_Supernat._010minb_vs_NRC-1g.sig	unpublished
+Dun_Supernat._020minb_vs_NRC-1g.sig	unpublished
+Dun_Supernat._040minb_vs_NRC-1g.sig	unpublished
+Dun_Supernat._080minb_vs_NRC-1g.sig	unpublished
+Dun_Supernat._160minb_vs_NRC-1g.sig	unpublished
+Dun_Supernat._320minb_vs_NRC-1g.sig	unpublished
+Dura3_Uracil_0690_0.197_rep1_vs_NRC-1g.sig	unpublished
+Dura3_Uracil_0690_0.200_rep2_vs_NRC-1g.sig	unpublished
+Dura3_Uracil_1200_0.465_rep1_vs_NRC-1g.sig	unpublished
+Dura3_Uracil_1200_0.467_rep2_vs_NRC-1g.sig	unpublished
+Dura3_Uracil_1860_0.755_rep1_vs_NRC-1g.sig	unpublished
+Dura3_Uracil_1860_0.756_rep2_vs_NRC-1g.sig	unpublished
+Dura3_Uracil_2280_0.830_rep2_vs_NRC-1g.sig	unpublished
+Dura3_Uracil_2280_0.832_rep1_vs_NRC-1g.sig	unpublished
+Dura3_Uracil_2760_0.970_rep2_vs_NRC-1g.sig	unpublished
+Dura3_Uracil_2760_0.975_rep1_vs_NRC-1g.sig	unpublished
+Dura3_Uracil_3120_1.136_rep1_vs_NRC-1g.sig	unpublished
+Dura3_Uracil_3120_1.147_rep2_vs_NRC-1g.sig	unpublished
+EMS_Treated__000uM-000	unpublished
+EMS_Treated__000uM-010	unpublished
+EMS_Treated__000uM-020	unpublished
+EMS_Treated__000uM-030	unpublished
+EMS_Treated__000uM-040	unpublished
+EMS_Treated__000uM-050	unpublished
+EMS_Treated__000uM-060	unpublished
+EMS_Treated__000uM-120	unpublished
+EMS_Treated__100000uM-000	unpublished
+EMS_Treated__100000uM-010	unpublished
+EMS_Treated__100000uM-020	unpublished
+EMS_Treated__100000uM-030	unpublished
+EMS_Treated__100000uM-040	unpublished
+EMS_Treated__100000uM-050	unpublished
+EMS_Treated__100000uM-060	unpublished
+EMS_Treated__100000uM-120	unpublished
+gamma4__0000gy-000min	Whitehead, 2006
+gamma4__0000gy-010min	Whitehead, 2006
+gamma4__0000gy-020min	Whitehead, 2006
+gamma4__0000gy-030min	Whitehead, 2006
+gamma4__0000gy-040min	Whitehead, 2006
+gamma4__0000gy-050min	Whitehead, 2006
+gamma4__0000gy-060min	Whitehead, 2006
+gamma4__0000gy-120min	Whitehead, 2006
+gamma4__0000gy-240min	Whitehead, 2006
+gamma4__2500gy-000min	Whitehead, 2006
+gamma4__2500gy-010min	Whitehead, 2006
+gamma4__2500gy-020min	Whitehead, 2006
+gamma4__2500gy-030min	Whitehead, 2006
+gamma4__2500gy-040min	Whitehead, 2006
+gamma4__2500gy-050min	Whitehead, 2006
+gamma4__2500gy-060min	Whitehead, 2006
+gamma4__2500gy-120min	Whitehead, 2006
+gamma4__2500gy-240min	Whitehead, 2006
+gamma__0000gy-0000m	Whitehead, 2006
+gamma__0000gy-0010m	Whitehead, 2006
+gamma__0000gy-0030m	Whitehead, 2006
+gamma__0000gy-0060m	Whitehead, 2006
+gamma__0000gy-0240m	Whitehead, 2006
+gamma__0000gy-0960m	Whitehead, 2006
+gamma__2500gy-0000m	Whitehead, 2006
+gamma__2500gy-0010m	Whitehead, 2006
+gamma__2500gy-0020m	Whitehead, 2006
+gamma__2500gy-0030m	Whitehead, 2006
+gamma__2500gy-0040m	Whitehead, 2006
+gamma__2500gy-0060m	Whitehead, 2006
+gamma__2500gy-0120m	Whitehead, 2006
+gamma__2500gy-0240m	Whitehead, 2006
+gamma__2500gy-0480m	Whitehead, 2006
+gamma__2500gy-0960m	Whitehead, 2006
+gap__HO_D_vs_NRC-1c	Bonneau, 2007
+gap__HO_L_vs_NRC-1c	Bonneau, 2007
+gap__LO_D_vs_NRC-1c	Bonneau, 2007
+gap__LO_L_vs_NRC-1c	Bonneau, 2007
+H2O2_Const._set_1_0mM_000min_vs_NRC-1f.sig	Kaur, in prep
+H2O2_Const._set_1_0mM_030min_vs_NRC-1f.sig	Kaur, in prep
+H2O2_Const._set_1_0mM_060min_vs_NRC-1f.sig	Kaur, in prep
+H2O2_Const._set_1_0mM_120min_vs_NRC-1f.sig	Kaur, in prep
+H2O2_Const._set_1_0mM_240min_vs_NRC-1f.sig	Kaur, in prep
+H2O2_Const._set_1_25mM_000min_vs_NRC-1f.sig	Kaur, in prep
+H2O2_Const._set_1_25mM_030min_vs_NRC-1f.sig	Kaur, in prep
+H2O2_Const._set_1_25mM_060min_vs_NRC-1f.sig	Kaur, in prep
+H2O2_Const._set_1_25mM_120min_vs_NRC-1f.sig	Kaur, in prep
+H2O2_Const._set_1_25mM_240min_vs_NRC-1f.sig	Kaur, in prep
+H2O2_Const._set_2_0mM_000min_vs_NRC-1f.sig	Kaur, in prep
+H2O2_Const._set_2_0mM_030min_vs_NRC-1f.sig	Kaur, in prep
+H2O2_Const._set_2_0mM_060min_vs_NRC-1f.sig	Kaur, in prep
+H2O2_Const._set_2_0mM_120min_vs_NRC-1f.sig	Kaur, in prep
+H2O2_Const._set_2_0mM_240min_vs_NRC-1f.sig	Kaur, in prep
+H2O2_Const._set_2_25mM_000min_vs_NRC-1f.sig	Kaur, in prep
+H2O2_Const._set_2_25mM_030min_vs_NRC-1f.sig	Kaur, in prep
+H2O2_Const._set_2_25mM_060min_vs_NRC-1f.sig	Kaur, in prep
+H2O2_Const._set_2_25mM_120min_vs_NRC-1f.sig	Kaur, in prep
+H2O2_Const._set_2_25mM_240min_vs_NRC-1f.sig	Kaur, in prep
+H2O2_Const._set_3_25mM_-001min_vs_NRC-1h1.sig	Kaur, in prep
+H2O2_Const._set_3_25mM_005min_vs_NRC-1h1.sig	Kaur, in prep
+H2O2_Const._set_3_25mM_010min_vs_NRC-1h1.sig	Kaur, in prep
+H2O2_Const._set_3_25mM_020min_vs_NRC-1h1.sig	Kaur, in prep
+H2O2_Const._set_3_25mM_040min_vs_NRC-1h1.sig	Kaur, in prep
+H2O2_Const._set_3_25mM_080min_vs_NRC-1h1.sig	Kaur, in prep
+H2O2_Const._set_3_25mM_160min_vs_NRC-1h1.sig	Kaur, in prep
+H2O2_Const._set_4_25mM_-001min_vs_NRC-1h1.sig	Kaur, in prep
+H2O2_Const._set_4_25mM_005min_vs_NRC-1h1.sig	Kaur, in prep
+H2O2_Const._set_4_25mM_010min_vs_NRC-1h1.sig	Kaur, in prep
+H2O2_Const._set_4_25mM_020min_vs_NRC-1h1.sig	Kaur, in prep
+H2O2_Const._set_4_25mM_040min_vs_NRC-1h1.sig	Kaur, in prep
+H2O2_Const._set_4_25mM_080min_vs_NRC-1h1.sig	Kaur, in prep
+H2O2_Const._set_4_25mM_160min_vs_NRC-1h1.sig	Kaur, in prep
+H2O2_Recov._set_2_0mM_000min_vs_NRC-1f.sig	Kaur, in prep
+H2O2_Recov._set_2_0mM_010min_vs_NRC-1f.sig	Kaur, in prep
+H2O2_Recov._set_2_0mM_020min_vs_NRC-1f.sig	Kaur, in prep
+H2O2_Recov._set_2_0mM_030min_vs_NRC-1f.sig	Kaur, in prep
+H2O2_Recov._set_2_0mM_040min_vs_NRC-1f.sig	Kaur, in prep
+H2O2_Recov._set_2_0mM_050min_vs_NRC-1f.sig	Kaur, in prep
+H2O2_Recov._set_2_0mM_060min_vs_NRC-1f.sig	Kaur, in prep
+H2O2_Recov._set_2_0mM_120min_vs_NRC-1f.sig	Kaur, in prep
+H2O2_Recov._set_2_0mM_240min_vs_NRC-1f.sig	Kaur, in prep
+H2O2_Recov._set_2_25mM_000min_vs_NRC-1f.sig	Kaur, in prep
+H2O2_Recov._set_2_25mM_010min_vs_NRC-1f.sig	Kaur, in prep
+H2O2_Recov._set_2_25mM_020min_vs_NRC-1f.sig	Kaur, in prep
+H2O2_Recov._set_2_25mM_030min_vs_NRC-1f.sig	Kaur, in prep
+H2O2_Recov._set_2_25mM_040min_vs_NRC-1f.sig	Kaur, in prep
+H2O2_Recov._set_2_25mM_050min_vs_NRC-1f.sig	Kaur, in prep
+H2O2_Recov._set_2_25mM_060min_vs_NRC-1f.sig	Kaur, in prep
+H2O2_Recov._set_2_25mM_120min_vs_NRC-1f.sig	Kaur, in prep
+H2O2_Recov._set_2_25mM_240min_vs_NRC-1f.sig	Kaur, in prep
+H2O2_Recov._set_3_0mM_000min_vs_NRC-1f.sig	Kaur, in prep
+H2O2_Recov._set_3_0mM_010min_vs_NRC-1f.sig	Kaur, in prep
+H2O2_Recov._set_3_0mM_020min_vs_NRC-1f.sig	Kaur, in prep
+H2O2_Recov._set_3_0mM_030min_vs_NRC-1f.sig	Kaur, in prep
+H2O2_Recov._set_3_0mM_040min_vs_NRC-1f.sig	Kaur, in prep
+H2O2_Recov._set_3_0mM_050min_vs_NRC-1f.sig	Kaur, in prep
+H2O2_Recov._set_3_0mM_060min_vs_NRC-1f.sig	Kaur, in prep
+H2O2_Recov._set_3_0mM_120min_vs_NRC-1f.sig	Kaur, in prep
+H2O2_Recov._set_3_0mM_240min_vs_NRC-1f.sig	Kaur, in prep
+H2O2_Recov._set_3_25mM_000min_vs_NRC-1f.sig	Kaur, in prep
+H2O2_Recov._set_3_25mM_010min_vs_NRC-1f.sig	Kaur, in prep
+H2O2_Recov._set_3_25mM_020min_vs_NRC-1f.sig	Kaur, in prep
+H2O2_Recov._set_3_25mM_030min_vs_NRC-1f.sig	Kaur, in prep
+H2O2_Recov._set_3_25mM_040min_vs_NRC-1f.sig	Kaur, in prep
+H2O2_Recov._set_3_25mM_050min_vs_NRC-1f.sig	Kaur, in prep
+H2O2_Recov._set_3_25mM_060min_vs_NRC-1f.sig	Kaur, in prep
+H2O2_Recov._set_3_25mM_120min_vs_NRC-1f.sig	Kaur, in prep
+H2O2_Recov._set_3_25mM_240min_vs_NRC-1f.sig	Kaur, in prep
+htlD__HO_D_vs_NRC-1	Bonneau, 2007
+htlD__HO_L_vs_NRC-1	Bonneau, 2007
+htlD__LO_D_vs_NRC-1	Bonneau, 2007
+htlD__LO_L_vs_NRC-1	Bonneau, 2007
+htr1__HO_D_vs_NRC-1	Bonneau, 2007
+htr1__HO_L_vs_NRC-1	Bonneau, 2007
+htr1__LO_D_vs_NRC-1	Bonneau, 2007
+htr1__LO_L_vs_NRC-1	Bonneau, 2007
+htr2__HO_D_vs_NRC-1	Bonneau, 2007
+htr2__HO_L_vs_NRC-1	Bonneau, 2007
+htr2__LO_D_vs_NRC-1	Bonneau, 2007
+htr2__LO_L_vs_NRC-1	Bonneau, 2007
+htr8__HO_D_vs_NRC-1	Bonneau, 2007
+htr8__HO_L_vs_NRC-1	Bonneau, 2007
+htr8__LO_D_vs_NRC-1	Bonneau, 2007
+htr8__LO_L_vs_NRC-1	Bonneau, 2007
+idr1-2_0min_-EDTA_CM_vs_NRC1-h1.sig	unpublished
+idr1-2_0min_1mM_EDTA_vs_NRC1-h1.sig	unpublished
+idr1-2_20min_-EDTA_CM_vs_NRC1-h1.sig	unpublished
+idr1-2_20min_1mM_EDTA_vs_NRC1-h1.sig	unpublished
+idr1-2_40min_-EDTA_CM_vs_NRC1-h1.sig	unpublished
+idr1-2_40min_1mM_EDTA_vs_NRC1-h1.sig	unpublished
+idr1-2_60min_-EDTA_CM_vs_NRC1-h1.sig	unpublished
+idr1-2_60min_1mM_EDTA_vs_NRC1-h1.sig	unpublished
+idr1_0min_-EDTA_CM_vs_NRC1-h1.sig	unpublished
+idr1_0min_1mM_EDTA_vs_NRC1-h1.sig	unpublished
+idr1_20min_-EDTA_CM_vs_NRC1-h1.sig	unpublished
+idr1_20min_1mM_EDTA_vs_NRC1-h1.sig	unpublished
+idr1_40min_-EDTA_CM_vs_NRC1-h1.sig	unpublished
+idr1_40min_1mM_EDTA_vs_NRC1-h1.sig	unpublished
+idr1_60min_-EDTA_CM_vs_NRC1-h1.sig	unpublished
+idr1_60min_1mM_EDTA_vs_NRC1-h1.sig	unpublished
+idr2_0min_-EDTA_CM_vs_NRC1-h1.sig	unpublished
+idr2_0min_1mM_EDTA_vs_NRC1-h1.sig	unpublished
+idr2_20min_-EDTA_CM_vs_NRC1-h1.sig	unpublished
+idr2_20min_1mM_EDTA_vs_NRC1-h1.sig	unpublished
+idr2_40min_-EDTA_CM_vs_NRC1-h1.sig	unpublished
+idr2_40min_1mM_EDTA_vs_NRC1-h1.sig	unpublished
+idr2_60min_-EDTA_CM_vs_NRC1-h1.sig	unpublished
+idr2_60min_1mM_EDTA_vs_NRC1-h1.sig	unpublished
+kinA2_II__HO_D_vs_NRC-1c	Bonneau, 2007
+kinA2_II__HO_L_vs_NRC-1c	Bonneau, 2007
+kinA2_II__LO_D_vs_NRC-1c	Bonneau, 2007
+kinA2_II__LO_L_vs_NRC-1c	Bonneau, 2007
+kinA2_I__HO_D_vs_NRC-1	Bonneau, 2007
+kinA2_I__HO_L_vs_NRC-1	Bonneau, 2007
+kinA2_I__LO_D_vs_NRC-1	Bonneau, 2007
+kinA2_I__LO_L_vs_NRC-1	Bonneau, 2007
+KO_1179C.1_0.1694_vs_NRC-1_h1.sig	unpublished
+KO_1179C.1_0.3684_vs_NRC-1_h1.sig	unpublished
+KO_1179C.1_0.613_vs_NRC-1_h1.sig	unpublished
+KO_1179C.1_1.1488_vs_NRC-1_h1.sig	unpublished
+KO_1179C.2_0.1699_vs_NRC-1_h1.sig	unpublished
+KO_1179C.2_0.3565_vs_NRC-1_h1.sig	unpublished
+KO_1179C.2_0.6018_vs_NRC-1_h1.sig	unpublished
+KO_1179C.2_1.1273_vs_NRC-1_h1.sig	unpublished
+KO_1237.2_0.218_vs_NRC-1_h1.sig	unpublished
+KO_1237.2_0.3619_vs_NRC-1_h1.sig	unpublished
+KO_1237.2_0.3745_vs_NRC-1_h1.sig	unpublished
+KO_1237.2_0.4319_vs_NRC-1_h1.sig	unpublished
+KO_1237C.1_0.2219_vs_NRC-1_h1.sig	unpublished
+KO_1237C.1_0.3505_vs_NRC-1_h1.sig	unpublished
+KO_1237C.1_0.4056_vs_NRC-1_h1.sig	unpublished
+KO_1237C.1_0.4442_vs_NRC-1_h1.sig	unpublished
+KO_trh6.1_0.1689_vs_NRC-1_h1.sig	unpublished
+KO_trh6.1_0.3532_vs_NRC-1_h1.sig	unpublished
+KO_trh6.1_0.4762_vs_NRC-1_h1.sig	unpublished
+KO_trh6.1_0.7964_vs_NRC-1_h1.sig	unpublished
+KO_trh6.2_0.1677_vs_NRC-1_h1.sig	unpublished
+KO_trh6.2_0.3621_vs_NRC-1_h1.sig	unpublished
+KO_trh6.2_0.5162_vs_NRC-1_h1.sig	unpublished
+KO_trh6.2_0.838_vs_NRC-1_h1.sig	unpublished
+KO_trh7.1_0.1442_vs_NRC-1_h1.sig	unpublished
+KO_trh7.1_0.3293_vs_NRC-1_h1.sig	unpublished
+KO_trh7.1_0.5217_vs_NRC-1_h1.sig	unpublished
+KO_trh7.2_0.1446_vs_NRC-1_h1.sig	unpublished
+KO_trh7.2_0.3424_vs_NRC-1_h1.sig	unpublished
+KO_trh7.2_0.5404_vs_NRC-1_h1.sig	unpublished
+KO_trh7.2_1.081_vs_NRC-1_h1.sig	unpublished
+KO_ura3.2_0.1716_vs_NRC-1_h1.sig	unpublished
+KO_ura3.2_0.3207_vs_NRC-1_h1.sig	unpublished
+KO_ura3.2_0.4308_vs_NRC-1_h1.sig	unpublished
+KO_ura3.2_0.5084_vs_NRC-1_h1.sig	unpublished
+KO_ura3.3_0.1673_vs_NRC-1_h1.sig	unpublished
+KO_ura3.3_0.274_vs_NRC-1_h1.sig	unpublished
+KO_ura3.3_0.4452_vs_NRC-1_h1.sig	unpublished
+KO_ura3.3_0.8976_vs_NRC-1_h1.sig	unpublished
+KO_ura3.4_0.1642_vs_NRC-1_h1.sig	unpublished
+KO_ura3.4_0.2812_vs_NRC-1_h1.sig	unpublished
+KO_ura3.4_0.4645_vs_NRC-1_h1.sig	unpublished
+KO_ura3.4_0.9128_vs_NRC-1_h1.sig	unpublished
+MDM200gSalt_0.199_vs_NRC-1e.sig	unpublished
+MDM200gSalt_0.388_vs_NRC-1e.sig	unpublished
+MDM200gSalt_0.466_vs_NRC-1e.sig	unpublished
+MDM200gSalt_0.534_vs_NRC-1e.sig	unpublished
+MDM250gSalt_0.204_vs_NRC-1e.sig	unpublished
+MDM250gSalt_0.396_vs_NRC-1e.sig	unpublished
+MDM250gSalt_0.481_vs_NRC-1e.sig	unpublished
+MDM250gSalt_0.49_vs_NRC-1e.sig	unpublished
+NRC-1b_vs_NRC-1a.sig	unpublished
+NRC-1c_vs_NRC-1d.sig	unpublished
+NRC-1f_vs_NRC-1g.sig	unpublished
+NRC-1_control_1week_vs_NRC-1h1.sig	unpublished
+NRC-1_control_2days_vs_NRC-1h1.sig	unpublished
+NRC-1_neg20C_1week_vs_NRC-1h1.sig	unpublished
+NRC-1_vs_NRC-1c.sig	unpublished
+NRC-1__HO_D_vs_NRC-1	unpublished
+NRC-1__HO_L_vs_NRC-1	unpublished
+NRC-1__LO_D_vs_NRC-1	unpublished
+NRC-1__LO_L_vs_NRC-1	unpublished
+NRC1e_vs_NRC1f.sig	unpublished
+NRC1e_vs_NRC1f_ctrl.sig	unpublished
+NRC1_03720_0.234_rep2_vs_NRC-1g.sig	unpublished
+NRC1_03720_0.259_rep1_vs_NRC-1g.sig	unpublished
+NRC1_03960_0.364_rep1_vs_NRC-1g.sig	unpublished
+NRC1_03960_0.409_rep2_vs_NRC-1g.sig	unpublished
+NRC1_04320_0.578_rep2_vs_NRC-1g.sig	unpublished
+NRC1_04320_0.590_rep1_vs_NRC-1g.sig	unpublished
+NRC1_04476_0.715_rep2_vs_NRC-1g.sig	unpublished
+NRC1_04476_0.762_rep1_vs_NRC-1g.sig	unpublished
+NRC1_05400_0.786_rep2_vs_NRC-1g.sig	unpublished
+NRC1_05400_0.803_rep1_vs_NRC-1g.sig	unpublished
+NRC1_05778_0.710_rep1vs_NRC-1g.sig	unpublished
+NRC1_05778_0.722_rep2_vs_NRC-1g.sig	unpublished
+NRC1_07020_1.318_rep2_vs_NRC-1g.sig	unpublished
+NRC1_07020_1.329_rep1_vs_NRC-1g.sig	unpublished
+NRC1_07740_2.580_rep1_vs_NRC-1g.sig	unpublished
+NRC1_07740_2.681_rep2_vs_NRC-1g.sig	unpublished
+NRC1_08460_3.510_rep1_vs_NRC-1g.sig	unpublished
+NRC1_08460_3.840_rep2_vs_NRC-1g.sig	unpublished
+NRC1_09540_4.690_rep2_vs_NRC-1g.sig	unpublished
+NRC1_09540_4.860_rep1_vs_NRC-1g.sig	unpublished
+NRC1_10260_4.540_rep2_vs_NRC-1g.sig	unpublished
+NRC1_10260_4.860_rep1_vs_NRC-1g.sig	unpublished
+NRC1_10980_4.935_rep2_vs_NRC-1g.sig	unpublished
+NRC1_10980_5.130_rep1_vs_NRC-1g.sig	unpublished
+NRC1_11700_5.640_rep1_vs_NRC-1g.sig	unpublished
+NRC1_11700_5.730_rep2_vs_NRC-1g.sig	unpublished
+NRC1_H2O_0540_0.220_rep2_vs_NRC-1g.sig	unpublished
+NRC1_H2O_0540_0.225_rep1_vs_NRC-1g.sig	unpublished
+NRC1_H2O_0890_0.468_rep2_vs_NRC-1g.sig	unpublished
+NRC1_H2O_0890_0.496_rep1_vs_NRC-1g.sig	unpublished
+NRC1_H2O_1260_0.807_rep1_vs_NRC-1g.sig	unpublished
+NRC1_H2O_1260_0.830_rep2_vs_NRC-1g.sig	unpublished
+NRC1_H2O_1860_0.733_rep2_vs_NRC-1g.sig	unpublished
+NRC1_H2O_1860_0.758_rep1_vs_NRC-1g.sig	unpublished
+NRC1_H2O_2280_0.764_rep2_vs_NRC-1g.sig	unpublished
+NRC1_H2O_2280_0.781_rep1_vs_NRC-1g.sig	unpublished
+NRC1_H2O_2760_0.913_rep1_vs_NRC-1g.sig	unpublished
+NRC1_H2O_2760_0.913_rep2_vs_NRC-1g.sig	unpublished
+NRC1_H2O_3120_1.023_rep1_vs_NRC-1g.sig	unpublished
+NRC1_H2O_3120_1.086_rep2_vs_NRC-1g.sig	unpublished
+NRC1_Uracil_0540_0.200_rep1_vs_NRC-1g.sig	unpublished
+NRC1_Uracil_0540_0.205_rep2_vs_NRC-1g.sig	unpublished
+NRC1_Uracil_0890_0.420_rep2_vs_NRC-1g.sig	unpublished
+NRC1_Uracil_0890_0.440_rep1_vs_NRC-1g.sig	unpublished
+NRC1_Uracil_1260_0.785_rep1_vs_NRC-1g.sig	unpublished
+NRC1_Uracil_1260_0.812_rep2_vs_NRC-1g.sig	unpublished
+NRC1_Uracil_1860_0.882_rep1_vs_NRC-1g.sig	unpublished
+NRC1_Uracil_1860_0.912_rep2_vs_NRC-1g.sig	unpublished
+NRC1_Uracil_2280_0.876_rep1_vs_NRC-1g.sig	unpublished
+NRC1_Uracil_2280_0.881_rep2_vs_NRC-1g.sig	unpublished
+NRC1_Uracil_2760_1.039_rep1_vs_NRC-1g.sig	unpublished
+NRC1_Uracil_2760_1.133_rep2_vs_NRC-1g.sig	unpublished
+NRC1_Uracil_3120_1.296_rep2_vs_NRC-1g.sig	unpublished
+NRC1_Uracil_3120_1.341_rep1_vs_NRC-1g.sig	unpublished
+o2__-001m_L2H_005	Schmid, 2007	Bonneau, 2007
+o2__0001m_L2H_500	Schmid, 2007	Bonneau, 2007
+o2__0005m_H_922	Schmid, 2007	Bonneau, 2007
+o2__0010m_H_947	Schmid, 2007	Bonneau, 2007
+o2__0020m_H_937	Schmid, 2007	Bonneau, 2007
+o2__0030m_H_931	Schmid, 2007	Bonneau, 2007
+o2__0045m_H_939	Schmid, 2007	Bonneau, 2007
+o2__0090m_H_941	Schmid, 2007	Bonneau, 2007
+o2__0180m_H_930	Schmid, 2007	Bonneau, 2007
+o2__0360m_H_903	Schmid, 2007	Bonneau, 2007
+o2__0362m_H2L_860	Schmid, 2007	Bonneau, 2007
+o2__0367m_H2L_215	Schmid, 2007	Bonneau, 2007
+o2__0372m_H2L_079	Schmid, 2007	Bonneau, 2007
+o2__0382m_H2L_048	Schmid, 2007	Bonneau, 2007
+o2__0387m_L_041	Schmid, 2007	Bonneau, 2007
+o2__0392m_L_037	Schmid, 2007	Bonneau, 2007
+o2__0397m_L_035	Schmid, 2007	Bonneau, 2007
+o2__0407m_L_030	Schmid, 2007	Bonneau, 2007
+o2__0417m_L_027	Schmid, 2007	Bonneau, 2007
+o2__0432m_L_024	Schmid, 2007	Bonneau, 2007
+o2__0477m_L_017	Schmid, 2007	Bonneau, 2007
+o2__0567m_L_011	Schmid, 2007	Bonneau, 2007
+o2__0747m_L_008	Schmid, 2007	Bonneau, 2007
+o2__0750m_L2H_540	Schmid, 2007	Bonneau, 2007
+o2__0755m_L2H_825	Schmid, 2007	Bonneau, 2007
+o2__0760m_L2H_847	Schmid, 2007	Bonneau, 2007
+o2__0770m_L2H_852	Schmid, 2007	Bonneau, 2007
+o2__0780m_L2H_847	Schmid, 2007	Bonneau, 2007
+phoR__HO_D_vs_NRC-1	Bonneau, 2007	
+phoR__HO_L_vs_NRC-1	Bonneau, 2007	
+phoR__LO_D_vs_NRC-1	Bonneau, 2007	
+phoR__LO_L_vs_NRC-1	Bonneau, 2007	
+phr1_and_2__HO_D_vs_NRC-1	Baliga, 2004	Bonneau, 2007
+phr1_and_2__HO_L_vs_NRC-1	Baliga, 2004	Bonneau, 2007
+phr1_and_2__LO_D_vs_NRC-1	Baliga, 2004	Bonneau, 2007
+phr1_and_2__LO_L_vs_NRC-1	Baliga, 2004	Bonneau, 2007
+phr1__HO_D_vs_NRC-1	Baliga, 2004	Bonneau, 2007
+phr1__HO_L_vs_NRC-1	Baliga, 2004	Bonneau, 2007
+phr1__LO_D_vs_NRC-1	Baliga, 2004	Bonneau, 2007
+phr1__LO_L_vs_NRC-1	Baliga, 2004	Bonneau, 2007
+phr2__HO_D_vs_NRC-1	Baliga, 2004	Bonneau, 2007
+phr2__HO_L_vs_NRC-1	Baliga, 2004	Bonneau, 2007
+phr2__LO_D_vs_NRC-1	Baliga, 2004	Bonneau, 2007
+phr2__LO_L_vs_NRC-1	Baliga, 2004	Bonneau, 2007
+PQ_Const._set_1_0mM_000min_vs_NRC-1f.sig	Kaur, in prep	
+PQ_Const._set_1_0mM_030min_vs_NRC-1f.sig	Kaur, in prep	
+PQ_Const._set_1_0mM_060min_vs_NRC-1f.sig	Kaur, in prep	
+PQ_Const._set_1_0mM_120min_vs_NRC-1f.sig	Kaur, in prep	
+PQ_Const._set_1_0mM_240min_vs_NRC-1f.sig	Kaur, in prep
+PQ_Const._set_1_4mM_000min_vs_NRC-1f.sig	Kaur, in prep
+PQ_Const._set_1_4mM_030min_vs_NRC-1f.sig	Kaur, in prep
+PQ_Const._set_1_4mM_060min_vs_NRC-1f.sig	Kaur, in prep
+PQ_Const._set_1_4mM_120min_vs_NRC-1f.sig	Kaur, in prep
+PQ_Const._set_1_4mM_240min_vs_NRC-1f.sig	Kaur, in prep
+PQ_Const._set_2_0mM_000min_vs_NRC-1f.sig	Kaur, in prep
+PQ_Const._set_2_0mM_030min_vs_NRC-1f.sig	Kaur, in prep
+PQ_Const._set_2_0mM_060min_vs_NRC-1f.sig	Kaur, in prep
+PQ_Const._set_2_0mM_120min_vs_NRC-1f.sig	Kaur, in prep
+PQ_Const._set_2_0mM_240min_vs_NRC-1f.sig	Kaur, in prep
+PQ_Const._set_2_4mM_000min_vs_NRC-1f.sig	Kaur, in prep
+PQ_Const._set_2_4mM_030min_vs_NRC-1f.sig	Kaur, in prep
+PQ_Const._set_2_4mM_060min_vs_NRC-1f.sig	Kaur, in prep
+PQ_Const._set_2_4mM_120min_vs_NRC-1f.sig	Kaur, in prep
+PQ_Const._set_2_4mM_240min_vs_NRC-1f.sig	Kaur, in prep
+PQ_Const._set_3_4mM_-001min_vs_NRC-1h1.sig	Kaur, in prep
+PQ_Const._set_3_4mM_005min_vs_NRC-1h1.sig	Kaur, in prep
+PQ_Const._set_3_4mM_010min_vs_NRC-1h1.sig	Kaur, in prep
+PQ_Const._set_3_4mM_020min_vs_NRC-1h1.sig	Kaur, in prep
+PQ_Const._set_3_4mM_040min_vs_NRC-1h1.sig	Kaur, in prep
+PQ_Const._set_3_4mM_080min_vs_NRC-1h1.sig	Kaur, in prep
+PQ_Const._set_3_4mM_160min_vs_NRC-1h1.sig	Kaur, in prep
+PQ_Const._set_4_4mM_-001min_vs_NRC-1h1.sig	Kaur, in prep
+PQ_Const._set_4_4mM_005min_vs_NRC-1h1.sig	Kaur, in prep
+PQ_Const._set_4_4mM_010min_vs_NRC-1h1.sig	Kaur, in prep
+PQ_Const._set_4_4mM_020min_vs_NRC-1h1.sig	Kaur, in prep
+PQ_Const._set_4_4mM_040min_vs_NRC-1h1.sig	Kaur, in prep
+PQ_Const._set_4_4mM_080min_vs_NRC-1h1.sig	Kaur, in prep
+PQ_Const._set_4_4mM_160min_vs_NRC-1h1.sig	Kaur, in prep
+PQ_Recov._set_1_0mM_000min_vs_NRC-1f.sig	Kaur, in prep
+PQ_Recov._set_1_0mM_010min_vs_NRC-1f.sig	Kaur, in prep
+PQ_Recov._set_1_0mM_020min_vs_NRC-1f.sig	Kaur, in prep
+PQ_Recov._set_1_0mM_030min_vs_NRC-1f.sig	Kaur, in prep
+PQ_Recov._set_1_0mM_040min_vs_NRC-1f.sig	Kaur, in prep
+PQ_Recov._set_1_0mM_050min_vs_NRC-1f.sig	Kaur, in prep
+PQ_Recov._set_1_0mM_060min_vs_NRC-1f.sig	Kaur, in prep
+PQ_Recov._set_1_0mM_120min_vs_NRC-1f.sig	Kaur, in prep
+PQ_Recov._set_1_0mM_240min_vs_NRC-1f.sig	Kaur, in prep
+PQ_Recov._set_1_4mM_000min_vs_NRC-1f.sig	Kaur, in prep
+PQ_Recov._set_1_4mM_010min_vs_NRC-1f.sig	Kaur, in prep
+PQ_Recov._set_1_4mM_020min_vs_NRC-1f.sig	Kaur, in prep
+PQ_Recov._set_1_4mM_030min_vs_NRC-1f.sig	Kaur, in prep
+PQ_Recov._set_1_4mM_040min_vs_NRC-1f.sig	Kaur, in prep
+PQ_Recov._set_1_4mM_050min_vs_NRC-1f.sig	Kaur, in prep
+PQ_Recov._set_1_4mM_060min_vs_NRC-1f.sig	Kaur, in prep
+PQ_Recov._set_1_4mM_120min_vs_NRC-1f.sig	Kaur, in prep
+PQ_Recov._set_1_4mM_240min_vs_NRC-1f.sig	Kaur, in prep
+PQ_Recov._set_2_0mM_000min_vs_NRC-1f.sig	Kaur, in prep
+PQ_Recov._set_2_0mM_010min_vs_NRC-1f.sig	Kaur, in prep
+PQ_Recov._set_2_0mM_020min_vs_NRC-1f.sig	Kaur, in prep
+PQ_Recov._set_2_0mM_030min_vs_NRC-1f.sig	Kaur, in prep
+PQ_Recov._set_2_0mM_040min_vs_NRC-1f.sig	Kaur, in prep
+PQ_Recov._set_2_0mM_050min_vs_NRC-1f.sig	Kaur, in prep
+PQ_Recov._set_2_0mM_060min_vs_NRC-1f.sig	Kaur, in prep
+PQ_Recov._set_2_0mM_120min_vs_NRC-1f.sig	Kaur, in prep
+PQ_Recov._set_2_0mM_240min_vs_NRC-1f.sig	Kaur, in prep
+PQ_Recov._set_2_4mM_000min_vs_NRC-1f.sig	Kaur, in prep
+PQ_Recov._set_2_4mM_010min_vs_NRC-1f.sig	Kaur, in prep
+PQ_Recov._set_2_4mM_020min_vs_NRC-1f.sig	Kaur, in prep
+PQ_Recov._set_2_4mM_030min_vs_NRC-1f.sig	Kaur, in prep
+PQ_Recov._set_2_4mM_040min_vs_NRC-1f.sig	Kaur, in prep
+PQ_Recov._set_2_4mM_050min_vs_NRC-1f.sig	Kaur, in prep
+PQ_Recov._set_2_4mM_060min_vs_NRC-1f.sig	Kaur, in prep
+PQ_Recov._set_2_4mM_120min_vs_NRC-1f.sig	Kaur, in prep
+PQ_Recov._set_2_4mM_240min_vs_NRC-1f.sig	Kaur, in prep
+sirR_0min_-EDTA_CM_vs_NRC1-h1.sig	unpublished
+sirR_20min_-EDTA_CM_vs_NRC1-h1.sig	unpublished
+sirR_20min_1mM_EDTA_vs_NRC1-h1.sig	unpublished
+sirR_40min_-EDTA_CM_vs_NRC1-h1.sig	unpublished
+sirR_40min_1mM_EDTA_vs_NRC1-h1.sig	unpublished
+sirR_60min_-EDTA_CM_vs_NRC1-h1.sig	unpublished
+sirR_60min_1mM_EDTA_vs_NRC1-h1.sig	unpublished
+sop2_II__HO_D_vs_NRC-1c	Bonneau, 2007
+sop2_II__HO_L_vs_NRC-1c	Bonneau, 2007
+sop2_II__LO_D_vs_NRC-1c	Bonneau, 2007
+sop2_II__LO_L_vs_NRC-1c	Bonneau, 2007
+sop2_I__HO_D_vs_NRC-1	Bonneau, 2007
+sop2_I__HO_L_vs_NRC-1	Bonneau, 2007
+sop2_I__LO_D_vs_NRC-1	Bonneau, 2007
+sop2_I__LO_L_vs_NRC-1	Bonneau, 2007
+tbp_A_vs_NRC-1c	Bonneau, 2007
+tbp_C_vs_NRC-1c	Bonneau, 2007
+tbp_D_vs_NRC-1c	Bonneau, 2007
+tfbG_CHIS_over	Bonneau, 2007
+tfb_A_vs_NRC-1c	Bonneau, 2007
+tfb_B_vs_NRC-1c	Bonneau, 2007
+tfb_C_vs_NRC-1c	Bonneau, 2007
+tfb_D_vs_NRC-1c	Bonneau, 2007
+troR_0min_-EDTA_CM_vs_NRC1-h1.sig	unpublished
+troR_0min_1mM_EDTA_vs_NRC1-h1.sig	unpublished
+troR_20min_-EDTA_CM_vs_NRC1-h1.sig	unpublished
+troR_20min_1mM_EDTA_vs_NRC1-h1.sig	unpublished
+troR_40min_-EDTA_CM_vs_NRC1-h1.sig	unpublished
+troR_40min_1mM_EDTA_vs_NRC1-h1.sig	unpublished
+troR_60min_-EDTA_CM_vs_NRC1-h1.sig	unpublished
+troR_60min_1mM_EDTA_vs_NRC1-h1.sig	unpublished
+ura3_+glu_a_OD0.2_vs_NRC1e.sig	unpublished
+ura3_+glu_a_OD0.6repl_vs_NRC1e.sig	unpublished
+ura3_+glu_a_OD0.6_vs_NRC1e.sig	unpublished
+ura3_+glu_a_OD1.2repl_vs_NRC1e.sig	unpublished
+ura3_+glu_a_OD1.2_vs_NRC1e.sig	unpublished
+ura3_+glu_b_OD0.2_vs_NRC1g.sig	unpublished
+ura3_+glu_b_OD0.6repl_vs_NRC1g.sig	unpublished
+ura3_+glu_b_OD1.2repl_vs_NRC1g.sig	unpublished
+ura3_-glu_a_OD0.2_vs_NRC1e.sig	unpublished
+ura3_-glu_a_OD0.6repl_vs_NRC1e.sig	unpublished
+ura3_-glu_a_OD0.6_vs_NRC1e.sig	unpublished
+ura3_-glu_a_OD1.2repl_vs_NRC1e.sig	unpublished
+ura3_-glu_a_OD1.2_vs_NRC1e.sig	unpublished
+ura3_-glu_b_OD0.2_vs_NRC1g.sig	unpublished
+ura3_-glu_b_OD0.6repl_vs_NRC1g.sig	unpublished
+ura3_-glu_b_OD1.2repl_vs_NRC1g.sig	unpublished
+ura3_0min_-EDTA_CM_vs_NRC1-h1.sig	unpublished
+ura3_0min_1mM_EDTA_vs_NRC1-h1.sig	unpublished
+ura3_20min_-EDTA_CM_vs_NRC1-h1.sig	unpublished
+ura3_20min_1mM_EDTA_vs_NRC1-h1.sig	unpublished
+ura3_40min_-EDTA_CM_vs_NRC1-h1.sig	unpublished
+ura3_40min_1mM_EDTA_vs_NRC1-h1.sig	unpublished
+ura3_60min_-EDTA_CM_vs_NRC1-h1.sig	unpublished
+ura3_60min_1mM_EDTA_vs_NRC1-h1.sig	unpublished
+ura3_growth_t1_exp2_0.3OD_vs_NRC1f.sig	unpublished
+ura3_growth_t1_exp3_0.3OD_vs_NRC1f.sig	unpublished
+ura3_growth_t2exp1_0.5OD_vs_NRC1e.sig	unpublished
+ura3_growth_t2_exp2_0.5OD_vs_NRC1f.sig	unpublished
+ura3_growth_t2_exp3_0.5OD_vs_NRC1f.sig	unpublished
+ura3_growth_t3exp1_0.8OD_vs_NRC1e.sig	unpublished
+ura3_growth_t3_exp2_0.8OD_vs_NRC1f.sig	unpublished
+ura3_growth_t3_exp3_0.8OD_vs_NRC1f.sig	unpublished	
+ura3_growth_t4_exp2_1.2OD_vs_NRC1f.sig	unpublished	
+ura3_growth_t4_exp3_1.2OD_vs_NRC1f.sig	unpublished	
+ura3__HO_D_vs_NRC-1	Bonneau, 2007	
+ura3__HO_L_vs_NRC-1	Bonneau, 2007	
+ura3__LO_D_vs_NRC-1	Bonneau, 2007	
+ura3__LO_L_vs_NRC-1	Bonneau, 2007	
+uv__000jm2_CL_060m	Baliga, 2004	Bonneau, 2007
+uv__200jm2_D_030m	Baliga, 2004	Bonneau, 2007
+uv__200jm2_D_060m	Baliga, 2004	Bonneau, 2007
+uv__200jm2_L_030m	Baliga, 2004	Bonneau, 2007
+uv__200jm2_L_060m	Baliga, 2004	Bonneau, 2007
+VNG0019H__HO_D_vs_NRC-1c	Bonneau, 2007	
+VNG0019H__HO_L_vs_NRC-1c	Bonneau, 2007	
+VNG0019H__LO_D_vs_NRC-1c	Bonneau, 2007	
+VNG0019H__LO_L_vs_NRC-1c	Bonneau, 2007	
+VNG0750C__HO_D_vs_NRC-1	Bonneau, 2007
+VNG0750C__HO_L_vs_NRC-1	Bonneau, 2007
+VNG0750C__LO_D_vs_NRC-1	Bonneau, 2007
+VNG0750C__LO_L_vs_NRC-1	Bonneau, 2007
+VNG1296C__HO_D_vs_NRC-1	Bonneau, 2007
+VNG1296C__HO_L_vs_NRC-1	Bonneau, 2007
+VNG1296C__LO_D_vs_NRC-1	Bonneau, 2007
+VNG1296C__LO_L_vs_NRC-1	Bonneau, 2007
+VNG2334C__HO_D_vs_NRC-1	Bonneau, 2007
+VNG2334C__HO_L_vs_NRC-1	Bonneau, 2007
+VNG2334C__LO_D_vs_NRC-1	Bonneau, 2007
+VNG2334C__LO_L_vs_NRC-1	Bonneau, 2007
+zim__HO_D_vs_NRC-1	Bonneau, 2007
+zim__HO_L_vs_NRC-1	Bonneau, 2007
+zim__LO_D_vs_NRC-1	Bonneau, 2007
+zim__LO_L_vs_NRC-1	Bonneau, 2007
