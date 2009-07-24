@@ -1,7 +1,7 @@
 class MainController < ApplicationController
   
   before_filter :authenticate, :except => :login
-  filter_parameter_logging "password"
+  filter_parameter_logging :password
 
   def authenticate  
     puts "in authenticate"
@@ -109,6 +109,13 @@ class MainController < ApplicationController
    render :partial => "experiment_tags", :locals => {:tags => experiment_tags}
  end   
  
+ def get_gwap1_ids
+   exp_ids = params[:exp_ids].gsub(/,$/, "")
+   gwap1_ids = Experiment.find_by_sql(["select gwap1_id from experiments where id in (?)",exp_ids.split(",")]).map{|i|i.gwap1_id}
+   ret = "var gwap_url = 'http://gaggle.systemsbiology.net:/GWAP/dmv/dynamic.jnlp?host=gaggle.systemsbiology.net&port=&exps=#{gwap1_ids.join(",")}';"
+   render :text => ret
+ end
+ 
  def experiment_detail
    @exp = Experiment.find(params[:id], :include =>[{:conditions=>:observations}]) 
    if (@exp.has_knockouts)
@@ -142,14 +149,19 @@ class MainController < ApplicationController
 EOF
    @exps = Experiment.find_by_sql([sql,tags])
    @sparklines = []                   
+   exp_cond_nums = {}
    for exp in @exps
      columns, maxrange, minrange, h, rejected_columns = SparklineHelper.get_sparkline_info(exp.id)
      sparkline = render_to_string(:partial => "sparkline", :locals => {
        :exp => exp, :columns => columns, :h => h, :maxrange => maxrange, :minrange => minrange
      })
      @sparklines << sparkline
+     exp_cond_nums[exp.id.to_s] = exp.conditions.size
+     
    end
-   render :partial => "inclusive_search", :locals => {:exps => @exps, :sparklines => @sparklines, :rejected_columns => rejected_columns}
+   
+   render :partial => "inclusive_search", :locals => {:exps => @exps, :sparklines => @sparklines, :rejected_columns => rejected_columns,
+     :exp_cond_nums => exp_cond_nums.to_json}
  end
           
  def old_tag_exps     

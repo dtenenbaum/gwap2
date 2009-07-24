@@ -3,11 +3,25 @@
 <% end %>
 
 <p>
-<a id="check_all">Check All</a> | <a id="uncheck_all">Uncheck All</a> | <a id="tag_selected">Tag Selected</a>
+<a id="check_all">Check All</a> | <a id="uncheck_all">Uncheck All</a> | <a id="tag_selected">Tag Selected</a> | <a id="open_in_dmv">Open Checked in DMV</a>
 <script type="text/javascript">
+    exp_cond_nums = <%= exp_cond_nums%>;
     onSearchResultsLoaded();
 </script>
 </p>
+
+<% unless exps.nil? or exps.empty?%>
+
+<p>
+    Total number of experiments matching query: <%= exps.size%><br/>
+    Total number of experiments selected: <span id="number_of_experiments_selected"></span><br/>
+Total number of conditions (arrays) matching query: <%=exps.inject(0){|memo,exp|memo += exp.conditions.size} %><br/>
+Total number of conditions (arrays) selected: <span id="number_of_conditions_selected"></span>
+
+</p>
+    
+    
+<% end %>    
 
 <% exps.each_with_index do |exp,i| %>
     <input type="checkbox" class="experiment_checkbox" id="experiment_checkbox_<%=exp.id%>"/>

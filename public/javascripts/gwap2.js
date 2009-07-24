@@ -23,6 +23,7 @@ var net_options;
 
 var available_tags;
 
+var exp_cond_nums;
 
 function clearAjaxError() {
     jQuery("#ajax_error").empty();
@@ -155,25 +156,76 @@ var addSearchBoxValueToCart = function(item) {
 var addToCart = function(item) {
     jQuery("#my_search").append("<li>" + item  + "</li>");
 }
+
+var onSelectionChanged = function() {    
+    log("in onSelectionChanged()");
+    var checked_exps = 0;
+    var checked_conds = 0;
+    jQuery(".experiment_checkbox").each(function(i){
+        if (this.checked) {
+            checked_exps += 1;
+            var segs = this.id.split("_");
+            s = segs[2];
+            checked_conds += exp_cond_nums[s];
+        }
+    });
+    jQuery("#number_of_experiments_selected").text("" + checked_exps);
+    jQuery("#number_of_conditions_selected").text("" + checked_conds);
+}
                   
 var onSearchResultsLoaded = function() {
+    
+    log("search results loaded...");
+    onSelectionChanged();
+    
     jQuery("#check_all").click(function(){    
         jQuery(".experiment_checkbox").each(function(){
             this.checked = true;
         });
+        onSelectionChanged();
     });
 
     jQuery("#uncheck_all").click(function(){
         jQuery(".experiment_checkbox").each(function(){
             this.checked = false;
         });
+        onSelectionChanged();
+    });
+                             
+    
+    jQuery(".experiment_checkbox").change(function(){
+        onSelectionChanged();
     });
     
     jQuery("#tag_selected").click(function(){
             jQuery("#dialog").dialog({modal: true});//, 
 //                buttons: {"Tag": function(){}, "Cancel", function(){}}
 //            });
+    });     
+    
+    
+    
+    jQuery("#open_in_dmv").click(function(){     
+        var s = "";
+        jQuery(".experiment_checkbox").each(function(i){
+            if (this.checked) {
+                var segs = this.id.split("_");
+                //log(segs[2]);
+                s = s + segs[2];
+                s = s + ",";
+            }
+        });  
+        if (s == "") {
+            alert("Nothing checked!");
+            return;
+        }          
+        jQuery.getScript("get_gwap1_ids?exp_ids=" + s, function(){ 
+            //log("gwap_url = " + gwap_url);
+            location.href = gwap_url;
+        });
+        //alert("match = " + s);
     });
+    
 }
 
 jQuery(document).ready(function(){       
@@ -221,7 +273,10 @@ jQuery(document).ready(function(){
     });
           
     jQuery("#clear_selections").click(function(){
-        jQuery("#my_search").children().remove();
+        jQuery("#my_search").children().remove();    
+        jQuery(".tag_select").each(function(i){
+            this.selectedIndex = 0;
+        });
         jQuery("#top").focus();
     });
     

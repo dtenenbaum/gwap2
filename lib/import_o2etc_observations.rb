@@ -122,8 +122,9 @@ class ImportO2etcObservations
         #  puts "^^^^^^"
         #end
         ####next unless existing_cond.observations.empty? or existing_cond.observations.nil?
-        puts ob.name
-        puts "condition id:  #{new_ob[:condition_id]}" 
+        
+        #puts ob.name
+        #puts "condition id:  #{new_ob[:condition_id]}" 
         new_ob[:name_id] = ob_name_hash[ob.name]   
         puts "#{ob.name} converts to #{new_ob[:name_id]}"
         new_ob.string_value = ob.value
@@ -134,7 +135,8 @@ class ImportO2etcObservations
           num,exp = ob.value.split("*10^")
           new_ob.float_value = num.to_f * (10 ** exp.to_i)
 
-        end           
+        end       
+        puts "!!!!!!! #{ob.float_value}"    
         if (ob.value =~ sci_pat2)
           new_ob.float_value = ob.value.to_f
         end

@@ -11,19 +11,11 @@ class SparklineHelper
     end   
     rejected_cols = all_cols - cols   
     rejected_cols -= ['time','clockTime']
-    return cols, rejected_cols
+    return cols.sort, rejected_cols.sort
   end
 
 
   def self.get_sparkline_info(exp_id, normalized=true)         
-    puts "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
-    puts "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
-    puts "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
-    puts "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
-    puts "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
-    puts "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
-    puts "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
-    puts "exp_id == #{exp_id}"
     has_nan = false
     exp = Experiment.find(:first, :conditions => "id = #{exp_id}", :order => 'name', :include =>[{:conditions=>:observations}])
     columns, rejected_columns = get_columns_for_sparkline(exp)
@@ -40,8 +32,6 @@ class SparklineHelper
       for cond in exp.conditions
         for ob in cond.observations
           if (ob.name == col)                     
-            puts "~~~~~~~~~~~~~"
-            puts "#{cond.id} name = #{ob.name}"
             min = max = ob.float_value if min.nil?
             min = ob.float_value if min > ob.float_value
             max = ob.float_value if max < ob.float_value

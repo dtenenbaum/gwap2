@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090714204010) do
+ActiveRecord::Schema.define(:version => 20090724014501) do
 
   create_table "authorizations", :force => true do |t|
     t.integer  "user_id",       :limit => 11
@@ -126,6 +126,9 @@ ActiveRecord::Schema.define(:version => 20090714204010) do
     t.integer "location_id",  :limit => 11
     t.integer "condition_id", :limit => 11
     t.integer "sequence_id",  :limit => 11
+    t.integer "start",        :limit => 11
+    t.integer "end",          :limit => 11
+    t.boolean "strand"
   end
 
   create_table "gene_to_position_maps", :force => true do |t|
