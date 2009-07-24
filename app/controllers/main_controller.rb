@@ -3,41 +3,6 @@ class MainController < ApplicationController
   before_filter :authenticate, :except => :login
   filter_parameter_logging :password
 
-  def authenticate  
-    puts "in authenticate"
-    if cookies[:gwap2_cookie].nil? or cookies[:gwap2_cookie].empty?
-      puts "cookie doesn't exist"
-      redirect_to :action => "login" and return false
-    end
-    if (session[:user].nil?)    
-      puts "session user is not set"
-      puts "cookie is set to #{cookies[:gwap2_cookie]}"
-      session[:user] = User.find_by_email(cookies[:gwap2_cookie])
-    end
-  end                              
-
-  # todo make more secure
-  def login
-    if request.post?
-      user = User.authenticate(params['email'],params['password'])     
-      #render :text => user.email and return false
-      if (user == false)
-        flash[:notice] = "Invalid login, try again"
-        render :action => "login" and return false
-      else              
-        cookies[:gwap2_cookie] = {:value => user.email,
-          :expires => 1000.days.from_now }
-        session[:user] = user
-        redirect_to :action => "index"
-      end
-    end
-  end
-  
-  def logout
-    cookies.delete(:gwap2_cookie)
-    session[:user] = nil  
-    redirect_to :action => "login"
-  end
   
   require 'pp'
 #  require 'CGI'

@@ -33,14 +33,14 @@ class ImportArrayData
           next
         end          
         
-        #for item in data
+        for item in data
           # just so happens that ratios = 1, lambdas = 2, and error = 3 in both dbs
           # old: condition_id, datatype, value, row_name
           # new: value, data_type, gene_id
           f = Feature.new(:condition_id => cond.id, :data_type => item.datatype, :value => item.value, :gene_id => genes[item.row_name])
           f.save
           #pp f
-        #end
+        end
       end
     end
   rescue Exception => ex
