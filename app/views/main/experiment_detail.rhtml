@@ -9,7 +9,7 @@ Description:<br/>
 <%=@exp.description%>
 <br/>
 Growth media recipe: <%= @exp.growth_media_recipe.name%> (TODO: click to show full recipe)<br/>
-Imported by: <%= (@exp.owner.nil?)  ? "undefined " : @exp.owner.email %><br/>
+Imported by: <%= (@exp.owner.nil?)  ? "undefined " :  "<a href='mailto:#{@exp.owner.email}'>#{@exp.owner.email}</a>" %><br/>
 Is Time Series: <%= @exp.is_time_series%><br/>
 Is Private: <%=@exp.is_private %><br/>
 Lab Notebook number: <%=@exp.lab_notebook_number%><br/>

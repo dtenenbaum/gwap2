@@ -16,14 +16,49 @@ class DataController < ApplicationController
     cond_ids = []
     params[:cond_ids].split(",").each{|i|cond_ids << i.to_i}
     
-    data = DataOutputHelper.get_data(cond_ids,data_type)
-
-    render :text => DataOutputHelper.as_matrix(data)
+    data = DataOutputHelper.get_data(cond_ids,params[:data_type])
+    
+    respond_to do |format|
+      format.xml {render :text => DataOutputHelper.as_matrix(data)}
+    end
     
     
   end
   
   def get_emiml
+    url = url_for(:action => "get_data")
+    headers['Content-type'] = 'text/xml'
+    cond_ids = []
+    params[:cond_ids].split(",").each{|i|cond_ids << i.to_i}
+    path = "this:that:the other"
+    render :text => DataOutputHelper.get_emiml(url, path, cond_ids)
+  end   
+  
+  def get_jnlp
+    f = File.open("#{RAILS_ROOT}/app/views/data/dmv_jnlp.xml")
+    jnlp = ""
+    while (line = f.gets())
+      jnlp += line
+    end
+    cond_ids = []
+    params[:cond_ids].split(",").each{|i|cond_ids << i.to_i}
+    headers['Content-type'] = 'application/x-java-jnlp-file'
+    url = url_for(:action => "get_emiml_outer")
+    url += "?cond_ids=#{cond_ids.join(",")}"
+    jnlp.gsub!(/EMIML_URL/, url)
+    render :text => jnlp
+  end
+
+
+  def get_emiml_outer
+    cond_ids = []
+    params[:cond_ids].split(",").each{|i|cond_ids << i.to_i}
+    url = url_for(:action => "get_emiml")
+    url += "/nothing.xml?cond_ids=#{cond_ids.join(",")}"
+    out = <<"EOF"
+    <a href="#{url}">something</a>
+EOF
+    render :text => out
   end
   
 end

@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090724014501) do
+ActiveRecord::Schema.define(:version => 20090729181546) do
 
   create_table "authorizations", :force => true do |t|
     t.integer  "user_id",       :limit => 11
@@ -31,12 +31,15 @@ ActiveRecord::Schema.define(:version => 20090724014501) do
   end
 
   create_table "conditions", :force => true do |t|
-    t.integer  "experiment_id", :limit => 11
+    t.integer  "experiment_id",        :limit => 11
     t.string   "name"
-    t.integer  "sequence",      :limit => 11
+    t.integer  "sequence",             :limit => 11
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "has_data",                    :default => true
+    t.boolean  "has_data",                           :default => true
+    t.integer  "forward_slide_number", :limit => 11
+    t.integer  "reverse_slide_number", :limit => 11
+    t.integer  "is_duplicate_of",      :limit => 11
   end
 
   create_table "controlled_vocab_items", :force => true do |t|

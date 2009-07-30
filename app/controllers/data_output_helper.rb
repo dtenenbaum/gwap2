@@ -1,4 +1,8 @@
-class DataOutputHelper
+class DataOutputHelper < ApplicationController
+  require 'rexml/document'
+  include REXML
+  
+  require 'pp'
   
   def self.as_matrix(data) # todo - improve performance
     out = "GENE\t"
@@ -35,6 +39,69 @@ class DataOutputHelper
     out += "\n"
     out
 #    "done"
+  end  
+  
+  
+  
+  def self.get_emiml(url, path, cond_list)
+    doc = Element.new("experiment")
+    doc.attributes["date"] = Time.now.strftime("%Y-%m-%d")
+    doc.attributes['name'] = 'gwap2 search results'
+    species = Element.new("predicate")
+    species.attributes["category"] = "species"
+    species.attributes["value"] = "Halobacterium sp. NRC-1" # todo unhardcode
+    doc.add(species)
+              
+    
+    perturbation = Element.new("predicate")
+    perturbation.attributes["category"] = "perturbation"
+    perturbation.attributes["value"] = path
+    doc.add(perturbation)
+    
+    ratio = Element.new('dataset')
+    ratio.attributes['status'] = 'primary'
+    ratio.attributes['type'] = 'log10 ratios'
+    ratio_url = "#{url}?cond_ids=#{cond_list.join(",")}&data_type=ratios" 
+    ratio_uri = Element.new("uri")
+    ratio_uri.root.text = ratio_url
+                   
+    ratio.add(ratio_uri)
+    
+    doc.add(ratio)
+    
+    lambda = Element.new('dataset')
+    lambda.attributes['status'] = 'derived'
+    lambda.attributes['type'] = 'lambdas'
+    lambda_url = "#{url}?cond_ids=#{cond_list.join(",")}&data_type=lambda" 
+    lambda_uri = Element.new("uri")
+    lambda_uri.root.text = lambda_url
+    lambda.add(lambda_uri)
+    
+    doc.add(lambda)
+
+
+    for cond_id in cond_list
+      cond = Condition.find cond_id
+      cond_xml = Element.new("condition")
+      cond_xml.attributes["alias"] = cond.name
+      for ob in cond.observations
+        ob_xml = Element.new("variable")
+        ob_xml.attributes['name'] = ob.name
+        ob_xml.attributes['value'] = ob.string_value
+        ob_xml.attributes['units'] = ob.unit_name unless ob.units_id.nil?
+        cond_xml.add(ob_xml)
+      end
+      doc.add(cond_xml)
+    end
+
+    
+    fmt =  REXML::Formatters::Pretty.new(2)
+    fmt.compact = true 
+    strang = ""
+    fmt.write(doc, strang)
+    strang
+    #strang.gsub(/&amp;/,"&")
+    #puts doc
   end
   
   def self.get_data(cond_ids,data_type_str)
