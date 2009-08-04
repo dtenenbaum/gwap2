@@ -4,7 +4,7 @@ class SparklineHelper
 
   def self.get_columns_for_sparkline(exp)
     cols = []    
-    all_cols = []
+    all_cols = []  
     for ob in exp.conditions.first.observations
       cols << ob.name unless (ob.float_value.nil? or  !ob.float_value.is_a?(Numeric) or  ob.name == 'time')
       all_cols << ob.name
