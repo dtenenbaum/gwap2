@@ -1,6 +1,7 @@
 #!/bin/sh                                                   
 rm db/dump/dump.sql.gz
+rm db/dump/dump.sql.gz.gpg
 mysqldump -uroot gwap2_take2_development > db/dump/dump.sql
 gzip db/dump/dump.sql
-rm db/dump.*
-hdiutil create -encryption -stdinpass -srcfolder db/dump/ db/dump.dmg
+#hdiutil create -encryption -stdinpass -srcfolder db/dump/ db/dump.dmg
+gpg --passphrase gaggle -c db/dump/dump.sql.gz
