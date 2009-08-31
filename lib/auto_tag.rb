@@ -107,7 +107,7 @@ class AutoTag
       
       eh.each_key do |k|    
         #puts "ok"
-        tag = (k.last == 0) ? "Fang Yin 154 Conditions" : "Fang Yin 161 Conditions"
+        tag = (k.last == 0) ? "FYL_GTFs:Lrps:154conditions:200908" : "FYL_GTFs:Lrps:161 conditions:200908"
         add_tag(k.first, tag, "Other")
       end
       
