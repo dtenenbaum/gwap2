@@ -88,6 +88,30 @@ class AutoTag
         add_tag(exp, exp.growth_media_recipe.name, "Other")
         
       end
+
+      # for FY
+      eh = {}
+      files =  ["ratios_154cond.txt", "ratios_161cond2.txt"]
+      files.each_with_index do |file, i| 
+        
+        f = File.open("#{RAILS_ROOT}/data/#{file}")
+        cnames = f.readlines.first.chomp.split("\t")
+        cnames.shift
+        #pp cnames
+        for cname in cnames
+          cond = Condition.find_by_name(cname)
+          eh[[cond.experiment,i]] = 1
+        end
+        
+      end
+      
+      eh.each_key do |k|    
+        #puts "ok"
+        tag = (k.last == 0) ? "Fang Yin 154 Conditions" : "Fang Yin 161 Conditions"
+        add_tag(k.first, tag, "Other")
+      end
+      
+      
       
     rescue Exception => ex
       puts ex.message
