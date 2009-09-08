@@ -13,10 +13,11 @@ class ExpressionHelper
        conds = Condition.find :all, :conditions => ["experiment_id in (?)", experiment_ids], :order => 'experiment_id, sequence'
 
        rows = []                                       
-       if (for_heatmap)      
+       if (for_heatmap) # it seems that for_heatmap is never anything but true. todo: verify and clean up accordingly
          sql = <<EOF
-         select f.*, g.name as gene_name from features f, genes g
-         where f.gene_id = g.id
+         select f.*, g.name as gene_name, c.name as condition_name from features f, genes g, conditions c
+         where f.gene_id = g.id                                                                          
+         and f.condition_id = c.id
          and g.name in (?)
          and f.condition_id in (?)    
          and f.data_type = 1

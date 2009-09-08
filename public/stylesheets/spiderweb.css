@@ -54,7 +54,7 @@ padding: 3px 2px 1px 2px;
     width:6in; 
 }
 
-
+/* why are string and egrin styles in this file and not gwap2.css? */
 .string {
     background: #3366CC;   
     color: #ffffff;

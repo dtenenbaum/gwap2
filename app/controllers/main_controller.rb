@@ -71,16 +71,58 @@ end
      })
  end                                              
  
- def search                                                         
+ def gene_search                                                         
+   exp_ids = params['exps'].split(",")
+   @matches, @proteins = SearchHelper.full_search(params['search'])
+   
+   #@annos = AnnotationHelper.get_annotations(@proteins)
+   #colnames, rows = ExpressionHelper.get_expr_data(@proteins, exp_ids)
+   #@heatmap = VisHelper.matrix_as_google_response(colnames,rows, "gene_name","GENE")
+   #colnames, rows = ExpressionHelper.get_expr_data(@proteins, exp_ids, false)
+   #@plot = VisHelper.matrix_as_google_response(colnames, rows, "condition_name", "CONDITION")
+   #@network = NetworkHelper.get_network(@proteins)
+   render :partial => "gene_search"
+ end                   
+ 
+ 
+ def annotations
    exp_ids = params['exps'].split(",")
    @matches, @proteins = SearchHelper.full_search(params['search'])
    @annos = AnnotationHelper.get_annotations(@proteins)
+   render(:partial => "annotations", :locals => {:annotations => @annos})
+ end     
+ 
+ def heatmap
+   exp_ids = params['exps'].split(",")
+   @matches, @proteins = SearchHelper.full_search(params['search'])
    colnames, rows = ExpressionHelper.get_expr_data(@proteins, exp_ids)
    @heatmap = VisHelper.matrix_as_google_response(colnames,rows, "gene_name","GENE")
-   colnames, rows = ExpressionHelper.get_expr_data(@proteins, exp_ids, false)
-   @plot = VisHelper.matrix_as_google_response(colnames, rows, "condition_name", "CONDITION")
-   @network = NetworkHelper.get_network(@proteins)
+   render(:partial => "heatmap", :locals => {:data => @heatmap})
  end
+
+ def table
+   exp_ids = params['exps'].split(",")
+   @matches, @proteins = SearchHelper.full_search(params['search'])
+   colnames, rows = ExpressionHelper.get_expr_data(@proteins, exp_ids)
+   @table = VisHelper.matrix_as_google_response(colnames,rows, "gene_name","GENE")
+   render(:partial => "table", :locals => {:data => @table})
+ end       
+ 
+ def plot
+   exp_ids = params['exps'].split(",")
+   @matches, @proteins = SearchHelper.full_search(params['search'])
+   colnames, rows = ExpressionHelper.get_expr_data(@proteins, exp_ids)
+   @plot = VisHelper.matrix_as_google_response(colnames, rows, "condition_name", "CONDITION")
+   render(:partial => "plot", :locals => {:data => @plot})
+ end       
+ 
+ def network
+   exp_ids = params['exps'].split(",")
+   @matches, @proteins = SearchHelper.full_search(params['search'])
+   @network = NetworkHelper.get_network(@proteins)
+   render(:partial => "network", :locals => {:data => @network})
+ end
+ 
                               
  def get_columns(exp)
    cols = []

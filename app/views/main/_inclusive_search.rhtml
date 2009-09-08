@@ -6,7 +6,7 @@
 <% end %>
 
 <p>
-<a id="check_all">Check All</a> | <a id="uncheck_all">Uncheck All</a> | <a id="tag_selected">Tag Selected</a> | <a id="open_in_dmv">Open Checked in DMV</a>
+<a id="check_all">Check All</a> | <a id="uncheck_all">Uncheck All</a> | <a id="tag_selected">Tag Selected</a> | <a id="open_in_dmv">Open Checked in DMV</a>  | <input type="text" id="gene_search" name="gene_search" value="Gene Search"/>
 <script type="text/javascript">
     exp_cond_nums = <%= exp_cond_nums%>;
     onSearchResultsLoaded();
@@ -22,6 +22,8 @@ Total number of conditions (arrays) matching query: <%=exps.inject(0){|memo,exp|
 Total number of conditions (arrays) selected: <span id="number_of_conditions_selected"></span>
 
 </p>
+
+<div id="gene_search_results"></div>
     
     
 <% end %>    

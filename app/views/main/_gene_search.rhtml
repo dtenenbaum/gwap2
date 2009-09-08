@@ -1,0 +1,65 @@
+<% if @proteins.nil? %>
+	No matches.
+<% else %>	
+
+	The following proteins were returned:<br/>
+	<%= @proteins.join(", ")%><br/>
+	                                       
+	
+	<div style="display: none;">
+		<div class="gaggle-data">
+
+		  <span class="gaggle-name">ORF Names for Halobacterium sp. NRC-1</span>
+		     species=<span class="gaggle-species">Halobacterium sp. NRC-1</span>
+		     <span class="gaggle-size"><%= @proteins.size%></span>
+		  <div class="gaggle-namelist">
+		   <ol>
+				<% for protein in @proteins %>
+					<li><%=protein%></li>
+				<% end %>
+		   </ol>
+		  </div>
+		 </div>
+	</div>
+	
+	<p>&nbsp;</p>
+	
+	<a id="annotations_link" href="#">Annotations</a> |
+	<a id="heatmap_link" href="#">Heatmap</a> |
+	<a id="plot_link" href="#">Plot</a> |
+	<a id="table_link" href="#">Numeric Data</a> |
+	<a id="network_link" href="#">Network</a>   
+	
+	
+	<div id="annotations"></div>
+	
+	<div id="heatmap_script"></div>
+	<div id="heatmap"></div>
+
+	<div id="table_script"></div>
+	<div id="table"></div>     
+	
+	<div id="plot_script"></div>
+	<div id="plot"></div>
+	
+	<div id="network_script"></div>
+	<div id="network"></div>
+	<div id="net_legend"></div>
+	
+	
+	
+	<p>&nbsp;</p>
+	
+	<%#= render :partial => "annotations", :locals => {:annotations => @annos }%>
+	
+	<div id="vis">
+	<%#= render :partial => "heatmap", :locals => {:data => @heatmap} %>
+	
+	<%#= render :partial => "plot", :locals => {:data => @plot}%>    
+	
+	
+	<%#= render :partial => "network", :locals => {:data => @network}%>
+	</div>
+	
+<% #  <input type="button" id="clear_search" class="clear_search" value="Clear Search"></input> %>
+<% end %>

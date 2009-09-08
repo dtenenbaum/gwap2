@@ -23,13 +23,15 @@ var net_options;
 
 var available_tags;
 
-var exp_cond_nums;
+var exp_cond_nums;        
+
+var searchString;
 
 function clearAjaxError() {
     jQuery("#ajax_error").empty();
 }
 
-function googleVisInit() {
+function googleVisInit() {   
     //heatmap_options = {cellWidth: 30, cellHeight: 30}; 
     /*
     startColor: {r:0, g:0, b:0, a:1},
@@ -149,6 +151,17 @@ var enterDetect = function(elem, func) {
     });
 }     
 
+var geneSearch = function() {
+    expIds = getListOfCheckedBoxes();
+    if (expIds == null) {
+        alert("Nothing is checked!");
+        return;
+    }
+    searchString = document.getElementById("gene_search").value;
+    jQuery("#gene_search_results").html("Loading...");
+    jQuery("#gene_search_results").load("gene_search", {"exps" : expIds,  "search" : searchString}, onGeneSearchReturned());
+}
+
 var addSearchBoxValueToCart = function(item) {
     addToCart(document.getElementById("tag_search_box").value);
 }
@@ -171,6 +184,22 @@ var onSelectionChanged = function() {
     });
     jQuery("#number_of_experiments_selected").text("" + checked_exps);
     jQuery("#number_of_conditions_selected").text("" + checked_conds);
+}   
+
+var getListOfCheckedBoxes = function() {
+    var s = "";
+    jQuery(".experiment_checkbox").each(function(i){
+        if (this.checked) {
+            var segs = this.id.split("_");
+            //log(segs[2]);
+            s = s + segs[2];
+            s = s + ",";
+        }
+    });  
+    if (s == "") {
+        return null;
+    }
+    return s;
 }
                   
 var onSearchResultsLoaded = function() {
@@ -199,34 +228,81 @@ var onSearchResultsLoaded = function() {
     
     jQuery("#tag_selected").click(function(){
             jQuery("#dialog").dialog({modal: true});//, 
-//                buttons: {"Tag": function(){}, "Cancel", function(){}}
-//            });
     });     
     
     
     
     jQuery("#open_in_dmv").click(function(){     
-        var s = "";
-        jQuery(".experiment_checkbox").each(function(i){
-            if (this.checked) {
-                var segs = this.id.split("_");
-                //log(segs[2]);
-                s = s + segs[2];
-                s = s + ",";
-            }
-        });  
-        if (s == "") {
+        var s = getListOfCheckedBoxes();
+        if (s == null) {
             alert("Nothing checked!");
             return;
         }          
         jQuery.getScript("get_gwap1_ids?exp_ids=" + s, function(){ 
-            //log("gwap_url = " + gwap_url);
             location.href = gwap_url;
         });
-        //alert("match = " + s);
+    });
+
+     jQuery("#gene_search").focus(function() {
+         log("gene search box has focus!")
+         if (document.getElementById("gene_search").value == "Gene Search") {
+             document.getElementById("gene_search").value = "";
+         }
+     });
+     
+     enterDetect("#gene_search", function() {
+         geneSearch();
+     });
+
+
+    
+}          
+
+var onGeneSearchReturned = function() {
+    log("onGeneSearchReturned");     
+    
+    // todo refactor these:
+    
+    jQuery("#annotations_link").livequery('click', function(event) {    
+        log("annotations link!");
+        var s = getListOfCheckedBoxes();
+        jQuery("#annotations").load("annotations", {"search" : searchString, "exps" : s});
     });
     
+    jQuery("#heatmap_link").livequery('click', function(event) {    
+        heatmap = new org.systemsbiology.visualization.BioHeatMap(document.getElementById("heatmap"));
+        var s = getListOfCheckedBoxes();
+        jQuery("#heatmap").html("Loading...");
+        jQuery("#heatmap_script").load("heatmap", {"search" : searchString, "exps" : s})
+    });   
+    
+    jQuery("#table_link").livequery('click', function(event) {    
+    	network = new org.systemsbiology.visualization.BioNetwork(document.getElementById("network"));  
+        var s = getListOfCheckedBoxes();
+        jQuery("#network").html("Loading...");
+        jQuery("#network_script").load("network", {"search" : searchString, "exps" : s})
+    });   
+    
+    jQuery("#plot_link").livequery('click', function(event) {    
+    	plot = new google.visualization.LineChart(document.getElementById("plot"));
+        var s = getListOfCheckedBoxes();
+        jQuery("#plot").html("Loading...");
+        jQuery("#plot_script").load("plot", {"search" : searchString, "exps" : s})
+    });   
+    
+    jQuery("#network_link").livequery('click', function(event) {    
+    	network = new org.systemsbiology.visualization.BioNetwork(document.getElementById("network"));  
+        var s = getListOfCheckedBoxes();
+        jQuery("#network").html("Loading...");
+        jQuery("#network_script").load("network", {"search" : searchString, "exps" : s})
+    });   
+    
+    
 }
+
+
+// jQuery document ready function comprises the rest of this file
+
 
 jQuery(document).ready(function(){       
     jQuery('span.sf-menu').superfish();
@@ -337,7 +413,7 @@ jQuery(document).ready(function(){
         jQuery("#tag_search_box").focus();
      });    
      
-     
 
 
-});
+
+});      // end of jquery document ready function
