@@ -3,7 +3,7 @@ class NetworkHelper
 
   def self.get_unfiltered_net(gene_names)
     species_id = 1
-    MDV.find_by_sql(["select * from interactions where species_id = ? and protein1 in (?) and protein2 in (?)", species_id, gene_names, gene_names]) 
+    Mdv.find_by_sql(["select * from interactions where species_id = ? and protein1 in (?) and protein2 in (?)", species_id, gene_names, gene_names]) 
   end
     
 
