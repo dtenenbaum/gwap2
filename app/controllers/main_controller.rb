@@ -165,7 +165,8 @@ end
  
  def experiment_detail
    @exp = Experiment.find(params[:id], :include =>[{:conditions=>:observations}]) 
-   if (@exp.has_knockouts)
+   #if (@exp.has_knockouts)
+   unless (@exp.knockouts.empty?)
      k = @exp.knockouts.first
      @kos = [k] # just deal with single KOs for now
      while (true)

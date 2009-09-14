@@ -28,7 +28,7 @@ Uses probe numbers: <%= @exp.uses_probe_numbers%><br/>
 	Environmental perturbations: <% for pert in @exp.environmental_perturbations %><%= @exp.environmental_perturbations.map{|i|i.perturbation}.join(", ") %><% end%><br/>
 <% end %>
 
-<% if @exp.has_knockouts  %> 
+<% if !@kos.nil? and !@kos.empty?  %> 
 	Knockouts:  <% for ko in @kos %> &Delta;<%=ko.gene%>  <% end %><br/>
 	                     
 	
