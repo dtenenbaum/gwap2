@@ -2,9 +2,9 @@ class AddTagsToSplot
   
   begin
     Condition.transaction do
-      ids = 404..417
+      ids = 424..429
       ids.each do |i|
-        ExperimentTag.new(:experiment_id => i, :tag => 'metals', :auto => false, 
+        ExperimentTag.new(:experiment_id => i, :tag => '-EDTA', :auto => false, 
           :is_alias => false, :alias_for => 'metals', :tag_category_id => 2).save
       end
     end
