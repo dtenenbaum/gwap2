@@ -9,3 +9,11 @@
 #sparkline {
     width: 120px;
 }          
+
+.hide-me-away {
+    display:block!important; /* overrides the display:none in the original rule */
+    height:0!important;
+    width:0!important;
+    border:none!important;
+    visibility:hidden!important;
+}

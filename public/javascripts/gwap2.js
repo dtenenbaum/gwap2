@@ -19,7 +19,8 @@ var heatmap_data;
 var table;   
 var plot; 
 var network;    
-var net_options;
+var net_options;    
+
 
 var available_tags;
 
@@ -231,7 +232,7 @@ var onSearchResultsLoaded = function() {
     });     
     
     
-    
+    //todo - modify to use gwap2 loading
     jQuery("#open_in_dmv").click(function(){     
         var s = getListOfCheckedBoxes();
         if (s == null) {
@@ -263,38 +264,63 @@ var onGeneSearchReturned = function() {
     
     // todo refactor these:
     
+    //todo add legends
+    
     jQuery("#annotations_link").livequery('click', function(event) {    
-        log("annotations link!");
-        var s = getListOfCheckedBoxes();
-        jQuery("#annotations").load("annotations", {"search" : searchString, "exps" : s});
+        if (jQuery("#annotations").html().length < 2) {
+            var s = getListOfCheckedBoxes(); 
+            jQuery("#annotations").html("Loading...");
+            jQuery("#annotations").load("annotations", {"search" : searchString, "exps" : s});
+        } else {
+            jQuery("#annotations").toggleClass("hide-me-away");
+        }
     });
     
     jQuery("#heatmap_link").livequery('click', function(event) {    
         heatmap = new org.systemsbiology.visualization.BioHeatMap(document.getElementById("heatmap"));
-        var s = getListOfCheckedBoxes();
-        jQuery("#heatmap").html("Loading...");
-        jQuery("#heatmap_script").load("heatmap", {"search" : searchString, "exps" : s})
+        if (jQuery("#heatmap").html().length < 2) {
+            var s = getListOfCheckedBoxes();
+            jQuery("#heatmap").html("Loading...");
+            jQuery("#heatmap_script").load("heatmap", {"search" : searchString, "exps" : s});
+        } else {
+            jQuery("#heatmap").toggleClass("hide-me-away");
+        }
     });   
     
     jQuery("#table_link").livequery('click', function(event) {    
-    	network = new org.systemsbiology.visualization.BioNetwork(document.getElementById("network"));  
-        var s = getListOfCheckedBoxes();
-        jQuery("#network").html("Loading...");
-        jQuery("#network_script").load("network", {"search" : searchString, "exps" : s})
+    	table = new google.visualization.Table(document.getElementById("table"));   
+        if (jQuery("#table").html().length < 2) {
+            var s = getListOfCheckedBoxes();  
+            jQuery("#table").html("Loading...");
+            jQuery("#table_script").load("table", {"search" : searchString, "exps" : s});
+        } else {
+            jQuery("#table").toggleClass("hide-me-away");
+        }
     });   
     
     jQuery("#plot_link").livequery('click', function(event) {    
     	plot = new google.visualization.LineChart(document.getElementById("plot"));
-        var s = getListOfCheckedBoxes();
-        jQuery("#plot").html("Loading...");
-        jQuery("#plot_script").load("plot", {"search" : searchString, "exps" : s})
+        if (jQuery("#plot").html().length < 2) {
+            var s = getListOfCheckedBoxes();
+            jQuery("#plot_loader").html("Loading...");
+            jQuery("#plot_script").load("plot", {"search" : searchString, "exps" : s}, function(){
+                jQuery("#plot_loader").html("");
+            });
+        } else {
+            jQuery("#plot").toggleClass("hide-me-away");
+        }
     });   
     
     jQuery("#network_link").livequery('click', function(event) {    
     	network = new org.systemsbiology.visualization.BioNetwork(document.getElementById("network"));  
-        var s = getListOfCheckedBoxes();
-        jQuery("#network").html("Loading...");
-        jQuery("#network_script").load("network", {"search" : searchString, "exps" : s})
+    	if (jQuery("#network").html().length < 2) {
+            var s = getListOfCheckedBoxes();
+            jQuery("#network").html("Loading...");
+            jQuery("#network_script").load("network", {"search" : searchString, "exps" : s});
+    	} else {
+    	    jQuery("#network").toggleClass("hide-me-away");
+    	    jQuery("#net_legend").toggleClass("hide-me-away");
+    	}
     });   
     
     
