@@ -163,6 +163,14 @@ end
    render :text => ret
  end
  
+ def get_dmv_url
+   exp_ids = params[:exp_ids].gsub(/,$/, "")
+   cond_ids = Condition.find_by_sql(["select id from conditions where experiment_id in (?)", exp_ids]).map{|i|i.id}
+   url =  "http://#{request.host}:#{request.port}/data/emiml.xml?cond_ids=#{cond_ids.join(",")}"
+   ret = "var gwap_url = '#{url}';"
+   render :text => ret
+ end
+ 
  def experiment_detail
    @exp = Experiment.find(params[:id], :include =>[{:conditions=>:observations}]) 
    #if (@exp.has_knockouts)

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <jnlp
-  codebase="http://gaggle.systemsbiology.net/2007-04/dmv"
-  href="dmv.jnlp">
+  codebase="http://gaggle.systemsbiology.net/2007-04/dmv">
   <information>
     <title>DataMatrixViewer</title>
     <vendor> (April 2007)</vendor>
@@ -27,7 +26,7 @@
 
   </resources>
   <application-desc>
-    <argument>EMIML_URL</argument>
+      <argument>EMIML_URL</argument>
   </application-desc>
 </jnlp>
 

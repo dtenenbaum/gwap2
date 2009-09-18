@@ -184,7 +184,15 @@ var onSelectionChanged = function() {
         }
     });
     jQuery("#number_of_experiments_selected").text("" + checked_exps);
-    jQuery("#number_of_conditions_selected").text("" + checked_conds);
+    jQuery("#number_of_conditions_selected").text("" + checked_conds);    
+    
+    if (checked_exps == 0) {
+        jQuery("#dmv_link").html("Open Checked In DMV");
+    } else {                                                            
+        var url = "" + window.location.protocol + "//" + window.location.hostname + ":" + window.location.port +  "/data/get_jnlp?exp_ids=" + getListOfCheckedBoxes();
+        jQuery("#dmv_link").html("<a href='"+url+"'>Open Checked In DMV</a>");
+    }
+    
 }   
 
 var getListOfCheckedBoxes = function() {
@@ -234,12 +242,13 @@ var onSearchResultsLoaded = function() {
     
     //todo - modify to use gwap2 loading
     jQuery("#open_in_dmv").click(function(){     
+        log("so you want a dmv?");
         var s = getListOfCheckedBoxes();
         if (s == null) {
             alert("Nothing checked!");
             return;
         }          
-        jQuery.getScript("get_gwap1_ids?exp_ids=" + s, function(){ 
+        jQuery.getScript("../data/get_jnlp_url?exp_ids=" + s, function(){ 
             location.href = gwap_url;
         });
     });

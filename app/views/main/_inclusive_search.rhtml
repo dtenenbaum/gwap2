@@ -6,7 +6,7 @@
 <% end %>
 
 <p>
-<a id="check_all">Check All</a> | <a id="uncheck_all">Uncheck All</a> | <a id="tag_selected">Tag Selected</a> | <a id="open_in_dmv">Open Checked in DMV</a>  | <input type="text" id="gene_search" title="Search for genes from this set of conditions. Search using all or part of a protein name, annotation, COG ID, GI or Gene ID number" name="gene_search" value="Gene Search"/>
+<a id="check_all">Check All</a> | <a id="uncheck_all">Uncheck All</a> | <a id="tag_selected">Tag Selected</a> | <span id="dmv_link"></span>  | <input type="text" id="gene_search" title="Search for genes from this set of conditions. Search using all or part of a protein name, annotation, COG ID, GI or Gene ID number" name="gene_search" value="Gene Search"/>
 <script type="text/javascript">
     exp_cond_nums = <%= exp_cond_nums%>;
     onSearchResultsLoaded();
@@ -18,8 +18,8 @@
 <p>
     Total number of experiments matching query: <%= exps.size%><br/>
     Total number of experiments selected: <span id="number_of_experiments_selected"></span><br/>
-Total number of conditions (arrays) matching query: <%=exps.inject(0){|memo,exp|memo += exp.conditions.size} %><br/>
-Total number of conditions (arrays) selected: <span id="number_of_conditions_selected"></span>
+Total number of conditions matching query: <%=exps.inject(0){|memo,exp|memo += exp.conditions.size} %><br/>
+Total number of conditions selected: <span id="number_of_conditions_selected"></span>
 
 </p>
 

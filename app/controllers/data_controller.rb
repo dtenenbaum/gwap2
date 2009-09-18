@@ -30,8 +30,13 @@ class DataController < ApplicationController
     headers['Content-type'] = 'text/xml'
     cond_ids = []
     params[:cond_ids].split(",").each{|i|cond_ids << i.to_i}
-    path = "this:that:the other"
-    render :text => DataOutputHelper.get_emiml(url, path, cond_ids)
+    path = "Search Results"
+    render :text => DataOutputHelper.get_emiml(url, path, cond_ids)   
+    
+#    respond_to do |format|
+#      format.xml {render :text => "whoa"}
+#    end
+    
   end   
   
   def get_jnlp
@@ -40,21 +45,36 @@ class DataController < ApplicationController
     while (line = f.gets())
       jnlp += line
     end
-    cond_ids = []
-    params[:cond_ids].split(",").each{|i|cond_ids << i.to_i}
+    
+    exp_ids = params[:exp_ids].gsub(/,$/, "")
+    cond_ids = Condition.find_by_sql(["select id from conditions where experiment_id in (?)", exp_ids]).map{|i|i.id}
+    
+    
     headers['Content-type'] = 'application/x-java-jnlp-file'
-    url = url_for(:action => "get_emiml_outer")
+#    url = url_for(:action => "get_emiml_outer")       
+    url = "http://#{request.host}:#{request.port}/data/emiml.xml"
     url += "?cond_ids=#{cond_ids.join(",")}"
+ 
+ 
+    
     jnlp.gsub!(/EMIML_URL/, url)
     render :text => jnlp
+  end    
+  
+  def get_jnlp_url
+    url = url_for(:action => "get_jnlp")
+    url << "?exp_ids=#{params[:exp_ids]}"
+    ret = "var gwap_url = '#{url}';"
+    render :text => ret
   end
 
 
   def get_emiml_outer
     cond_ids = []
     params[:cond_ids].split(",").each{|i|cond_ids << i.to_i}
-    url = url_for(:action => "get_emiml")
-    url += "/nothing.xml?cond_ids=#{cond_ids.join(",")}"
+    #url = url_for(:action => "get_emiml")
+    url = "emiml.xml?cond_ids=#{cond_ids.join(",")}"
+#    url = "http://gaggle.systemsbiology.net/projects/yeast/data/allYeast.xml"
     out = <<"EOF"
     <a href="#{url}">something</a>
 EOF
