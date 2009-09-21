@@ -276,7 +276,7 @@ var onGeneSearchReturned = function() {
     //todo add legends
     
     jQuery("#annotations_link").livequery('click', function(event) {    
-        if (jQuery("#annotations").html().length < 2) {
+        if (jQuery("#annotations").html().length < 12) {
             var s = getListOfCheckedBoxes(); 
             jQuery("#annotations").html("Loading...");
             jQuery("#annotations").load("annotations", {"search" : searchString, "exps" : s});
@@ -287,7 +287,7 @@ var onGeneSearchReturned = function() {
     
     jQuery("#heatmap_link").livequery('click', function(event) {    
         heatmap = new org.systemsbiology.visualization.BioHeatMap(document.getElementById("heatmap"));
-        if (jQuery("#heatmap").html().length < 2) {
+        if (jQuery("#heatmap").html().length < 12) {
             var s = getListOfCheckedBoxes();
             jQuery("#heatmap").html("Loading...");
             jQuery("#heatmap_script").load("heatmap", {"search" : searchString, "exps" : s});
@@ -298,7 +298,7 @@ var onGeneSearchReturned = function() {
     
     jQuery("#table_link").livequery('click', function(event) {    
     	table = new google.visualization.Table(document.getElementById("table"));   
-        if (jQuery("#table").html().length < 2) {
+        if (jQuery("#table").html().length < 12) {
             var s = getListOfCheckedBoxes();  
             jQuery("#table").html("Loading...");
             jQuery("#table_script").load("table", {"search" : searchString, "exps" : s});
@@ -309,7 +309,7 @@ var onGeneSearchReturned = function() {
     
     jQuery("#plot_link").livequery('click', function(event) {    
     	plot = new google.visualization.LineChart(document.getElementById("plot"));
-        if (jQuery("#plot").html().length < 2) {
+        if (jQuery("#plot").html().length < 12) {
             var s = getListOfCheckedBoxes();
             jQuery("#plot_loader").html("Loading...");
             jQuery("#plot_script").load("plot", {"search" : searchString, "exps" : s}, function(){
@@ -322,7 +322,7 @@ var onGeneSearchReturned = function() {
     
     jQuery("#network_link").livequery('click', function(event) {    
     	network = new org.systemsbiology.visualization.BioNetwork(document.getElementById("network"));  
-    	if (jQuery("#network").html().length < 2) {
+    	if (jQuery("#network").html().length < 12) {
             var s = getListOfCheckedBoxes();
             jQuery("#network").html("Loading...");
             jQuery("#network_script").load("network", {"search" : searchString, "exps" : s});
