@@ -11,7 +11,7 @@ def authenticate
   puts "in authenticate"
   if cookies[:gwap2_cookie].nil? or cookies[:gwap2_cookie].empty?
     puts "cookie doesn't exist"
-    redirect_to :action => "login" and return false
+    redirect_to :action => "login", :url => request.url and return false
   end
   if (session[:user].nil?)    
     puts "session user is not set"
@@ -22,7 +22,9 @@ end
 
 # todo make more secure
 def login
-  if request.post?
+  if request.get?
+    session[:redir_url] = params[:url]
+  else
     user = User.authenticate(params['email'],params['password'])     
     #render :text => user.email and return false
     if (user == false)
@@ -31,7 +33,13 @@ def login
     else              
       cookies[:gwap2_cookie] = {:value => user.email,
         :expires => 1000.days.from_now }
-      session[:user] = user
+      session[:user] = user   
+      puts "url = #{session[:redir_url]}"      
+      unless (session[:redir_url].nil?)
+        puts "user had a url in mind"
+        redirect_to session[:redir_url] and return false
+      end
+      puts "user had no url in mind"
       redirect_to :action => "index"
     end
   end
@@ -163,6 +171,15 @@ end
    @growth_media_recipes = GrowthMediaRecipe.find :all
    @controlled_vocab_items = ControlledVocabItem.find :all
    @units = Unit.find :all, :order => 'name', :conditions => 'id > 1'
+   @papers = Paper.find :all, :order => 'short_name'
+   @aliases = Gene.find_by_sql "select * from genes where alias is not null and name in (select gene from knockouts)"
+   @knockouts = Knockout.find :all, :conditions => "gene != 'wild type'", :order => 'gene'
+   for al in @aliases                                      
+     ko = @knockouts.detect{|i|i.gene == al.name}
+     ko.gene_alias = al.alias
+   end 
+   @env_perts = 
+     EnvironmentalPerturbation.find_by_sql("select distinct perturbation from environmental_perturbations  order by perturbation").map{|i|i.perturbation}
  end
 
  def show_all_exps  #default action  

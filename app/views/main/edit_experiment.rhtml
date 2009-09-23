@@ -50,13 +50,40 @@ Time series?
 Growth Media Recipe:
 <select name="exp[growth_media_recipe_id]" id="exp_growth_media_recipe_id">
     <%= options_from_collection_for_select(@growth_media_recipes, 'id', 'name', @exp.growth_media_recipe_id)%>
-</select><br/>      
+</select>
+<button type="button" id="show_selected_recipe">Show Selected Recipe</button><br/>
+<br/>      
 
 Control?
 <%= check_box("exp", 'is_control')%>
-<br/>
+<br/>   
+<button type="button" id="assign_controls" title="Choose experiments for which this one is a control.">Assign Controls</button><br/>
+
+Papers:<br/>
+<select multiple name="exp[papers]" id="papers">
+    <%= options_from_collection_for_select(@papers, 'id', 'short_name', @exp.papers.map{|i|i.id})%>
+</select><br/>      
+<button type="button" id="add_paper" class="add_new">Add New Paper</button><br/>
+
+Knockouts:<br/>
+<select multiple name="exp[knockouts]" id="knockouts">
+    <%= options_from_collection_for_select(@knockouts, 'id', 'gene_and_alias', @exp.knockouts.map{|i|i.id})%>
+</select><br/>      
+<button type="button" id="add_knockout" class="add_new">Add Knockout</button><br/>
+
+
+Environmental Perturbations:  <br/>
+<%# doesn't show current environmental perturbations - todo fix %>
+<select multiple name="exp[environmental_perturbations]" id="exp_environmental_perturbations">
+    <%= options_for_select(@env_perts, @exp.environmental_perturbations)%>
+</select><br/>
+<button type="button" id="add_environmental_perturbation" class="add_new">Add Environmental Perturbation</button><br/>
                                                                              
 <p>Conditions:</p>
+<button type="button" id="add_observation" class="add_new">Add Observation</button>
+<button type="button" id="add_observation_name" class="add_new">Add Observation Name</button>
+<button type="button" id="add_unit" class="add_new">Add Unit of Measurement</button><br/>
+<p>&nbsp;</p>
 
 <% for cond in @exp.conditions %>
     <%= text_field_tag "condition_#{cond.id}", cond.name, :size => 60 %>    
@@ -72,7 +99,7 @@ Control?
         </select><br/>
         
         
-        </br>
+        </br> 
     <% end %>  
     </blockquote>
 <% end %>
