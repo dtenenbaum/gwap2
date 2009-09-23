@@ -1,6 +1,7 @@
 
 <script type="text/javascript">
     available_tags = <%= tags.map{|i|i.tag}.to_json %>;
+    setExistingTagList(<%= manual_tags.to_json %>);
 </script>
 
 

@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090729181546) do
+ActiveRecord::Schema.define(:version => 20090922232322) do
 
   create_table "authorizations", :force => true do |t|
     t.integer  "user_id",       :limit => 11
@@ -84,6 +84,7 @@ ActiveRecord::Schema.define(:version => 20090729181546) do
     t.boolean "is_alias"
     t.string  "alias_for"
     t.integer "tag_category_id", :limit => 11
+    t.integer "owner_id",        :limit => 11
   end
 
   create_table "experiments", :force => true do |t|
@@ -133,6 +134,10 @@ ActiveRecord::Schema.define(:version => 20090729181546) do
     t.integer "end",          :limit => 11
     t.boolean "strand"
   end
+
+  add_index "features", ["gene_id"], :name => "index_features_on_gene_id"
+  add_index "features", ["condition_id"], :name => "index_features_on_condition_id"
+  add_index "features", ["data_type"], :name => "index_features_on_data_type"
 
   create_table "gene_to_position_maps", :force => true do |t|
     t.integer  "platform_id", :limit => 11

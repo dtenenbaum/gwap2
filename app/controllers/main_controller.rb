@@ -139,9 +139,36 @@ end
  def index
    redirect_to :action => 'show_all_exps'
  end
+
+ def import_experiment
+   @project_id = params[:project_id]
+   @timestamp = params[:timestamp]
+ end 
  
+ def do_import
+   @exp = PipelineImporter.import_experiment(params[:project_id],params[:timestamp],session[:user])
+   redirect_to :action => "edit_experiment", :experiment_id => @exp.id
+   #render :action => "edit_experiment" #todo redirect to edit_experiment with experiment_id in url
+ end
+ 
+ def edit_experiment
+   @exp = Experiment.find params[:experiment_id]
+   @reference_samples = ReferenceSample.find :all
+   @users = User.find :all
+   @repls = []
+   (1..10).each{|i|@repls << i}
+   @repls.unshift nil
+   @species = Species.find :all
+   @curation_statuses = CurationStatus.find :all
+   @growth_media_recipes = GrowthMediaRecipe.find :all
+   @controlled_vocab_items = ControlledVocabItem.find :all
+   @units = Unit.find :all, :order => 'name', :conditions => 'id > 1'
+ end
+
  def show_all_exps  #default action  
    @all_tags = ExperimentTag.find_by_sql("select distinct tag, auto from experiment_tags order by tag")
+   @manual_tags = @all_tags.find_all{|i|i.auto == false}.map{|i|i.tag}.sort.uniq
+   @manual_tags.unshift("")
    @remaining_tags = @all_tags
    @exps = Experiment.find(:all, :order => 'name', :include =>[{:conditions=>:observations}])
    @tag_categories = TagCategory.find :all, :order => 'category_name'
@@ -150,10 +177,30 @@ end
  
  def add_experiment_tag
    # todo - should show a warning, or disallow adding tag, if user tries to add tag with the same name as an auto-generated tag
-   # or does that not make sense? (it would complicate displaying auto tags differently from manual tags)
-   ExperimentTag.new(:experiment_id => params[:id], :tag => params['tag'], :auto => false, :is_alias => false, :alias_for => params['tag']).save
-   experiment_tags = ExperimentTag.find_all_by_experiment_id(params[:id], :all, :order => 'tag')
-   render :partial => "experiment_tags", :locals => {:tags => experiment_tags}
+   # or does that not make sense? (it would complicate displaying auto tags differently from manual tags)     
+   
+   existing_tags = ExperimentTag.find :all, :conditions => ["auto = false and tag = ?", params[:tag]]
+   
+   for experiment_id in params[:experiments].split(",")
+     new_tag = ExperimentTag.new(:experiment_id => experiment_id, :tag => params[:tag], :owner_id => session[:user].id, :alias_for => params[:tag],
+       :tag_category_id => params[:tagCategory], :auto => false)
+     unless existing_tags.detect{|i|i.experiment_id == new_tag.experiment_id and i.tag = new_tag.tag}
+       new_tag.save
+     end
+   end
+   @all_tags = ExperimentTag.find_by_sql("select distinct tag, auto from experiment_tags order by tag")
+   @tag_categories = TagCategory.find :all, :order => 'category_name'
+   @manual_tags = @all_tags.find_all{|i|i.auto == false}.map{|i|i.tag}.sort.uniq
+   @manual_tags.unshift("")
+
+   
+   #render :partial => "experiment_tags", :locals => {:tags => @all_tags, :categories => @tag_categories, :cumulative => false, 
+   #     :selected_tags => @selected_tags
+   
+   #ExperimentTag.new(:experiment_id => params[:id], :tag => params['tag'], :auto => false, :is_alias => false, :alias_for => params['tag']).save
+   #experiment_tags = ExperimentTag.find_all_by_experiment_id(params[:id], :all, :order => 'tag')
+   render :partial => "experiment_tags", :locals => {:tags => @all_tags, :categories => @tag_categories, :cumulative => false,
+     :manual_tags => @manual_tags}
  end   
  
  def get_gwap1_ids

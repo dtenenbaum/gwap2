@@ -1,0 +1,6 @@
+<p>Importing experiment with SBEAMS ID <%= @project_id %> and timestamp <%= @timestamp %>.</p>
+
+<p>Click 
+    <%=link_to "here", :action => 'do_import', :project_id => @project_id, :timestamp => @timestamp %>
+    to import the experiment. Please click only once. It may take a while for the experiment to be imported.</p>
+

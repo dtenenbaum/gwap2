@@ -1,0 +1,81 @@
+Edit experiment
+<br/>
+<p>Experiment id is <%=@exp.id%></p>
+
+Name: <%= text_field 'exp', 'name'%><br/>
+        
+Reference Sample:
+<select name="exp[reference_sample_id]" id="exp_reference_sample_id">
+<%= options_from_collection_for_select(@reference_samples, 'id', 'name', @exp.reference_sample_id.to_i)%>
+</select><br/>
+
+Description:<br/>
+<%= text_area 'exp', 'description' %><br/>
+Lab notebook number: <%= text_field 'exp', 'lab_notebook_number'%><br/>
+Lab notebook page: <%= text_field 'exp', 'lab_notebook_page'%><br/>
+Date Performed: <%= text_field 'exp', 'date_performed'%><br/>     
+Owner: 
+<select name="exp[owner_id]" id="exp_owner_id">
+    <%= options_from_collection_for_select(@users, 'id', 'email', @exp.owner_id)%>
+</select><br/>
+
+Technical replicate:
+<select name="exp[technical_replicate]" id="exp_technical_replicate">
+    <%= options_for_select(@repls, @exp.technical_replicate)%>
+</select><br/>
+
+Biological replicate:
+<select name="exp[biological_replicate]" id="exp_biological_replicate">
+    <%= options_for_select(@repls, @exp.biological_replicate)%>
+</select><br/>
+
+Species:
+<select name="exp[species_id]" id="exp_species_id">
+    <%= options_from_collection_for_select(@species, 'id', 'name', @exp.species_id)%>
+</select><br/>
+                                                                               
+Curation status:
+<select name="exp[curation_status_id]" id="exp_curation_status_id">
+    <%= options_from_collection_for_select(@curation_statuses, 'id', 'name', @exp.curation_status_id)%>
+</select><br/>                                                                                   
+
+Private?
+<%= check_box("exp", 'is_private')%>
+<br/>
+
+Time series?
+<%= check_box("exp", 'is_time_series')%>
+<br/>
+                                    
+Growth Media Recipe:
+<select name="exp[growth_media_recipe_id]" id="exp_growth_media_recipe_id">
+    <%= options_from_collection_for_select(@growth_media_recipes, 'id', 'name', @exp.growth_media_recipe_id)%>
+</select><br/>      
+
+Control?
+<%= check_box("exp", 'is_control')%>
+<br/>
+                                                                             
+<p>Conditions:</p>
+
+<% for cond in @exp.conditions %>
+    <%= text_field_tag "condition_#{cond.id}", cond.name, :size => 60 %>    
+    <br/> 
+    <blockquote>
+    <% for obs in cond.observations %>
+        <select name="obs_<%=obs.id%>_name">
+            <%= options_from_collection_for_select(@controlled_vocab_items, 'id', 'name', obs.name_id)%>
+        </select>    
+        <%= text_field_tag "obs_#{obs.id}_string_value", obs.string_value %>
+        <select name="obs_<%=obs.id%>_unit">
+            <%= options_from_collection_for_select(@units, 'id', 'name', obs.units_id)%>
+        </select><br/>
+        
+        
+        </br>
+    <% end %>  
+    </blockquote>
+<% end %>
+
+
+<input type="submit" value="Save Changes" id="save_changes">

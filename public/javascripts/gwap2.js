@@ -23,6 +23,7 @@ var net_options;
 
 
 var available_tags;
+var manual_tags;
 
 var exp_cond_nums;        
 
@@ -171,6 +172,17 @@ var addToCart = function(item) {
     jQuery("#my_search").append("<li>" + item  + "</li>");
 }
 
+var setExistingTagList = function(tagList) {     
+    log("in setExistingTagList");
+    var s = "";
+    for (var i = 0; i < tagList.length; i++) {
+        log("item... " + tagList[i]);
+        s += "<option>" + tagList[i] + "</option>\n";
+    }
+    log("list = " + s);
+    jQuery("#existing_tag").html(s);
+}
+
 var onSelectionChanged = function() {    
     log("in onSelectionChanged()");
     var checked_exps = 0;
@@ -236,7 +248,17 @@ var onSearchResultsLoaded = function() {
     });
     
     jQuery("#tag_selected").click(function(){
-            jQuery("#dialog").dialog({modal: true});//, 
+        log("you clicked 'tag selected'");
+        if (getListOfCheckedBoxes() == null) {
+            alert("Nothing is checked!");
+        } else {           
+            jQuery("#tag_category").val(jQuery("#tag_category_initial_value").text());
+            jQuery("#tag_name").val("");
+            log ("before_et: " + jQuery("#existing_tag").val());
+            jQuery("#existing_tag").val("");
+            log ("after_et: " + jQuery("#existing_tag").val());
+            jQuery("#dialog").dialog("open");//, 
+        }
     });     
     
     
@@ -335,6 +357,61 @@ var onGeneSearchReturned = function() {
     
 }
 
+var tagCheckedExperiments = function() {
+    log("in tagCheckedExperiments");    
+    var tagCategory = jQuery("#tag_category").val();
+    var tagName = jQuery("#tag_name").val();
+    var existingTag = jQuery("#existing_tag").val();
+    
+    log("tag category: " + tagCategory);
+    log("tag name: " + tagName.trim());
+    log("existingTag: " + existingTag);
+    
+    if ((tagName.trim() == "") && (existingTag.trim() == "")) {
+        alert("You have to choose something!");
+        return;
+    }
+
+    if ((tagName != "") && (existingTag != "")) {
+        alert("You can add a new tag, or add these experiments to an existing tag, but not both.");
+        return;
+    }
+    
+    var isNewTag = (existingTag == "");
+    
+    var tag = (isNewTag) ? tagName : existingTag;
+    
+    var data = {experiments: getListOfCheckedBoxes(),
+                tagCategory: tagCategory,
+                isNewTag: isNewTag,
+                tag: tag};
+    
+    var url = "add_experiment_tag";
+    
+    if (isNewTag) {
+        jQuery("#all_tags").load(url, data);
+    } else {
+        jQuery.get(url, data);
+    }
+    
+    jQuery(this).dialog('close');
+}
+
+var initializeTaggingDialog = function() {
+    jQuery("#dialog").hide();    
+    jQuery("#dialog_old").hide();    
+    
+    jQuery("#dialog").dialog({modal: false, autoOpen: false,
+        height: 500,
+        width: 500, 
+        buttons: {
+            'Tag Checked Experiments': tagCheckedExperiments,
+            'Cancel': function(){ jQuery(this).dialog('close');}
+        }
+    });
+    
+}
+
 
 // jQuery document ready function comprises the rest of this file
 
@@ -342,8 +419,7 @@ var onGeneSearchReturned = function() {
 jQuery(document).ready(function(){       
     jQuery('span.sf-menu').superfish();
                                               
-    
-    jQuery("#dialog").hide();
+    initializeTaggingDialog();
 
     
 
@@ -383,7 +459,7 @@ jQuery(document).ready(function(){
         addSearchBoxValueToCart();
     });
           
-    jQuery("#clear_selections").click(function(){
+    jQuery("#clear_selections").livequery('click',function(){
         jQuery("#my_search").children().remove();    
         jQuery(".tag_select").each(function(i){
             this.selectedIndex = 0;
@@ -396,7 +472,7 @@ jQuery(document).ready(function(){
     });
                
     
-    jQuery("#search_button").click(function(){ 
+    jQuery("#search_button").livequery('click', function(){ 
         var tags = "";
         var i = 0;
         jQuery("#my_search").children().each(function(item){
@@ -433,7 +509,7 @@ jQuery(document).ready(function(){
     });                        
     
     
-    jQuery(".tag_select").change(function(){   
+    jQuery(".tag_select").livequery('change', function(){   
         if (this.value != "-") {
             addToCart(this.value);
         }
@@ -449,6 +525,8 @@ jQuery(document).ready(function(){
      });    
      
 
-
+    jQuery("#save_changes").livequery('click', function(event){
+        alert("You can't save. Yet.");
+    });
 
 });      // end of jquery document ready function

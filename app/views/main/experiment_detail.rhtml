@@ -1,5 +1,9 @@
 <%#= javascript_include_tag "edit_exp" %>
+
+
  <script type="text/javascript" src="<%=url_for :action => "sparkline", :id => @exp.id %>"></script>
+
+<b><%= link_to "Edit", :action => "edit_experiment", :experiment_id => params[:id]%></b><br/>
 
 Name = <%= @exp.name%><br/>       
 Curation status:  <%= @exp.curation_status.name%><br/>

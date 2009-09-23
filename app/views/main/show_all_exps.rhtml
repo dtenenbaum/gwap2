@@ -4,12 +4,12 @@
 
 
                    
-<% if @selected_tags.nil? %>
+<% if @selected_tags.nil? # seems like this will always be the case. todo fix %>
 
 <span id="all_tags">    
     
 <%= render :partial => "experiment_tags", :locals => {:tags => @all_tags, :categories => @tag_categories, :cumulative => false, 
-    :selected_tags => @selected_tags }%>
+    :selected_tags => @selected_tags, :manual_tags => @manual_tags }%>
 </span>
 <br/>
 
@@ -36,17 +36,38 @@ No Matches.<br/>
 <div id="inclusive_search_results">
 </div>
 
-<div id="dialog" title="Tag Checked Experiments ">
+<div id="dialog" title="Tag Checked Items">
+    <div class="ui-dialog ui-widget ui-widget-content ui-corner-all ui-draggable ui-resizable">
+       <div style="height: auto; min-height: 109px; width: auto;" class="ui-dialog-content ui-widget-content" id="dialog_core">
+          <p>Choose a tag category:</p>
+  		<select name="tag_category" id="tag_category">
+  		    <%= options_from_collection_for_select(@tag_categories, 'id', 'category_name')%>
+  		</select>
+        <P>Create a new tag by typing a tag name:</p>
+            <%= text_field_tag "tag_name" %>
+        <p>OR, add these experiments to an existing tag:</p>
+  		<select name="existing_tag" id="existing_tag">
+  		    <%= options_for_select(@manual_tags)%>
+  		</select>
+       </div>
+    </div>
+</div>
+
+<div id="hidden_stuff" class="hide-me-away">
+    <div id="tag_category_initial_value"><%=@tag_categories.first.id%></div>
+</div>
+
+<div id="dialog_old" title="Tag Checked Experiments ">
 
 	<form>
 	<fieldset>
 		<label for="name">Tag:</label>
 		<input type="text" name="tag" id="name" class="text ui-widget-content ui-corner-all" />
 		<select name="tag_category" id="tag_category">
-		    <option>category1</option>
-		    <option>category2</option>
+		    <%= options_from_collection_for_select(@tag_categories, 'id', 'category_name')%>
 		</select>
 		<input type="submit" value="Tag"/>
 	</fieldset>
-	</form>
+	</form> 
+	
 </div>

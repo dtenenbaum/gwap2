@@ -21,7 +21,10 @@
 
 	<%= stylesheet_link_tag "superfish" %>
 	<%= stylesheet_link_tag "spiderweb" %>
-	<%= stylesheet_link_tag "jquery.autocomplete" %>
+	<%= stylesheet_link_tag "jquery.autocomplete" %>   
+	<%= stylesheet_link_tag "south-street/jquery-ui-1.7.1.custom.css" %>   
+	
+	
 	<%= stylesheet_link_tag "gwap2" %>
 
 </head>
@@ -29,11 +32,14 @@
 <div id="top"></div>
 <div id="ajax_error"></div>
 <div id="page">  
+    <p>
+        <%= link_to "Home", :action => 'show_all_exps'%> | 
     <% if logged_in() %>
-        <p>Logged in as <i><%= email() %></i> | <a href="<%= url_for :action => "logout"%>">Log Out</a> </p>
+        Logged in as <i><%= email() %></i> | <a href="<%= url_for :action => "logout"%>">Log Out</a>
     <% else %>
-        <p>Not logged in</p>
+        Not logged in
     <% end %>
+    </p>
 <%= yield :layout %> 
 
 

@@ -87,7 +87,8 @@ class PipelineImporter
     segs = line.split("\t")
     orig_name = segs.shift
     vng_name = oligo_map[orig_name]
-    gene_id = genes.detect{|i|i.name == vng_name}
+    gene_id = genes.detect{|i|i.name == vng_name}.id
+    #puts "mapping original name #{orig_name} to vng name #{vng_name} to gene_id #{gene_id}"
     segs.shift
     segs.pop
     mid = segs.length/2
@@ -102,9 +103,8 @@ class PipelineImporter
   def self.import_experiment(project_id, timestamp, importer)
     begin      
       oligo_map = get_oligo_map()     
-      puts "oligo map:"
-      pp oligo_map
-      raise "scheisse!"
+      #puts "oligo map:"
+      #pp oligo_map
       genes = Gene.find :all
       Condition.transaction do
         slidenums = get_slide_numbers(project_id, timestamp)
@@ -126,7 +126,8 @@ class PipelineImporter
           next if count == 1
           add_features(line, conditions, oligo_map, genes)
         end
-        puts "Imported experiment #{exp.id}."
+        puts "Imported experiment #{exp.id}." 
+        return exp
       end
     rescue Exception => ex
       puts ex.message
@@ -135,7 +136,8 @@ class PipelineImporter
     
   end 
   
-  def self.delete_experiment(experiment_id)
+  def self.delete_experiment(experiment_id)  
+    # todo - delete all other associations
     e = Experiment.find experiment_id
     begin
       Condition.transaction do
