@@ -43,48 +43,50 @@ class AutoTag
       Experiment.connection.execute("delete from experiment_tags where auto = true")
 
       for exp in exps    
-        add_tag(exp, "control", "Experiment Type") if exp.is_control
-        add_tag(exp, "not control", "Experiment Type") unless exp.is_control    
-        ts = (exp.is_time_series) ? "time series" : "steady state"
-        add_tag(exp, ts, "Experiment Type")
+        add_tag(exp, "control", "Other") if exp.is_control
+        add_tag(exp, "not control", "Other") unless exp.is_control    
+        ts = (exp.is_time_series) ? "time series" : "not time series"
+        add_tag(exp, ts, "Other")
         add_tag(exp, 'knockout', "Genetic") if exp.has_knockouts
         add_tag(exp, 'overexpression', "Genetic") if exp.has_overexpression
-        add_tag(exp, exp.reference_sample.name, "Other") unless exp.reference_sample.nil?
+        add_tag(exp, "Reference Sample #{exp.reference_sample.name}", "Other") unless exp.reference_sample.nil?
         add_tag(exp, 'all genetic', "Genetic") if exp.has_knockouts or exp.has_overexpression
         add_tag(exp, 'all environmental', "Environmental") if exp.has_environmental
         for gp in exp.knockouts
           add_tag(exp, gp.gene, "Genetic")
-        end
+        end       
+        add_tag(exp, 'wild type', "Genetic") if (exp.knockouts.empty?)
         for ep in exp.environmental_perturbations
           add_tag(exp, ep.perturbation, "Environmental")
         end
         unless exp.description.nil? 
           if exp.description.downcase =~ /chj lab/
-            add_tag(exp, "CHJ Lab", "Experiment Type")
+            add_tag(exp, "CHJ Lab", "Other")
           elsif exp.description.downcase =~ /jdr lab/
-            add_tag(exp, "JDR Lab", "Experiment Type")
+            add_tag(exp, "JDR Lab", "Other")
           else
-            add_tag(exp, "Baliga Lab", "Experiment Type")
+            add_tag(exp, "Baliga Lab", "Other")
           end
         end
         
         unless exp.owner_id.nil?
           owner = User.find exp.owner_id
-          username = owner.email.split("@").first
+          username = "#{owner.first_name} #{owner.last_name}"
           add_tag(exp, username, "Owner")
         else
           add_tag(exp, "Unknown Owner", "Owner")
         end
                                   
-        add_tag(exp, exp.species.name, "Other")
-        add_tag(exp, exp.species.alternate_name, "Other")
-        #add_tag(exp, 'published') if ((!exp.papers.nil?) and exp.papers.size > 0)     
+        add_tag(exp, exp.species.name, "Species")
+        #add_tag(exp, exp.species.alternate_name, "Species")
+        add_tag(exp, 'in a paper', 'Papers') if ((!exp.papers.nil?) and exp.papers.size > 0)     
+        add_tag(exp, 'not in a paper', 'Papers') if (exp.papers.empty?)
         unless (exp.papers.nil?)
           for paper in exp.papers
             add_tag(exp, paper.short_name, "Papers")
           end
         end
-        add_tag(exp, "Not Published", "Papers") if exp.papers.empty?
+        ##add_tag(exp, "Not Published", "Papers") if exp.papers.empty?
         add_tag(exp, exp.growth_media_recipe.name, "Other")
         
       end

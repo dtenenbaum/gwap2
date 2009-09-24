@@ -173,13 +173,10 @@ var addToCart = function(item) {
 }
 
 var setExistingTagList = function(tagList) {     
-    log("in setExistingTagList");
     var s = "";
     for (var i = 0; i < tagList.length; i++) {
-        log("item... " + tagList[i]);
         s += "<option>" + tagList[i] + "</option>\n";
     }
-    log("list = " + s);
     jQuery("#existing_tag").html(s);
 }
 
@@ -429,7 +426,8 @@ jQuery(document).ready(function(){
     });
     
 	
-	// this is for the condition chooser box not the tag search box
+	// this is for the condition chooser box not the tag search box    
+	// is this code still used? todo - determine
     jQuery(".search_box").keypress(function(e){
         var code = (e.keyCode ? e.keyCode : e.which);
          if(code == 13) { //Enter keycode 
@@ -443,7 +441,8 @@ jQuery(document).ready(function(){
              var segs = this.id.split("_");
              var exps = segs[segs.length -1];   
              jQuery(".vis").empty();
-             jQuery("#load_status").html("Loading...");     
+             jQuery("#load_status").html("Loading...");  
+             // hmm, there is no controller called 'search' so I guess this is not used.   
              jQuery.get("search", {search : search, exps: exps}, function(data){    
                  jQuery("#load_status").empty();
                  jQuery("#search_results").html(data);
@@ -487,8 +486,16 @@ jQuery(document).ready(function(){
         }                              
         jQuery("#inclusive_search_results").html("Loading...")
         
+        var negate = "false";
+        //alert(document.getElementById("negate").checked);
+        if (document.getElementById("negate").checked) {
+            negate = "true" ;
+        }
+
+        log("negate = " + negate);
+        
         clearAjaxError();
-        jQuery.get("inclusive_search", {tags: tags}, function(data){
+        jQuery.get("inclusive_search", {tags: tags, negate: negate}, function(data){
             jQuery("#inclusive_search_results").html(data);
         });
     });
@@ -528,5 +535,8 @@ jQuery(document).ready(function(){
     jQuery("#save_changes").livequery('click', function(event){
         alert("You can't save. Yet.");
     });
+         
+    jQuery(".tag_select").val("-");
+    document.getElementById("negate").checked = false;
 
 });      // end of jquery document ready function

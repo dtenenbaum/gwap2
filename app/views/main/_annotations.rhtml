@@ -58,4 +58,28 @@
 			</tr>
 			<% end %>
 </table>
+</div>  
+<!--
+<div id="gaggle_namelist_locus_tag" class="gaggle">
+    <div class="gaggle-data___">
+      <span class="gaggle-name">Annotated Genes (Locus Tag)</span>
+         <span class="gaggle-species">Halobacterium sp. NRC-1</span>
+         <span class="gaggle-size"><%=annotations.size%></span>
+      <span class="gaggle-namelist-tsv">         
+          <%= annotations.map{|i|i.locus_tag}.join("\n")%>
+      </span>
+     </div>
 </div>
+<div id="gaggle_namelist_locus" class="gaggle">
+    <div class="gaggle-data___">
+      <span class="gaggle-name">Annotated Genes (Locus)</span>
+         <span class="gaggle-species">Halobacterium sp. NRC-1</span>
+         <span class="gaggle-size"><%=locus_annotations(annotations).size %></span>
+      <span class="gaggle-namelist-tsv">         
+          <%= locus_annotations(annotations).join("\n") %>
+      </span>
+     </div>
+</div>
+ -->
+
+<%# = render :partial => 'fg_fire_event'%>

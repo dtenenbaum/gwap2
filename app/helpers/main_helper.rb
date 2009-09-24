@@ -56,6 +56,18 @@ module MainHelper
   def email
     session[:user].email
   end
+  
+  def locus_annotations(annotations)
+    locus = []
+    annotations.each do |anno| 
+      if anno.locus.nil?
+        locus << anno.locus_tag
+      else
+        locus << anno.locus
+      end
+    end
+    locus
+  end
 
   
 end

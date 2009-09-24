@@ -188,7 +188,8 @@ end
    @manual_tags.unshift("")
    @remaining_tags = @all_tags
    @exps = Experiment.find(:all, :order => 'name', :include =>[{:conditions=>:observations}])
-   @tag_categories = TagCategory.find :all, :order => 'category_name'
+   #@tag_categories = TagCategory.find :all, :order => 'category_name'
+   @tag_categories = TagCategory.find_by_sql "select * from tag_categories where id in (select distinct tag_category_id from experiment_tags) order by category_name"
    #@exps = Experiment.find(:all)
  end
  
@@ -257,17 +258,29 @@ end
    @non_numeric.sort!
    @non_numeric.uniq!     
    @exps = [@exp]
+   
+   @manual_tags = ExperimentTag.find :all, :conditions => ['auto = false and experiment_id = ?',@exp.id ], :order => 'tag'
+   @auto_tags = ExperimentTag.find :all, :conditions => ['auto = true and experiment_id = ?',@exp.id ], :order => 'tag_category_id, tag'
+   @auto_tag_categories = {}
+   @auto_tags.each {|i| @auto_tag_categories[i.tag_category.category_name] = []}
+   @auto_tags.each do |tag|
+#     @auto_tag_categories[tag.category.category_name] << tag
+   end
  end
  
  def inclusive_search
    raw_tags = params['tags'].gsub(/\#\#$/,"")
-   tags = raw_tags.split("##")
+   tags = raw_tags.split("##") 
+   negate = " " 
+   negate = " not " if params[:negate] == 'true'
    sql = <<"EOF"
    select * from experiments where id in (
-       select experiment_id from experiment_tags where tag in (?)
+       select experiment_id from experiment_tags where tag #{negate} in (?)
    ) order by name
 EOF
-   @exps = Experiment.find_by_sql([sql,tags])
+   @exps = Experiment.find_by_sql([sql,tags])  
+   @negate = ""
+   @negate = "(Negated)" if params[:negate] == 'true'
    @sparklines = []                   
    exp_cond_nums = {}
    for exp in @exps
