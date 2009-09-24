@@ -1,5 +1,6 @@
 class DataOutputHelper < ApplicationController
   require 'rexml/document'
+  require 'rexml/formatters/pretty'
   include REXML
   
   require 'pp'

@@ -55,7 +55,7 @@ class AutoTag
         for gp in exp.knockouts
           add_tag(exp, gp.gene, "Genetic")
         end       
-        add_tag(exp, 'wild type', "Genetic") if (exp.knockouts.empty?)
+        add_tag(exp, 'wild type', "Genetic") if (exp.knockouts.empty?) # this will not handle overexpression, when we start dealing with it. todo fix
         for ep in exp.environmental_perturbations
           add_tag(exp, ep.perturbation, "Environmental")
         end
