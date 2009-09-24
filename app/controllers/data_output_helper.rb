@@ -62,7 +62,7 @@ class DataOutputHelper < ApplicationController
     ratio = Element.new('dataset')
     ratio.attributes['status'] = 'primary'
     ratio.attributes['type'] = 'log10 ratios'
-    ratio_url = "URL_SUB?cond_ids=#{cond_list.join(",")}&data_type=ratios" 
+    ratio_url = "URL_SUB?cond_ids=COND_SUB&data_type=ratios" 
     ratio_uri = Element.new("uri")
     ratio_uri.root.text = ratio_url
                    
@@ -73,7 +73,7 @@ class DataOutputHelper < ApplicationController
     lambda = Element.new('dataset')
     lambda.attributes['status'] = 'derived'
     lambda.attributes['type'] = 'lambdas'
-    lambda_url = "URL_SUB?cond_ids=#{cond_list.join(",")}&data_type=lambda" 
+    lambda_url = "URL_SUB?cond_ids=COND_SUB&data_type=lambda" 
     lambda_uri = Element.new("uri")
     lambda_uri.root.text = lambda_url
     lambda.add(lambda_uri)
@@ -102,7 +102,8 @@ class DataOutputHelper < ApplicationController
     #return url if true
     fmt.write(doc, strang)
     strang
-    strang.gsub("URL_SUB",url)
+    strang.gsub!("URL_SUB",url)
+    strang.gsub("COND_SUB", cond_list.join(","))
     #puts doc
   end
   

@@ -224,6 +224,11 @@ var onSearchResultsLoaded = function() {
     
     log("search results loaded...");
     onSelectionChanged();
+
+    jQuery(".experiment_checkbox").each(function(){
+        this.checked = true;
+    });
+
     
     jQuery("#check_all").click(function(){    
         jQuery(".experiment_checkbox").each(function(){
@@ -415,6 +420,13 @@ var initializeTaggingDialog = function() {
 
 jQuery(document).ready(function(){       
     jQuery('span.sf-menu').superfish();
+
+    jQuery("button").addClass("ui-widget");
+    jQuery("select").addClass("ui-widget");
+    jQuery("checkbox").addClass("ui-widget");
+    jQuery("input").addClass("ui-widget");
+
+
                                               
     initializeTaggingDialog();
 
@@ -488,7 +500,7 @@ jQuery(document).ready(function(){
         
         var negate = "false";
         //alert(document.getElementById("negate").checked);
-        if (document.getElementById("negate").checked) {
+        if (document.getElementById("negate") != null && document.getElementById("negate").checked) {
             negate = "true" ;
         }
 
@@ -536,7 +548,12 @@ jQuery(document).ready(function(){
         alert("You can't save. Yet.");
     });
          
-    jQuery(".tag_select").val("-");
-    document.getElementById("negate").checked = false;
+    jQuery(".tag_select").val("-");  
+    if (document.getElementById("negate") != null) {
+        document.getElementById("negate").checked = false;
+    }
+
+  
+    log("end of page init");
 
 });      // end of jquery document ready function

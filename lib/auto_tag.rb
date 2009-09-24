@@ -17,14 +17,14 @@ class AutoTag
   
   @categories = {}
   
-  def self.add_tag(exp, tag, type)
-    e = ExperimentTag.new(:experiment_id => exp.id, :tag => tag, :auto => true, :is_alias => false, :alias_for => tag,
+  def self.add_tag(exp, tag, type, auto=true)
+    e = ExperimentTag.new(:experiment_id => exp.id, :tag => tag, :auto => auto, :is_alias => false, :alias_for => tag,
     :tag_category_id => @categories[type])
 ##    pp e                
     e.save
     if @synonyms.has_key?(tag)
       for item in @synonyms[tag]
-        e = ExperimentTag.new(:experiment_id => exp.id, :tag => item, :auto => true, :is_alias => true, :alias_for => tag,
+        e = ExperimentTag.new(:experiment_id => exp.id, :tag => item, :auto => auto, :is_alias => true, :alias_for => tag,
           :tag_category_id => @categories[type])
 ##        pp e                                                                        
         e.save
@@ -110,7 +110,7 @@ class AutoTag
       eh.each_key do |k|    
         #puts "ok"
         tag = (k.last == 0) ? "FYL_GTFs:Lrps:154conditions:200908" : "FYL_GTFs:Lrps:161 conditions:200908"
-        add_tag(k.first, tag, "Other")
+        ########add_tag(k.first, tag, "Manually Tagged", false)
       end
       
       

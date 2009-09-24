@@ -46,7 +46,7 @@ class DataController < ApplicationController
       jnlp += line
     end
     
-    exp_ids = params[:exp_ids].gsub(/,$/, "")
+    exp_ids = params[:exp_ids].gsub(/,$/, "").split(",")
     cond_ids = Condition.find_by_sql(["select id from conditions where experiment_id in (?)", exp_ids]).map{|i|i.id}
     
     
