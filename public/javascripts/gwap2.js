@@ -223,11 +223,11 @@ var getListOfCheckedBoxes = function() {
 var onSearchResultsLoaded = function() {
     
     log("search results loaded...");
-    onSelectionChanged();
 
     jQuery(".experiment_checkbox").each(function(){
         this.checked = true;
     });
+    onSelectionChanged();
 
     
     jQuery("#check_all").click(function(){    
