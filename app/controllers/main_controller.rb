@@ -224,7 +224,7 @@ end
  def get_gwap1_ids
    exp_ids = params[:exp_ids].gsub(/,$/, "")
    gwap1_ids = Experiment.find_by_sql(["select gwap1_id from experiments where id in (?)",exp_ids.split(",")]).map{|i|i.gwap1_id}
-   ret = "var gwap_url = 'http://gaggle.systemsbiology.net:/GWAP/dmv/dynamic.jnlp?host=gaggle.systemsbiology.net&port=&exps=#{gwap1_ids.join(",")}';"
+   ret = "var gwap_url = 'http://gaggle.systemsbiology.net/GWAP/dmv/dynamic.jnlp?host=gaggle.systemsbiology.net&port=&exps=#{gwap1_ids.join(",")}';"
    render :text => ret
  end
  

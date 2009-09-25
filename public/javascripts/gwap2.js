@@ -197,8 +197,10 @@ var onSelectionChanged = function() {
     
     if (checked_exps == 0) {
         jQuery("#dmv_link").html("Open Checked In DMV");
-    } else {                                                            
-        var url = "" + window.location.protocol + "//" + window.location.hostname + ":" + window.location.port +  "/data/get_jnlp?exp_ids=" + getListOfCheckedBoxes();
+    } else {                                  
+                                  
+        //var url = "" + window.location.protocol + "//" + window.location.hostname + ":" + window.location.port +  "/data/get_jnlp?exp_ids=" + getListOfCheckedBoxes();
+        var url = "http://gaggle.systemsbiology.net/GWAP/dmv/dynamic.jnlp?host=gaggle.systemsbiology.net&port=&exps=" + getCheckedGwap1Ids();
         jQuery("#dmv_link").html("<a href='"+url+"'>Open Checked In DMV</a>");
     }
     
@@ -219,6 +221,22 @@ var getListOfCheckedBoxes = function() {
     }
     return s;
 }
+
+var getCheckedGwap1Ids = function() {
+    var s = "";
+    jQuery(".experiment_checkbox").each(function(i){
+        if (this.checked) {
+            s = s + jQuery(this).attr("gwap1_id");
+            s = s + ",";
+        }
+    });  
+    if (s == "") {
+        return null;
+    }
+    return s;
+}
+
+
                   
 var onSearchResultsLoaded = function() {
     
@@ -227,7 +245,8 @@ var onSearchResultsLoaded = function() {
     jQuery(".experiment_checkbox").each(function(){
         this.checked = true;
     });
-    onSelectionChanged();
+    onSelectionChanged();       
+    //alert("haha: " + getCheckedGwap1Ids());
 
     
     jQuery("#check_all").click(function(){    

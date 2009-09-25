@@ -29,7 +29,7 @@ Total number of conditions selected: <span id="number_of_conditions_selected"></
 <% end %>    
 
 <% exps.each_with_index do |exp,i| %>
-    <input type="checkbox" class="experiment_checkbox" id="experiment_checkbox_<%=exp.id%>"/>
+    <input type="checkbox" class="experiment_checkbox" id="experiment_checkbox_<%=exp.id%>" gwap1_id="<%=exp.gwap1_id%>"/>
     <a href="<%=url_for :action => "experiment_detail", :id => exp.id %>" target="_blank" title="click for detail"><%=exp.name%></a> (<%= exp.conditions.size%> conditions)<br/>
     &nbsp;&nbsp;<%= exp.description %><br/>
     <%= sparklines[i] %><br/>
