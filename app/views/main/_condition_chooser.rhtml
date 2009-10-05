@@ -1,0 +1,11 @@
+<div id="conditions_for_experiment_<%=exp.id%>" class="conditions_for_experiment">
+<% for cond in exp.conditions %>
+   <input type="checkbox" checked class="condition" id="condition_<%=cond.id%>"/>
+   <%= cond.name %>
+   <blockquote> 
+       <% for ob in cond.observations %>
+            <%= ob.name %> <%= ob.string_value %> <%= ob.unit_name || " " %><br/>
+       <% end %>
+   </blockquote>
+<% end %>
+</div>

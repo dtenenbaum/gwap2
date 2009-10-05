@@ -19,7 +19,11 @@ var heatmap_data;
 var table;   
 var plot; 
 var network;    
-var net_options;    
+var net_options;     
+
+var last_table_state = "";
+var last_heatmap_state = "";
+var last_plot_state = "";
 
 
 var available_tags;
@@ -39,13 +43,12 @@ function googleVisInit() {
     startColor: {r:0, g:0, b:0, a:1},
                                       endColor: {r:255, g:0, b:0, a:1},
     */
-    heatmap_options = {               cellHeight: 30, 
-                                      cellWidth: 30,
+    heatmap_options = {               mapWidth: 500, 
+                                      mapHeight: 500,
                                       passThroughBlack:false, 
                                       hideHeaders: true, 
-                                      drawBorder: false, 
+                                      drawBorder: true, 
                                       useCellLabels: false, 
-                                      //useRowLabels: false,
                                       cellToolTips: "headers"};
                                       
 
@@ -154,14 +157,14 @@ var enterDetect = function(elem, func) {
 }     
 
 var geneSearch = function() {
-    expIds = getListOfCheckedBoxes();
-    if (expIds == null) {
+    var isAnythingChecked = getListOfCheckedBoxes();
+    if (isAnythingChecked == null) {
         alert("Nothing is checked!");
         return;
     }
     searchString = document.getElementById("gene_search").value;
     jQuery("#gene_search_results").html("Loading...");
-    jQuery("#gene_search_results").load("gene_search", {"exps" : expIds,  "search" : searchString}, onGeneSearchReturned());
+    jQuery("#gene_search_results").load("gene_search", {"search" : searchString}, onGeneSearchReturned());
 }
 
 var addSearchBoxValueToCart = function(item) {
@@ -185,11 +188,29 @@ var onSelectionChanged = function() {
     var checked_exps = 0;
     var checked_conds = 0;
     jQuery(".experiment_checkbox").each(function(i){
+        var segs = this.id.split("_");
+        s = segs[segs.length-1];
         if (this.checked) {
             checked_exps += 1;
-            var segs = this.id.split("_");
-            s = segs[2];
-            checked_conds += exp_cond_nums[s];
+            if (jQuery("#condition_chooser_"+s).html().length > 2) {
+                var c = 0;
+                jQuery("#conditions_for_experiment_" + s + " .condition").each(function(j){
+                    if (this.checked) {
+                        c += 1;
+                    }
+                });
+                checked_conds += c;
+            } else {
+                checked_conds += exp_cond_nums[s];
+            }
+            
+            jQuery("#choose_conditions_" + s).removeAttr("disabled");
+        } else {
+            jQuery("#choose_conditions_" + s).attr("disabled","disabled");
+            if (jQuery("#condition_chooser_"+s).is(":visible")) {
+                jQuery("#condition_chooser_" + s).hide();
+                jQuery("#choose_conditions_" + s).html("Show Conditions");
+            }
         }
     });
     jQuery("#number_of_experiments_selected").text("" + checked_exps);
@@ -199,7 +220,6 @@ var onSelectionChanged = function() {
         jQuery("#dmv_link").html("Open Checked In DMV");
     } else {                                  
                                   
-        //var url = "" + window.location.protocol + "//" + window.location.hostname + ":" + window.location.port +  "/data/get_jnlp?exp_ids=" + getListOfCheckedBoxes();
         var url = "http://gaggle.systemsbiology.net/GWAP/dmv/dynamic.jnlp?host=gaggle.systemsbiology.net&port=&exps=" + getCheckedGwap1Ids();
         jQuery("#dmv_link").html("<a href='"+url+"'>Open Checked In DMV</a>");
     }
@@ -236,12 +256,19 @@ var getCheckedGwap1Ids = function() {
     return s;
 }
 
+var setUpFullDataMatrixUrl = function() {
+    jQuery("checkedMatrix").attr("url","someurl");
+    FG_fireDataEvent();
+}
 
                   
 var onSearchResultsLoaded = function() {
     
+    
     log("search results loaded...");
-
+    
+    setUpFullDataMatrixUrl();
+    
     jQuery(".experiment_checkbox").each(function(){
         this.checked = true;
     });
@@ -263,6 +290,9 @@ var onSearchResultsLoaded = function() {
         onSelectionChanged();
     });
                              
+    jQuery(".condition").livequery('change',function(event){
+        onSelectionChanged();
+    });
     
     jQuery(".experiment_checkbox").change(function(){
         onSelectionChanged();
@@ -283,7 +313,8 @@ var onSearchResultsLoaded = function() {
     });     
     
     
-    //todo - modify to use gwap2 loading
+    //todo - modify to use gwap2 loading    
+    // doesn't look like this is called
     jQuery("#open_in_dmv").click(function(){     
         log("so you want a dmv?");
         var s = getListOfCheckedBoxes();
@@ -320,40 +351,61 @@ var onGeneSearchReturned = function() {
     
     jQuery("#annotations_link").livequery('click', function(event) {    
         if (jQuery("#annotations").html().length < 12) {
-            var s = getListOfCheckedBoxes(); 
             jQuery("#annotations").html("Loading...");
-            jQuery("#annotations").load("annotations", {"search" : searchString, "exps" : s});
+            jQuery("#annotations").load("annotations", {"search" : searchString});
         } else {
             jQuery("#annotations").toggleClass("hide-me-away");
         }
     });
     
-    jQuery("#heatmap_link").livequery('click', function(event) {    
-        heatmap = new org.systemsbiology.visualization.BioHeatMap(document.getElementById("heatmap"));
-        if (jQuery("#heatmap").html().length < 12) {
-            var s = getListOfCheckedBoxes();
+    //  todo the next 3 calls are ripe for refactoring
+    
+    
+    jQuery("#heatmap_link").livequery('click', function(event) {           
+        
+        var s = getListOfChosenConditions();
+        
+        log("s = " + s);
+        log("lhs = " + last_heatmap_state);
+
+
+        var stateHasChanged = (last_heatmap_state == "" || last_heatmap_state != s);
+
+        if (stateHasChanged) {
+            last_heatmap_state = s;
+            jQuery("#heatmap").removeClass("hide-me-away");
+            heatmap = new org.systemsbiology.visualization.BioHeatMap(document.getElementById("heatmap"));
             jQuery("#heatmap").html("Loading...");
             jQuery("#heatmap_script").load("heatmap", {"search" : searchString, "exps" : s});
         } else {
             jQuery("#heatmap").toggleClass("hide-me-away");
         }
+        
     });   
     
     jQuery("#table_link").livequery('click', function(event) {    
-    	table = new google.visualization.Table(document.getElementById("table"));   
-        if (jQuery("#table").html().length < 12) {
-            var s = getListOfCheckedBoxes();  
+        var s = getListOfChosenConditions();  
+        var stateHasChanged = (last_table_state == "" || last_table_state != s);
+        if (stateHasChanged) {
+            last_table_state = s;
+            jQuery("#table").removeClass("hide-me-away");
+        	table = new google.visualization.Table(document.getElementById("table"));   
             jQuery("#table").html("Loading...");
             jQuery("#table_script").load("table", {"search" : searchString, "exps" : s});
+            
         } else {
             jQuery("#table").toggleClass("hide-me-away");
         }
     });   
     
     jQuery("#plot_link").livequery('click', function(event) {    
-    	plot = new google.visualization.LineChart(document.getElementById("plot"));
-        if (jQuery("#plot").html().length < 12) {
-            var s = getListOfCheckedBoxes();
+        var s = getListOfChosenConditions();  
+        var stateHasChanged = (last_plot_state == "" || last_plot_state != s);       
+        log ("stateHasChanged?" + stateHasChanged);
+        if (stateHasChanged) {
+            last_plot_state = s;
+            jQuery("#plot").removeClass("hide-me-away");
+        	plot = new google.visualization.LineChart(document.getElementById("plot"));
             jQuery("#plot_loader").html("Loading...");
             jQuery("#plot_script").load("plot", {"search" : searchString, "exps" : s}, function(){
                 jQuery("#plot_loader").html("");
@@ -361,12 +413,26 @@ var onGeneSearchReturned = function() {
         } else {
             jQuery("#plot").toggleClass("hide-me-away");
         }
+
+
+        /*
+        if (jQuery("#plot").html().length < 12) {
+            var s = getListOfChosenConditions();
+        	plot = new google.visualization.LineChart(document.getElementById("plot"));
+            jQuery("#plot_loader").html("Loading...");
+            jQuery("#plot_script").load("plot", {"search" : searchString, "exps" : s}, function(){
+                jQuery("#plot_loader").html("");
+            });
+        } else {
+            jQuery("#plot").toggleClass("hide-me-away");
+        } 
+        */
     });   
     
     jQuery("#network_link").livequery('click', function(event) {    
-    	network = new org.systemsbiology.visualization.BioNetwork(document.getElementById("network"));  
     	if (jQuery("#network").html().length < 12) {
             var s = getListOfCheckedBoxes();
+        	network = new org.systemsbiology.visualization.BioNetwork(document.getElementById("network"));  
             jQuery("#network").html("Loading...");
             jQuery("#network_script").load("network", {"search" : searchString, "exps" : s});
     	} else {
@@ -402,7 +468,7 @@ var tagCheckedExperiments = function() {
     
     var tag = (isNewTag) ? tagName : existingTag;
     
-    var data = {experiments: getListOfCheckedBoxes(),
+    var data = {experiments: getListOfChosenConditions(),
                 tagCategory: tagCategory,
                 isNewTag: isNewTag,
                 tag: tag};
@@ -431,6 +497,59 @@ var initializeTaggingDialog = function() {
         }
     });
     
+}
+
+var getListOfChosenConditions = function() {
+    /*
+    if exp is checked:
+      if cond chooser is loaded:
+        return list of checkboxes
+      else:
+        add eX to list
+     */
+    var s = "";
+    jQuery(".experiment_checkbox").each(function(i){
+        if (this.checked) {
+            var segs = this.id.split("_");
+            var expId = segs[segs.length -1];
+            var ccDivName = "#conditions_for_experiment_" + expId;
+            if (jQuery(ccDivName).length) {
+                jQuery(ccDivName + " .condition").each(function(i){
+                    if (this.checked) {
+                        var tmp = this.id.split("_");
+                        var condId = tmp[tmp.length -1];
+                        s += condId;
+                        s += ","
+                    }
+                });
+            } else {
+                s += "e" + expId + ","
+            }
+        }
+    });  
+    if (s == "") {
+        return null;
+    }
+    return s;
+}
+
+var conditionChooserClickHandler = function(event) {
+    var tmp = jQuery(this).attr("id").split("_");
+    var id = tmp[tmp.length-1];
+    var divName = "#condition_chooser_" + id;
+    
+    log("length = " + jQuery(divName).html().length);
+    
+    if (jQuery(divName).html().length < 2) {
+        jQuery(this).html("Hide Conditions");
+        jQuery(divName).show();
+        jQuery(divName).html("Loading...");
+        jQuery(divName).load("condition_chooser", {exp_id: id});
+    } else {
+        jQuery(divName).toggle();
+        var html = (jQuery(divName).is(':visible')) ? "Hide Conditions" : "Show Conditions" ;
+        jQuery(this).html(html);
+    }
 }
 
 
@@ -571,8 +690,14 @@ jQuery(document).ready(function(){
     if (document.getElementById("negate") != null) {
         document.getElementById("negate").checked = false;
     }
+       
+    jQuery(".choose_conditions").livequery('click', conditionChooserClickHandler)
 
-  
-    log("end of page init");
+    jQuery("#dan_test").livequery("click", function(event){
+       log("result is " + getListOfChosenConditions()) ;
+    });
+
+    log("end of page init");  
+    
 
 });      // end of jquery document ready function

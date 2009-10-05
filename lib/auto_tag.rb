@@ -14,21 +14,26 @@ class AutoTag
   end
   
 #  exit if true
-  
+   
+  @condmap = {}
+  exps = Experiment.find :all
+  exps.each {|i|@condmap[i.id] = i}
   @categories = {}
   
   def self.add_tag(exp, tag, type, auto=true)
-    e = ExperimentTag.new(:experiment_id => exp.id, :tag => tag, :auto => auto, :is_alias => false, :alias_for => tag,
-    :tag_category_id => @categories[type])
-##    pp e                
-    e.save
-    if @synonyms.has_key?(tag)
-      for item in @synonyms[tag]
-        e = ExperimentTag.new(:experiment_id => exp.id, :tag => item, :auto => auto, :is_alias => true, :alias_for => tag,
+    for cond in @condmap[exp.id].conditions
+          e = ExperimentTag.new(:condition_id => cond.id, :tag => tag, :auto => auto, :is_alias => false, :alias_for => tag,
           :tag_category_id => @categories[type])
-##        pp e                                                                        
-        e.save
-      end
+      ##    pp e                
+          e.save
+          if @synonyms.has_key?(tag)
+            for item in @synonyms[tag]
+              e = ExperimentTag.new(:condition_id => cond.id, :tag => item, :auto => auto, :is_alias => true, :alias_for => tag,
+                :tag_category_id => @categories[type])
+      ##        pp e                                                                        
+              e.save
+            end
+          end
     end
   end
   

@@ -5,13 +5,9 @@
     No match.
 <% end %>
 
+<p><a href="#" id="dan_test">Test</a></p>
 <p>
 <a id="check_all">Check All</a> | <a id="uncheck_all">Uncheck All</a> | <a id="tag_selected">Tag Selected</a> | <span id="dmv_link"></span>  | <input type="text" id="gene_search" title="Search for genes from this set of conditions. Search using all or part of a protein name, annotation, COG ID, GI or Gene ID number" name="gene_search" value="Gene Search"/>
-<script type="text/javascript">
-    exp_cond_nums = <%= exp_cond_nums%>;
-    onSearchResultsLoaded();
-</script>
-</p>
 
 <% unless exps.nil? or exps.empty?%>
 
@@ -23,19 +19,64 @@ Total number of conditions selected: <span id="number_of_conditions_selected"></
 
 </p>
 
+
+<div name="gaggle_xml" class="hidden">
+    <gaggleData version="0.1">
+        <dataMatrix id="checkedMatrix" type="indirect" name="Checked Experiments" species="Halobacterium sp. NRC-1" size="8,1"
+            url="">
+        </dataMatrix>
+    </gaggleData>
+</div>
+
+
 <div id="gene_search_results"></div>
     
     
 <% end %>    
 
+
+<script type="text/javascript">
+    exp_cond_nums = <%= exp_cond_nums%>;
+    onSearchResultsLoaded();
+</script>
+</p>
+
+<table border="1">
+    <tr>
+        <th>Checked</th>
+        <th>Conditions</th>
+        <th>Knockouts</th>
+        <th>Environmental</th>
+        <th>Sparkline</th>
+    </tr>
+
 <% exps.each_with_index do |exp,i| %>
-    <input type="checkbox" class="experiment_checkbox" id="experiment_checkbox_<%=exp.id%>" gwap1_id="<%=exp.gwap1_id%>"/>
-    <a href="<%=url_for :action => "experiment_detail", :id => exp.id %>" target="_blank" title="click for detail"><%=exp.name%></a> (<%= exp.conditions.size%> conditions)<br/>
-    &nbsp;&nbsp;<%= exp.description %><br/>
-    <%= sparklines[i] %><br/>
-    <% unless rejected_columns.empty? %>
-        Not shown: non-numeric values for: <%= rejected_columns.join(", ")%><br/>
-    <% end %>
-    &nbsp;<br/>
-    
+    <tr>
+        <td>
+            <input type="checkbox" class="experiment_checkbox" id="experiment_checkbox_<%=exp.id%>" gwap1_id="<%=exp.gwap1_id%>"/>
+        </td>
+        <td>
+            <a href="<%=url_for :action => "experiment_detail", :id => exp.id %>" target="_blank" title="click for detail"><%= exp.conditions.size%></a>  
+        </td>
+        <td>
+            <% for ko in exp.knockouts %>
+                &Delta;<%=ko.gene_and_alias%><br/>
+            <% end %>             
+        </td>
+        <td>
+            <% for ep in exp.environmental_perturbations %>
+                <%=ep.perturbation%><br/>
+            <% end %>
+        </td>
+        <td>
+            <%= sparklines[i] %><br/>
+            <% unless rejected_columns.empty? %>
+                Not shown: non-numeric values for: <%= rejected_columns.join(", ")%><br/>
+            <% end %>
+            &nbsp;<br/> 
+            <button type="button" class="choose_conditions" id="choose_conditions_<%=exp.id%>" title-"Select individual conditions within this experiment">Show Conditions</button>
+            <div id="condition_chooser_<%=exp.id%>"></div>
+        </td>
+    </tr>
 <% end %>
+</table>

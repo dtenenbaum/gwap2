@@ -5,5 +5,5 @@ class Observation < ActiveRecord::Base
   belongs_to :controlled_vocab_item, :foreign_key => :name_id
   belongs_to :unit, :foreign_key => :units_id
   delegate :name, :to => :controlled_vocab_item
-  delegate :unit_name, :to => :unit
+  delegate :unit_name, :to => :unit, :default => nil
 end

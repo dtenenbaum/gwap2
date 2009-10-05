@@ -1,0 +1,42 @@
+== Cogent Utilities
+
+Cogent Utilities is a plugin that provides a :default extension to the 'delegate' method, and a 'total method to the Enumerable module.
+
+=== Using the :default extension to 'delegate'
+
+(NOTE: This code and example were created by Jonathan Leighton, and wrapped in a plugin by Cogent Consulting.  Credit for the implementation should all go to Jonathan.  See http://jonathanleighton.com/blog/rails-delegate-default-option for details).
+
+Rails contains a handy shortcut for adhering to The Principle of Least Knowledge. If your Person class has an address, and you want to get the person’s country, you can delegate it like so:
+
+	class Person < ActiveRecord::Base
+	  ...
+	  delegate :country, :to => :address
+	  ...
+	end
+
+This is all well and good if you can be sure that there will always be an address for any given person. If address is nil and country is called, however, an exception will be raised (because nil.country is undefined).
+
+Sometimes it’s helpful to be able to specify a default value, so I extended the delegate method to allow you to write:
+
+	class Person < ActiveRecord::Base
+	  ...
+	  delegate :country, :to => :address, :default => "United Kingdom" 
+	  ...
+	end
+
+A word of caution however: use this with restraint. In general, default values should be stored in the database, not in your code. A next step for this might be for delegate to be association-aware, so that it can look up defaults from the database automatically when it encounters a nil object.
+
+
+=== Using the 'total' method on Enumerable
+
+Instead of writing this code to figure out the total:
+	accounts.inject(0.0) {|sum, each| sum = sum + each.send(:balance)}
+	
+You can write this instead:
+	accounts.total(:balance)
+
+
+=== License
+
+This plugin is copyright 2008 by Cogent Consulting, Pty. Ltd. and is released
+under the MIT license.

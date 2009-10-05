@@ -5,54 +5,31 @@
 </script>
 
 
-<table>
-    <tr>
-        <td>
         <% unless categories.nil? %>  
-        
-        <table>
-            <tr>
-        <% for category in categories %>
-            <td>
-            <%= category.category_name%><br/>
-            <select class="tag_select">
+        <div>
+        <% categories.each_with_index do |category, index|%>
+            <fieldset class="select_box_group"> 
+                <label for="select_<%=index%>"><%= category.category_name%>:</label>
+            <select name="select_<%=index%>" class="tag_select">
                 <option>-</option>
                 <% for tag in category.experiment_tags.map{|i|i.tag}.sort{|a,b|a.downcase <=> b.downcase}.uniq %>
                 <option><%= tag%></option>
                 <% end %>
             </select>
-            </td>
+            </fieldset>
+            <% if index > 0 and index.modulo(3) == 0%>
+                <br/>
+            <% end %>
         <% end %>
-            </tr>
-        </table>
-        
-        
-        <% for category in [] #for category in categories %>
-            <td>
-                <ul class="sf-menu">
-                    <li class="current">
-                        <a><%= category.category_name%></a>
-                            <ul>
-                                <% for tag in category.experiment_tags.map{|i|i.tag}.sort.uniq %>
-                                    <li class="menu_item_holder">
-                                        <a class="selected_menu_item"><%= tag %></a>
-                                    </li>
-                                <% end %>
-                            </ul>
-                 </ul>
-        <% end %>
+        </div>
         <% end%>
-        </td>
-        <td>
+<br/>
             My Search
             <ul id="my_search">
             </ul>
             <input type="checkbox" name="negate" id="negate" value="true"> Negate Search<br/>
             <button type="button" id="search_button">Search</button>
             <button type="button" id="clear_selections">Clear Selections</button>
-        </td>
-    </tr>
-</table>
 
 
 

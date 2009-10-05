@@ -24,6 +24,9 @@ end
 def login
   if request.get?
     session[:redir_url] = params[:url]
+    unless (session[:user].nil?)
+      redirect_to :action=> "index" and return false
+    end
   else
     user = User.authenticate(params['email'],params['password'])     
     #render :text => user.email and return false
@@ -80,7 +83,7 @@ end
  end                                              
  
  def gene_search                                                         
-   exp_ids = params['exps'].split(",")
+   #exp_ids =  get_condition_id_list_from_mixed_list(params['exps']).split(",")
    @matches, @proteins = SearchHelper.full_search(params['search'])
    
    #@annos = AnnotationHelper.get_annotations(@proteins)
@@ -94,38 +97,36 @@ end
  
  
  def annotations
-   exp_ids = params['exps'].split(",")
    @matches, @proteins = SearchHelper.full_search(params['search'])
    @annos = AnnotationHelper.get_annotations(@proteins)
    render(:partial => "annotations", :locals => {:annotations => @annos})
  end     
  
  def heatmap
-   exp_ids = params['exps'].split(",")
+   cond_ids = get_condition_id_list_from_mixed_list(params['exps'])
    @matches, @proteins = SearchHelper.full_search(params['search'])
-   colnames, rows = ExpressionHelper.get_expr_data(@proteins, exp_ids)
+   colnames, rows = ExpressionHelper.get_expr_data_for_conditions(@proteins, cond_ids)
    @heatmap = VisHelper.matrix_as_google_response(colnames,rows, "gene_name","GENE")
    render(:partial => "heatmap", :locals => {:data => @heatmap})
  end
 
  def table
-   exp_ids = params['exps'].split(",")
+   cond_ids = get_condition_id_list_from_mixed_list(params['exps'])
    @matches, @proteins = SearchHelper.full_search(params['search'])
-   colnames, rows = ExpressionHelper.get_expr_data(@proteins, exp_ids)
+   colnames, rows = ExpressionHelper.get_expr_data_for_conditions(@proteins, cond_ids)
    @table = VisHelper.matrix_as_google_response(colnames,rows, "gene_name","GENE")
    render(:partial => "table", :locals => {:data => @table})
  end       
  
  def plot
-   exp_ids = params['exps'].split(",")
+   cond_ids = get_condition_id_list_from_mixed_list(params['exps'])
    @matches, @proteins = SearchHelper.full_search(params['search'])
-   colnames, rows = ExpressionHelper.get_expr_data(@proteins, exp_ids)
+   colnames, rows = ExpressionHelper.get_expr_data_for_conditions(@proteins, cond_ids)
    @plot = VisHelper.matrix_as_google_response(colnames, rows, "condition_name", "CONDITION")
    render(:partial => "plot", :locals => {:data => @plot})
  end       
  
  def network
-   exp_ids = params['exps'].split(",")
    @matches, @proteins = SearchHelper.full_search(params['search'])
    @network = NetworkHelper.get_network(@proteins)
    render(:partial => "network", :locals => {:data => @network})
@@ -196,13 +197,16 @@ end
  def add_experiment_tag
    # todo - should show a warning, or disallow adding tag, if user tries to add tag with the same name as an auto-generated tag
    # or does that not make sense? (it would complicate displaying auto tags differently from manual tags)     
+
+   cond_ids = get_condition_id_list_from_mixed_list(params['experiments'])
+   
    
    existing_tags = ExperimentTag.find :all, :conditions => ["auto = false and tag = ?", params[:tag]]
    
-   for experiment_id in params[:experiments].split(",")
-     new_tag = ExperimentTag.new(:experiment_id => experiment_id, :tag => params[:tag], :owner_id => session[:user].id, :alias_for => params[:tag],
+   for cond_id in cond_ids
+     new_tag = ExperimentTag.new(:condition_id => cond_id, :tag => params[:tag], :owner_id => session[:user].id, :alias_for => params[:tag],
        :tag_category_id => params[:tagCategory], :auto => false)
-     unless existing_tags.detect{|i|i.experiment_id == new_tag.experiment_id and i.tag = new_tag.tag}
+     unless existing_tags.detect{|i|i.condition_id == new_tag.condition_id and i.tag = new_tag.tag}
        new_tag.save
      end
    end
@@ -273,12 +277,24 @@ end
    tags = raw_tags.split("##") 
    negate = " " 
    negate = " not " if params[:negate] == 'true'
-   sql = <<"EOF"
-   select * from experiments where id in (
-       select experiment_id from experiment_tags where tag #{negate} in (?)
-   ) order by name
+   cond_exps = Condition.find_by_sql("select id, experiment_id from conditions")
+   cond_exp_map = {}
+   cond_exps.each{|i|cond_exp_map[i.id] = i.experiment_id}
+   condition_list_sql = <<"EOF"
+   select distinct condition_id from experiment_tags where tag #{negate} in (?)
 EOF
-   @exps = Experiment.find_by_sql([sql,tags])  
+   condition_list = Experiment.find_by_sql([condition_list_sql,tags]).map{|i|i.condition_id.to_i}
+   chosen_conditions = {}
+   condition_list.each{|i|chosen_conditions[i]=1}
+   exp_list = []
+   condition_list.each{|i|exp_list << cond_exp_map[i]}
+   
+
+   
+   sql = <<"EOF"
+   select * from experiments where id in (?) order by created_at
+EOF
+   @exps = Experiment.find_by_sql([sql,exp_list])  
    @negate = ""
    @negate = "(Negated)" if params[:negate] == 'true'
    @sparklines = []                   
@@ -304,6 +320,10 @@ EOF
    end
  end
  
+ def test_matrix
+   headers['Content-type'] = 'text/plain'
+   render :action => 'test_matrix', :layout => false
+ end
  
  def tag_exps
    url = params['url'].gsub(/\#$/,"")
@@ -491,6 +511,20 @@ EOF
     # 54 - metal experiment
   end
         
+  def get_condition_id_list_from_mixed_list(mixed_list)
+    items = mixed_list.split(",")
+    ret = []
+    for item in items
+      if (item =~ /^e/)
+        exp_id = item.gsub(/^e/,"")
+        cond_ids = Condition.find_by_sql(["select id from conditions where experiment_id = ?",exp_id]).map{|i|i.id}
+        ret += cond_ids
+      else
+        ret << item.to_i
+      end
+    end
+    ret
+  end
   
   def normalize(x, min, max, nscale_min=0.0, nscale_max=1.0)
     return 0 if (min == 0 and max == 0)
@@ -504,7 +538,9 @@ EOF
     result
   end   
   
-
+  def condition_chooser
+    render :partial => "condition_chooser", :locals => {:exp => Experiment.find(params[:exp_id])}
+  end
   
 
   def self.norm(a)
