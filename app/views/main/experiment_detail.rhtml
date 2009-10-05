@@ -9,8 +9,8 @@ Name = <%= @exp.name%><br/>
 Curation status:  <%= @exp.curation_status.name%><br/>
 Date performed: <%= @exp.date_performed%><br/>
 Date imported into GWAP1: <%= @exp.date_gwap1_imported%><br/>
-Owner: <%= @exp.owner.first_name %> <%= @exp.owner.last_name %><br/>
-Imported by: <%= (@exp.owner.nil?)  ? "undefined " :  "#{@exp.owner.first_name} #{@exp.owner.last_name}" %><br/>
+Owner:   <%= (@exp.owner.nil?)  ? "undefined " : "#{@exp.owner.first_name}  #{@exp.owner.last_name}" %><br/>
+Imported by: <%= (@exp.importer.nil?)  ? "undefined " :  "#{@exp.importer.first_name} #{@exp.importer.last_name}" %><br/>
 Manual tags:
 <%= @manual_tags.map{|i|i.tag}.join(", ")%>
 <br/>
