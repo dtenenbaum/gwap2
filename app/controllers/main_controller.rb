@@ -77,7 +77,8 @@ end
  def sparkline()
    exp = Experiment.find params[:id]
      columns, maxrange, minrange, h, rejected_columns = SparklineHelper.get_sparkline_info(exp.id)
-     render(:partial => "single_sparkline", :locals => {
+#     render :text => "hi #{columns.size}"
+     render(:partial => "single_sparkline", :layout => false, :locals => {
        :exp => exp, :columns => columns, :h => h, :maxrange => maxrange, :minrange => minrange
      })
  end                                              
@@ -305,7 +306,10 @@ EOF
        :exp => exp, :columns => columns, :h => h, :maxrange => maxrange, :minrange => minrange
      })
      @sparklines << sparkline
-     exp_cond_nums[exp.id.to_s] = exp.conditions.size
+     #which_conditions(exp, chosen_conditions)
+     #exp_cond_nums[exp.id.to_s] = exp.conditions.size
+     exp_cond_nums[exp.id.to_s] = which_conditions(exp, chosen_conditions)
+     
      
    end
    
@@ -313,6 +317,21 @@ EOF
      :exp_cond_nums => exp_cond_nums.to_json, :tags => tags}
  end
           
+ def which_conditions(exp, chosen_conditions)  
+   exp.num_conditions_included = 0
+   includes_all = true
+   for cond in exp.conditions
+     unless chosen_conditions.has_key? cond.id
+       includes_all = false
+       cond.included = false
+     else
+       exp.num_conditions_included += 1
+       cond.included = true  
+     end
+   end
+   return exp.num_conditions_included
+ end
+ 
  def old_tag_exps     
    response.content_type = "text/javascript"
    render :update do |page|
@@ -323,6 +342,10 @@ EOF
  def test_matrix
    headers['Content-type'] = 'text/plain'
    render :action => 'test_matrix', :layout => false
+ end   
+ 
+ def another_test_matrix
+   test_matrix
  end
  
  def tag_exps

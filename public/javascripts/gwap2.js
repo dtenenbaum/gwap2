@@ -25,6 +25,9 @@ var last_table_state = "";
 var last_heatmap_state = "";
 var last_plot_state = "";
 
+var checked_exps = 0;
+var checked_conds = 0;
+
 
 var available_tags;
 var manual_tags;
@@ -185,8 +188,8 @@ var setExistingTagList = function(tagList) {
 
 var onSelectionChanged = function() {    
     log("in onSelectionChanged()");
-    var checked_exps = 0;
-    var checked_conds = 0;
+    checked_exps = 0;
+    checked_conds = 0;
     jQuery(".experiment_checkbox").each(function(i){
         var segs = this.id.split("_");
         s = segs[segs.length-1];
@@ -215,6 +218,10 @@ var onSelectionChanged = function() {
     });
     jQuery("#number_of_experiments_selected").text("" + checked_exps);
     jQuery("#number_of_conditions_selected").text("" + checked_conds);    
+
+
+    setUpFullDataMatrixUrl();
+
     
     if (checked_exps == 0) {
         jQuery("#dmv_link").html("Open Checked In DMV");
@@ -256,9 +263,15 @@ var getCheckedGwap1Ids = function() {
     return s;
 }
 
-var setUpFullDataMatrixUrl = function() {
-    jQuery("checkedMatrix").attr("url","someurl");
+var setUpFullDataMatrixUrl = function() {  
+    var elem = document.getElementById("checkedMatrix");
+    log("url before change: " + elem.getAttribute("url"));
+    elem.setAttribute("url", "http://localhost:3000/main/another_test_matrix");
+    elem.setAttribute("size", ""+checked_conds+",?");
+    log("changed gaggle url to: " + elem.getAttribute("url"));
+    log("asking FG to reparse page");
     FG_fireDataEvent();
+    log("FG method call complete");
 }
 
                   
@@ -267,7 +280,6 @@ var onSearchResultsLoaded = function() {
     
     log("search results loaded...");
     
-    setUpFullDataMatrixUrl();
     
     jQuery(".experiment_checkbox").each(function(){
         this.checked = true;

@@ -14,7 +14,7 @@
 <p>
     Total number of experiments matching query: <%= exps.size%><br/>
     Total number of experiments selected: <span id="number_of_experiments_selected"></span><br/>
-Total number of conditions matching query: <%=exps.inject(0){|memo,exp|memo += exp.conditions.size} %><br/>
+Total number of conditions matching query: <%=exps.inject(0){|memo,exp|memo += exp.num_conditions_included} %><br/>
 Total number of conditions selected: <span id="number_of_conditions_selected"></span>
 
 </p>
@@ -23,7 +23,7 @@ Total number of conditions selected: <span id="number_of_conditions_selected"></
 <div name="gaggle_xml" class="hidden">
     <gaggleData version="0.1">
         <dataMatrix id="checkedMatrix" type="indirect" name="Checked Experiments" species="Halobacterium sp. NRC-1" size="8,1"
-            url="">
+            url="http://localhost:3000/main/test_matrix">
         </dataMatrix>
     </gaggleData>
 </div>
@@ -56,7 +56,13 @@ Total number of conditions selected: <span id="number_of_conditions_selected"></
             <input type="checkbox" class="experiment_checkbox" id="experiment_checkbox_<%=exp.id%>" gwap1_id="<%=exp.gwap1_id%>"/>
         </td>
         <td>
-            <a href="<%=url_for :action => "experiment_detail", :id => exp.id %>" target="_blank" title="click for detail"><%= exp.conditions.size%></a>  
+            <a href="<%=url_for :action => "experiment_detail", :id => exp.id %>" target="_blank" title="click for detail">
+            <% if exp.num_conditions_included == exp.conditions.size%>
+                <%= exp.conditions.size%>
+            <% else %>
+                <%=exp.num_conditions_included%>/<%= exp.conditions.size%>
+            <% end %>
+            </a>  
         </td>
         <td>
             <% for ko in exp.knockouts %>
@@ -70,10 +76,10 @@ Total number of conditions selected: <span id="number_of_conditions_selected"></
         </td>
         <td>
             <%= sparklines[i] %><br/>
-            <% unless rejected_columns.empty? %>
-                Not shown: non-numeric values for: <%= rejected_columns.join(", ")%><br/>
-            <% end %>
-            &nbsp;<br/> 
+            <% #unless rejected_columns.empty? %>
+                <!--Not shown: non-numeric values for: <%= rejected_columns.join(", ")%><br/>-->
+            <% #end %>
+            &nbsp;<br/>
             <button type="button" class="choose_conditions" id="choose_conditions_<%=exp.id%>" title-"Select individual conditions within this experiment">Show Conditions</button>
             <div id="condition_chooser_<%=exp.id%>"></div>
         </td>

@@ -19,13 +19,13 @@ var sparkline_<%=exp.id%> = function() {
 		<% end %>
 
         var chart_<%=exp.id%> = new google.visualization.ImageSparkLine(document.getElementById('sparkline_<%=exp.id%>'));
-        chart_<%=exp.id%>.draw(data_<%=exp.id%>, {width: 120, height: 40, showAxisLines: false,  showValueLabels: false, labelPosition: 'left',min: [<%=minrange.join(",")%>], max: [<%=maxrange.join(",")%>]	});
+        chart_<%=exp.id%>.draw(data_<%=exp.id%>, {width: 40,  height: 40, showAxisLines: false,  showValueLabels: false, labelPosition: 'left',min: [<%=minrange.join(",")%>], max: [<%=maxrange.join(",")%>]	});
 
 }
 
 	sparkline_<%=exp.id%>();
 </script>
 <div class="sparkline" id="sparkline_<%=exp.id%>"></div>
-<% if has_nan %>
-    Warning: there was no data for some points.<br/>
-<% end %>
+<% #if has_nan %>
+    <!--Warning: there was no data for some points.<br/>-->
+<% #end %>

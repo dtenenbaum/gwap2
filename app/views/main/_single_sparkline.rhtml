@@ -17,10 +17,9 @@ var sparkline = function() {
 		<% end %>
 
         var chart = new google.visualization.ImageSparkLine(document.getElementById('sparkline'));
-        chart.draw(data, {width: 120, height: 40, showAxisLines: false,  showValueLabels: false, labelPosition: 'left',min: [<%=minrange.join(",")%>], max: [<%=maxrange.join(",")%>]	});
+        chart.draw(data, {width: 40, height: 40, showAxisLines: false,  showValueLabels: false, labelPosition: 'left', min: [<%=minrange.join(",")%>], max: [<%=maxrange.join(",")%>]    });
 
 }
-   jQuery()
 
    jQuery(document).ready(function(){       
 	   sparkline();

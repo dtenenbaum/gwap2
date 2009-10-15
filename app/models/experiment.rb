@@ -14,5 +14,7 @@ class Experiment < ActiveRecord::Base
   belongs_to :importer, :class_name => "User", :foreign_key => :importer_id    
   belongs_to :platform
   belongs_to :reference_sample
-  belongs_to :species
+  belongs_to :species         
+  
+  attr_accessor :all_conditions_included, :num_conditions_included
 end
