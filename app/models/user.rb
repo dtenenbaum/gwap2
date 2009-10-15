@@ -7,6 +7,7 @@ class User < ActiveRecord::Base
   
   def self.authenticate(nick, pass)
     user = find(:first, :conditions => ['email = ?',nick])
+    return false if user.nil?
 
     if Password::check(pass,user.password)
       user
