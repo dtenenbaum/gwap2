@@ -45,7 +45,7 @@ Total number of conditions selected: <span id="number_of_conditions_selected"></
     <tr>
         <th>Checked</th>
         <th>Conditions</th>
-        <th>Knockouts</th>
+        <th>Strain</th>
         <th>Environmental</th>
         <th>Sparkline</th>
     </tr>
@@ -67,7 +67,10 @@ Total number of conditions selected: <span id="number_of_conditions_selected"></
         <td>
             <% for ko in exp.knockouts %>
                 &Delta;<%=ko.gene_and_alias%><br/>
-            <% end %>             
+            <% end %>
+            <% if exp.knockouts.nil? or exp.knockouts.empty? %>
+                wild type
+            <% end %>
         </td>
         <td>
             <% for ep in exp.environmental_perturbations %>

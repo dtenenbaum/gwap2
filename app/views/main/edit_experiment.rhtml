@@ -49,7 +49,7 @@ Time series?
                                     
 Growth Media Recipe:
 <select name="exp[growth_media_recipe_id]" id="exp_growth_media_recipe_id">
-    <%= options_from_collection_for_select(@growth_media_recipes, 'id', 'name', @exp.growth_media_recipe_id)%>
+    <%= options_from_collection_for_select(@growth_media_recipes, 'url', 'name', @exp.growth_media_recipe_id)%>
 </select>
 <button type="button" id="show_selected_recipe">Show Selected Recipe</button><br/>
 <br/>      

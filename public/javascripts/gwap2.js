@@ -269,7 +269,7 @@ var setUpFullDataMatrixUrl = function() {
     elem.setAttribute("url", "http://localhost:3000/main/another_test_matrix");
     elem.setAttribute("size", ""+checked_conds+",?");
     log("changed gaggle url to: " + elem.getAttribute("url"));
-    log("asking FG to reparse page");
+    log("asking FG to rescan page");
     FG_fireDataEvent();
     log("FG method call complete");
 }
@@ -707,6 +707,13 @@ jQuery(document).ready(function(){
 
     jQuery("#dan_test").livequery("click", function(event){
        log("result is " + getListOfChosenConditions()) ;
+    });
+    
+    jQuery("#show_selected_recipe").click(function(){
+        //exp_growth_media_recipe_id
+//        alert("value = " + jQuery("#exp_growth_media_recipe_id").value);
+        var elem = document.getElementById("exp_growth_media_recipe_id");
+        window.open(elem.value);
     });
 
     log("end of page init");  
