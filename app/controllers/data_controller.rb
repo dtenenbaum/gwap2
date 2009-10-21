@@ -30,6 +30,31 @@ class DataController < ApplicationController
     render :text => DataOutputHelper.as_matrix(data)
     
   end
+
+
+  def get_envmap
+    if params[:cond_names]
+      cond_ids = Condition.find_by_sql(["select id from conditions where name in (?)",params[:cond_names].split(",")]).map{|i|i.id}
+    else
+      cond_ids = []
+      params[:cond_ids].split(",").each{|i|cond_ids << i.to_i}
+    end
+    headers['Content-type'] = 'text/plain'
+    render :text => EnvmapHelper.get_envmap(cond_ids)
+  end
+  
+  def get_colmap
+    if params[:cond_names]
+      cond_ids = Condition.find_by_sql(["select id from conditions where name in (?)",params[:cond_names].split(",")]).map{|i|i.id}
+    else
+      cond_ids = []
+      params[:cond_ids].split(",").each{|i|cond_ids << i.to_i}
+    end
+    headers['Content-type'] = 'text/plain'
+    render :text => ColmapHelper.get_colmap(cond_ids)
+  end
+
+
   
   def get_emiml
     url = url_for(:action => "get_data")
@@ -87,10 +112,5 @@ EOF
     render :text => out
   end
   
-  def get_envmap
-  end
-  
-  def get_colmap
-  end
   
 end

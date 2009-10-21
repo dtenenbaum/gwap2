@@ -2,45 +2,27 @@ class ColmapHelper
 
   require 'pp'
 
-  def self.read_conditions()      
-      if ARGV.nil? or ARGV.empty?
-        puts "supply a filename"
-        exit
-      end
-      f = File.open(ARGV.first)  #("#{RAILS_ROOT}/conditions_phu_wants.txt")  
+  def self.get_conditions_from_ids(cond_ids)       
+    @colmap_file = ""
+    @conditions = Condition.find_by_sql(["select * from conditions where id in (?)",cond_ids])
+  end
 
-      @colmap_file = File.open("#{RAILS_ROOT}/colmap.txt", "w")
-      @conditions = []         
-      while line = f.gets
-        c = Condition.find :first, :conditions => "name = '#{line.chomp!}'"
-        if (c.nil?)
-          puts "missing condition #{line}"
-          next
-        end
-        @conditions << c
-      end
-  end    
 
-  def self.read_parents
-    p = Condition.find_by_sql("select condition_id, condition_group_id from condition_groupings")
-    @childToParentMap = {}
-    for item in p
-      @childToParentMap[item.condition_id.to_i] = item.condition_group_id.to_i
-    end
+
+  def self.get_num_ts()
     tshash = {}
     for condition in @conditions
-      condition['parent_id'] = @childToParentMap[condition.id.to_i].to_i
-      tshash[condition['parent_id']]  = ' '  if(condition['is_time_series'])
+      tshash[condition.experiment_id]  = ' '  if(condition['is_time_series'])
     end
-    @numTS = tshash.keys.length #this can't be the # of time series
+    @numTS = tshash.keys.length.to_s #this can't be the # of time series
   end        
 
   def self.sort_conditions()
     @conditions.sort! do |a,b|
-      if (a['parent_id'] == b['parent_id'])
-        a.orig_sequence <=> b.orig_sequence
+      if (a.experiment_id == b.experiment_id)
+        a.sequence <=> b.sequence
       else
-        a['parent_id']  <=> b['parent_id']
+        a.experiment_id  <=> b.experiment_id
       end
     end
   end
@@ -48,16 +30,13 @@ class ColmapHelper
   def self.add_properties  
     for condition in @conditions
       data = {}
-      props = Property.find_by_sql("select name, value from properties where condition_id = #{condition.id} and property_type in(1,2)") 
+      props = Observation.find :all, :conditions => ['condition_id = ?',condition.id] #{condition.id} and property_type in(1,2)") 
       condition['is_time_series'] = false
       for prop in props  
         #puts "WHOA!!!!!" if condition.name =~ /^o2_set1_/ and prop.name == 'time'
         condition['is_time_series']  = true if prop.name == 'time'
-        data[prop.name] = prop.value
+        data[prop.name] = prop.string_value
       end
-      #if condition.name =~ /^o2_set1_/
-      #  puts "#{condition.name} time series? #{condition['is_time_series']} id: #{condition.id}"
-      #end                           
       condition['props'] = data
     end
   end
@@ -85,12 +64,12 @@ class ColmapHelper
 
 
       firstInSeries = true if prev_cond.nil?
-      firstInSeries = true if ((!prev_cond.nil?) and (prev_cond['parent_id'] != condition['parent_id']))
-      firstInSeries = false if ((!prev_cond.nil?) and (prev_cond['parent_id'] == condition['parent_id']))
+      firstInSeries = true if ((!prev_cond.nil?) and (prev_cond.experiment_id != condition.experiment_id))
+      firstInSeries = false if ((!prev_cond.nil?) and (prev_cond.experiment_id == condition.experiment_id))
 
       lastInSeries = false
       lastInSeries = true if (next_cond.nil?)
-      lastInSeries = true if ((!next_cond.nil?) and (next_cond['parent_id'] != condition['parent_id']))
+      lastInSeries = true if ((!next_cond.nil?) and (next_cond.experiment_id != condition.experiment_id))
 
 
       prevCol = condition.name      
@@ -108,7 +87,6 @@ class ColmapHelper
 
       ts_ind += 1 if (firstInSeries and ts)
 
-      #@colmap_file << condition['parent_id']; @colmap_file << "\t" # REMOVE THIS AFTER DEBUGGING  
 
       @colmap_file << condition.name
       @colmap_file << "\t"
@@ -133,7 +111,7 @@ class ColmapHelper
 
 
 
-      @colmap_file << delta_t
+      @colmap_file << delta_t.to_s
       @colmap_file << "\t"
 
       time = "NA"
@@ -148,25 +126,28 @@ class ColmapHelper
         ts_ind_value = ts_ind
       end
 
-      @colmap_file << ts_ind_value
-      @colmap_file << "\t"
+
+      
+      @colmap_file << ts_ind_value.to_s
+      @colmap_file << "\t"       
+      
 
       @colmap_file << @numTS
       @colmap_file << "\n"
 
       prev_cond = condition
 
-    end
+    end 
+    @colmap_file
   end
 
-  def self.main()
-    read_conditions() 
-    add_properties()  
-    read_parents()
-    sort_conditions()
-    print_header()
-    generate_output()
+  
+  def self.get_colmap(condition_ids)
+   get_conditions_from_ids(condition_ids) 
+   add_properties()  
+   get_num_ts()
+   sort_conditions()
+   print_header()
+   generate_output()
   end
-
-  main()
 end
