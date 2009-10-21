@@ -11,8 +11,12 @@ class DataController < ApplicationController
       # sort_by_condition_name = true (default false if cond_ids supplied)
 
     # todo - support MotionChart    
-    # todo unhardcode
-    if params[:cond_names]
+    # todo unhardcode     
+    
+    
+    if params[:exps]
+      cond_ids = MainController.get_condition_id_list_from_mixed_list(params['exps'])
+    elsif params[:cond_names]
       cond_ids = Condition.find_by_sql(["select id from conditions where name in (?)",params[:cond_names].split(",")]).map{|i|i.id}
     else
       cond_ids = []
@@ -33,7 +37,9 @@ class DataController < ApplicationController
 
 
   def get_envmap
-    if params[:cond_names]
+    if params[:exps]
+      cond_ids = MainController.get_condition_id_list_from_mixed_list(params['exps'])
+    elsif params[:cond_names]
       cond_ids = Condition.find_by_sql(["select id from conditions where name in (?)",params[:cond_names].split(",")]).map{|i|i.id}
     else
       cond_ids = []
@@ -44,7 +50,9 @@ class DataController < ApplicationController
   end
   
   def get_colmap
-    if params[:cond_names]
+    if params[:exps]
+      cond_ids = MainController.get_condition_id_list_from_mixed_list(params['exps'])
+    elsif params[:cond_names]
       cond_ids = Condition.find_by_sql(["select id from conditions where name in (?)",params[:cond_names].split(",")]).map{|i|i.id}
     else
       cond_ids = []

@@ -538,7 +538,7 @@ EOF
     # 54 - metal experiment
   end
         
-  def get_condition_id_list_from_mixed_list(mixed_list)
+  def self.get_condition_id_list_from_mixed_list(mixed_list)
     items = mixed_list.split(",")
     ret = []
     for item in items

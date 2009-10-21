@@ -225,10 +225,26 @@ var onSelectionChanged = function() {
     
     if (checked_exps == 0) {
         jQuery("#dmv_link").html("Open Checked In DMV");
+        jQuery("#ratios_link").html("Download log10 ratios matrix");
+        jQuery("#lambdas_link").html("Download lambdas matrix");
+        jQuery("#colmap_link").html("Download colmap");
+        jQuery("#envmap_link").html("Download envmap");
     } else {                                  
                                   
         var url = "http://gaggle.systemsbiology.net/GWAP/dmv/dynamic.jnlp?host=gaggle.systemsbiology.net&port=&exps=" + getCheckedGwap1Ids();
         jQuery("#dmv_link").html("<a href='"+url+"'>Open Checked In DMV</a>");
+        
+
+        jQuery("#ratios_link").html("<a target='ratios' href='../data/get_data?data_type=ratio&exps=" + getListOfChosenConditions() + "'>Download log10 ratios matrix</a>");
+        jQuery("#lambdas_link").html("<a target='lambdas' href='../data/get_data?data_type=lambda&exps=" + getListOfChosenConditions() + "'>Download lambdas matrix</a>");
+        jQuery("#colmap_link").html("<a target='colmap' href='../data/get_colmap?exps=" + getListOfChosenConditions() + "'>Download colmap</a>");
+        jQuery("#envmap_link").html("<a target='envmap' href='../data/get_envmap?exps=" + getListOfChosenConditions() + "'>Download envmap</a>");
+        /*
+        jQuery("#colmap_link").html("Download colmap");
+        jQuery("#envmap_link").html("Download envmap");
+        */
+
+
     }
     
 }   
