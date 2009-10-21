@@ -12,16 +12,22 @@ class DataController < ApplicationController
 
     # todo - support MotionChart    
     # todo unhardcode
+    if params[:cond_names]
+      cond_ids = Condition.find_by_sql(["select id from conditions where name in (?)",params[:cond_names].split(",")]).map{|i|i.id}
+    else
+      cond_ids = []
+      params[:cond_ids].split(",").each{|i|cond_ids << i.to_i}
+    end
     
-    cond_ids = []
-    params[:cond_ids].split(",").each{|i|cond_ids << i.to_i}
     
     data = DataOutputHelper.get_data(cond_ids,params[:data_type])
     
-    respond_to do |format|
-      format.xml {render :text => DataOutputHelper.as_matrix(data)}
-    end
-    
+#    respond_to do |format|
+#      format.xml {render :text => DataOutputHelper.as_matrix(data)}
+#      format.text {render :text => DataOutputHelper.as_matrix(data)}
+#    end
+    headers['Content-type'] = 'text/plain'
+    render :text => DataOutputHelper.as_matrix(data)
     
   end
   
@@ -79,6 +85,12 @@ class DataController < ApplicationController
     <a href="#{url}">something</a>
 EOF
     render :text => out
+  end
+  
+  def get_envmap
+  end
+  
+  def get_colmap
   end
   
 end

@@ -106,3 +106,50 @@ Environmental Perturbations:  <br/>
 
 
 <input type="submit" value="Save Changes" id="save_changes">
+
+<div id="dialogs" class="hide-me-away">
+
+    <div id="assign_controls_dialog" title="Assign Control">
+        <div class="ui-dialog ui-widget ui-widget-content ui-corner-all ui-draggable ui-resizable">
+           <div style="height: auto; min-height: 109px; width: auto;" class="ui-dialog-content ui-widget-content" id="dialog_core">
+               Pick an experiment...
+           </div>
+        </div>
+    </div>
+
+    <div id="add_new_paper_dialog" title="Add New Paper">
+        <div class="ui-dialog ui-widget ui-widget-content ui-corner-all ui-draggable ui-resizable">
+           <div style="height: auto; min-height: 109px; width: auto;" class="ui-dialog-content ui-widget-content" id="dialog_core">
+               <form>
+                   <fieldset>
+                       <label for="new_paper_title">Title:</label><%= text_field :paper, :title, :id => 'new_paper_title'%><br/>
+                       <label for="new_paper_url">URL:</label><%= text_field :paper, :url, :id => 'new_paper_url'%><br/>
+                       <label for="new_paper_authors">Authors:</label><%= text_field :paper, :authors, :id => 'new_paper_authors'%><br/>
+                       <label for="new_paper_short_name">Short Name:</label><%= text_field :paper, :short_name, :id => 'new_paper_short_name'%><br/>
+                       <label for="new_paper_abstract">Abstract:</label><%= text_area :paper, :abstract, :id => 'new_paper_abstract'%><br/>
+                       
+                   </fieldset>
+               </form>
+           </div>
+        </div>
+    </div>
+
+
+    <div id="add_new_knockout_dialog" title="Add New Knockout">
+        <div class="ui-dialog ui-widget ui-widget-content ui-corner-all ui-draggable ui-resizable">
+           <div style="height: auto; min-height: 109px; width: auto;" class="ui-dialog-content ui-widget-content" id="dialog_core">
+               Pick a knockout...
+           </div>
+        </div>
+    </div>
+
+    <div id="add_new_environmental_perturbation_dialog" title="Add New Environmental Perturbation">
+        <div class="ui-dialog ui-widget ui-widget-content ui-corner-all ui-draggable ui-resizable">
+           <div style="height: auto; min-height: 109px; width: auto;" class="ui-dialog-content ui-widget-content" id="dialog_core">
+               Enter a perturbation...
+           </div>
+        </div>
+    </div>
+
+
+</div>

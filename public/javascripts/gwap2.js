@@ -352,7 +352,51 @@ var onSearchResultsLoaded = function() {
 
 
     
-}          
+}   
+
+var initializeEditExperimentDialogs = function() {
+    jQuery("#assign_controls_dialog").dialog({modal: false, autoOpen: false,
+        height: 500,
+        width: 500, 
+        buttons: {
+            'Mark Selected Experiment as Control': false, //todo add function
+            'Cancel': function(){ jQuery(this).dialog('close');}
+        }
+    });
+    
+
+
+    jQuery("#add_new_paper_dialog").dialog({modal: false, autoOpen: false,
+        height: 500,
+        width: 500, 
+        buttons: {
+            'Add New Paper': false, //todo add function
+            'Cancel': function(){ jQuery(this).dialog('close');}
+        }
+    });
+    
+
+    jQuery("#add_new_knockout_dialog").dialog({modal: false, autoOpen: false,
+        height: 500,
+        width: 500, 
+        buttons: {
+            'Add New Knockout': false, //todo add function
+            'Cancel': function(){ jQuery(this).dialog('close');}
+        }
+    });
+    
+
+    jQuery("#add_new_environmental_perturbation_dialog").dialog({modal: false, autoOpen: false,
+        height: 500,
+        width: 500, 
+        buttons: {
+            'Add New Environmental Perturbation': false, //todo add function
+            'Cancel': function(){ jQuery(this).dialog('close');}
+        }
+    });
+        
+    
+}
 
 var onGeneSearchReturned = function() {
     log("onGeneSearchReturned");     
@@ -716,6 +760,26 @@ jQuery(document).ready(function(){
         window.open(elem.value);
     });
 
+    initializeEditExperimentDialogs();
+    
+    jQuery("#assign_controls").click(function(){
+        jQuery("#assign_controls_dialog").dialog("open");
+    });
+    
+    jQuery("#add_paper").click(function(){
+        jQuery("#add_new_paper_dialog").dialog("open");
+    });
+    
+    jQuery("#add_knockout").click(function(){
+        jQuery("#add_new_knockout_dialog").dialog("open");
+    });
+    
+    jQuery("#add_environmental_perturbation").click(function(){
+        jQuery("#add_new_environmental_perturbation_dialog").dialog("open");
+    });
+    
+    
+    
     log("end of page init");  
     
 

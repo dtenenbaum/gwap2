@@ -81,7 +81,11 @@ end
      render(:partial => "single_sparkline", :layout => false, :locals => {
        :exp => exp, :columns => columns, :h => h, :maxrange => maxrange, :minrange => minrange
      })
- end                                              
+ end 
+ 
+ def espark
+   render :text => bumpspark_tag([12, 34, 12, 42, 12, 23])
+ end                                             
  
  def gene_search                                                         
    #exp_ids =  get_condition_id_list_from_mixed_list(params['exps']).split(",")
