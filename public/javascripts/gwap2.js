@@ -32,7 +32,9 @@ var checked_conds = 0;
 var available_tags;
 var manual_tags;
 
-var exp_cond_nums;        
+var exp_cond_nums;    
+
+var full_ratios_xml;    
 
 var searchString;
 
@@ -280,14 +282,38 @@ var getCheckedGwap1Ids = function() {
 }
 
 var setUpFullDataMatrixUrl = function() {  
-    var elem = document.getElementById("checkedMatrix");
-    log("url before change: " + elem.getAttribute("url"));
-    elem.setAttribute("url", "http://localhost:3000/main/another_test_matrix");
-    elem.setAttribute("size", ""+checked_conds+",?");
-    log("changed gaggle url to: " + elem.getAttribute("url"));
-    log("asking FG to rescan page");
-    FG_fireDataEvent();
-    log("FG method call complete");
+    var elem = document.getElementById("fullRatiosMatrix");
+    if (elem == null) return;
+
+
+    var processUrl = function(element, ratios) {
+        var dataType = (ratios) ? "ratios" : "lambdas";
+        log("url before change: " + elem.getAttribute("url"));
+        var url = "http://";
+        url += window.location.hostname;
+        url += ":";
+        url += window.location.port;
+        url += "/data/get_data?data_type="
+        url += dataType;
+        url += "&exps="
+        url += getListOfChosenConditions();
+        elem.setAttribute("url", url);
+        elem.setAttribute("size", ""+checked_conds+",all rows");
+        log("changed gaggle url to: " + elem.getAttribute("url"));
+        log("asking FG to rescan page");
+        FG_fireDataEvent();
+        log("FG method call complete");        
+        
+    };
+
+    
+    processUrl(elem, true); 
+    elem = document.getElementById("fullLambdasMatrix");
+    processUrl(elem, false);
+    
+    
+    
+    
 }
 
                   
