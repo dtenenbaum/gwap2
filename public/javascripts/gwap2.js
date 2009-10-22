@@ -291,8 +291,9 @@ var setUpFullDataMatrixUrl = function() {
         log("url before change: " + elem.getAttribute("url"));
         var url = "http://";
         url += window.location.hostname;
-        url += ":";
-        url += window.location.port;
+        url += ":";       
+        var port = (window.location.port) ? window.location.port : "80";
+        url += port;
         url += "/data/get_data?data_type="
         url += dataType;
         url += "&exps="
