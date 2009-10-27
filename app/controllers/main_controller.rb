@@ -108,7 +108,7 @@ end
  end     
  
  def heatmap
-   cond_ids = get_condition_id_list_from_mixed_list(params['exps'])
+   cond_ids = MainController.get_condition_id_list_from_mixed_list(params['exps'])
    @matches, @proteins = SearchHelper.full_search(params['search'])
    colnames, rows = ExpressionHelper.get_expr_data_for_conditions(@proteins, cond_ids)
    @heatmap = VisHelper.matrix_as_google_response(colnames,rows, "gene_name","GENE")
@@ -116,7 +116,7 @@ end
  end
 
  def table
-   cond_ids = get_condition_id_list_from_mixed_list(params['exps'])
+   cond_ids = MainController.get_condition_id_list_from_mixed_list(params['exps'])
    @matches, @proteins = SearchHelper.full_search(params['search'])
    colnames, rows = ExpressionHelper.get_expr_data_for_conditions(@proteins, cond_ids)
    @table = VisHelper.matrix_as_google_response(colnames,rows, "gene_name","GENE")
@@ -124,7 +124,7 @@ end
  end       
  
  def plot
-   cond_ids = get_condition_id_list_from_mixed_list(params['exps'])
+   cond_ids = MainController.get_condition_id_list_from_mixed_list(params['exps'])
    @matches, @proteins = SearchHelper.full_search(params['search'])
    colnames, rows = ExpressionHelper.get_expr_data_for_conditions(@proteins, cond_ids)
    @plot = VisHelper.matrix_as_google_response(colnames, rows, "condition_name", "CONDITION")
@@ -203,7 +203,7 @@ end
    # todo - should show a warning, or disallow adding tag, if user tries to add tag with the same name as an auto-generated tag
    # or does that not make sense? (it would complicate displaying auto tags differently from manual tags)     
 
-   cond_ids = get_condition_id_list_from_mixed_list(params['experiments'])
+   cond_ids = MainController.get_condition_id_list_from_mixed_list(params['experiments'])
    
    
    existing_tags = ExperimentTag.find :all, :conditions => ["auto = false and tag = ?", params[:tag]]
