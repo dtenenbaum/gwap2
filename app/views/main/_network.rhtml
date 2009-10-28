@@ -1,9 +1,26 @@
-<% unless data.nil? %>
+<% unless data.nil? %> 
 <script type="text/javascript">         
 	var data = new google.visualization.DataTable(<%=network_as_google_response_helper(data)%>,0.5);
 	data.insertColumn(0, "string");
 	network.draw(data, net_options);   
 	                            
 	jQuery("#net_legend").html("<span class='string'>STRING</span><br/><span class='egrin'>EGRIN</span><br/>");
+	FG_fireDataEvent();
 </script>
+
+<div id="gaggle_network" class="gaggle">
+    <div class="gaggle-data">
+     <span class="gaggle-name">Interactions</span>
+     <span class="gaggle-species">Halobacterium sp. NRC-1</span>
+     <span class="gaggle-size"><%=data.size%></span>
+     <div class="gaggle-network">
+      <table class="gaggle-interactions">
+          <% for item in data%>
+            <%= show_gaggle_network_item(item)%>
+          <% end %>
+     </div>
+    </div>
+</div>
+
+
 <% end %>

@@ -68,6 +68,16 @@ module MainHelper
     end
     locus
   end
-
+  
+  def show_gaggle_network_item(item)
+    if item.sources.nil?
+      return "<tr><td>#{item.protein1}</td></tr>\n"
+    end
+    s = ""
+    for source in item.sources
+      s += "<tr><td>#{item.protein1}</td><td>#{source}</td><td>#{item.protein2}</td></tr>\n"
+    end
+    s
+  end
   
 end
