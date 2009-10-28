@@ -127,7 +127,7 @@ end
    cond_ids = MainController.get_condition_id_list_from_mixed_list(params['exps'])
    @matches, @proteins = SearchHelper.full_search(params['search'])
    colnames, rows = ExpressionHelper.get_expr_data_for_conditions(@proteins, cond_ids)
-   @plot = VisHelper.matrix_as_google_response(colnames, rows, "condition_name", "CONDITION")
+   @plot = VisHelper.matrix_as_google_response(@proteins, rows.transpose, "condition_name", "CONDITION")
    render(:partial => "plot", :locals => {:data => @plot})
  end       
  

@@ -504,6 +504,7 @@ var onGeneSearchReturned = function() {
         if (stateHasChanged) {
             last_plot_state = s;
             jQuery("#plot").removeClass("hide-me-away");
+            jQuery("#plot").empty();
         	plot = new google.visualization.LineChart(document.getElementById("plot"));
             jQuery("#plot_loader").html("Loading...");
             jQuery("#plot_script").load("plot", {"search" : searchString, "exps" : s}, function(){

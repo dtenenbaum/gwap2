@@ -2,8 +2,22 @@ class VisHelper
    def self.matrix_as_google_response(colnames, matrix, row_function, rowTitlesTitle="GENE")
     table = {}
     cols = []    
-    cols << {'label' => rowTitlesTitle, 'type' => 'string'}
+    cols << {'label' => rowTitlesTitle, 'type' => 'string'}        
+    
+    col_function = (row_function == 'gene_name') ? "condition_name" : "gene_name"
+                                        
+    all_col_names = []
+    for row in matrix
+      for item in row
+        all_col_names << item.send(col_function)
+      end
+    end
+    all_col_names = all_col_names.uniq
+    
+    
+    
     colnames.each do |col|
+      next unless all_col_names.include? col
       cols << {'label' => "#{col}", 'type' => 'string'}
     end
     table['cols'] = cols
