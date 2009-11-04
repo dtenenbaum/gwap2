@@ -2,7 +2,7 @@ class MainController < ApplicationController
   
   before_filter :authenticate, :except => :login
   filter_parameter_logging :password
-
+  
   
   require 'pp'
 #  require 'CGI'
