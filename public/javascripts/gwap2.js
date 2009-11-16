@@ -653,8 +653,37 @@ var conditionChooserClickHandler = function(event) {
 }
 
 
+var initializeDragDropMockup = function() {
+    jQuery(".draggable").draggable({helper: 'clone'});
+    jQuery(".droppable").droppable({ 
+        accept: function(){return true;},
+        tolerance: 'pointer',      
+		activeClass: 'ui-state-hover',
+		hoverClass: 'ui-state-active',
+		drop: function(event, ui) {
+		    log("in drop function");
+			var txt = jQuery(ui.draggable).text();
+			jQuery(this).addClass('ui-state-highlight').find('p').html(txt); 
+		}
+	});
+	
+	jQuery("#add_new_condition_group").click(function(){    
+	    log("value is " + document.getElementById("cg_name").value);
+	    document.getElementById("cg_name").value = "";
+	    jQuery(".droppable").html("<span class=droppable ui-widget-header'><p>Drag Conditions Here</p></span>");
+	    jQuery(".droppable").removeClass("ui-state-highlight");
+	});
+	
+	
+	
+}
+
+
+// --------------------------------------------------------------
+
 // jQuery document ready function comprises the rest of this file
 
+// --------------------------------------------------------------
 
 jQuery(document).ready(function(){       
     jQuery('span.sf-menu').superfish();
@@ -668,7 +697,7 @@ jQuery(document).ready(function(){
                                               
     initializeTaggingDialog();
 
-    
+    initializeDragDropMockup();
 
     log("setting up ajax event handlers");
     jQuery().ajaxError(function(event, request, settings){

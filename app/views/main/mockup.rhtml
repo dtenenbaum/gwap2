@@ -1,0 +1,20 @@
+Name of condition group: <input id="cg_name" name="cg_name"/><br/>
+<a id="add_new_condition_group" href="#">Add New Condition Group</a><br/>
+<div class="wrap">
+    <div class="sidebar">
+                <ul>           
+                    <% @conds.each_with_index do |cond, i|%>
+                        <li id="draggable_<%=i%>"  class="draggable"><%= cond %></li>
+                    <%end%>
+                </ul>
+    </div>
+
+    <div class="main">
+        <% 50.times do %>
+                <div class="droppable ui-widget-header">
+                    <p>Drag Conditions Here</p>
+                </div>
+        <% end %>
+
+    </div>
+</div>

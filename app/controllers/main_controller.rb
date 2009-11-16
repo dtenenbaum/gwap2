@@ -54,7 +54,82 @@ def logout
   redirect_to :action => "login"
 end
 
-
+def mockup
+  cond_names = <<"EOF"
+sDura3D1179_pCu_d0.100mM_t+015m_vs_NRC-1h1.sig
+sDura3D1179_pCu_d0.100mM_t+030m_vs_NRC-1h1.sig
+sDura3D1179_pCu_d0.100mM_t+060m_vs_NRC-1h1.sig
+sDura3D1179_pCu_d0.100mM_t+180m_vs_NRC-1h1.sig
+sDura3D1179_pCu_d0.100mM_t-015m_vs_NRC-1h1.sig
+sDura3D1179_pCu_d0.700mM_t+015m_vs_NRC-1h1.sig
+sDura3D1179_pCu_d0.700mM_t+030m_vs_NRC-1h1.sig
+sDura3D1179_pCu_d0.700mM_t+060m_vs_NRC-1h1.sig
+sDura3D1179_pCu_d0.700mM_t+180m_vs_NRC-1h1.sig
+sDura3D1179_pCu_d0.700mM_t-015m_vs_NRC-1h1.sig
+sDura3D1179_pCu_d1.000mM_t+015m_vs_NRC-1h1.sig
+sDura3D1179_pCu_d1.000mM_t+030m_vs_NRC-1h1.sig
+sDura3D1179_pCu_d1.000mM_t+060m_vs_NRC-1h1.sig
+sDura3D1179_pCu_d1.000mM_t+180m_vs_NRC-1h1.sig
+sDura3D1179_pCu_d1.000mM_t-015m_vs_NRC-1h1.sig
+sDura3D1179_pNULL_d0.000mM_t+015m_vs_NRC-1h1.sig
+sDura3D1179_pNULL_d0.000mM_t+030m_vs_NRC-1h1.sig
+sDura3D1179_pNULL_d0.000mM_t+060m_vs_NRC-1h1.sig
+sDura3D1179_pNULL_d0.000mM_t+180m_vs_NRC-1h1.sig
+sDura3D1179_pNULL_d0.000mM_t-015m_vs_NRC-1h1.sig
+sDura3D1179_pZn_d0.005mM_t+015m_vs_NRC-1h1.sig
+sDura3D1179_pZn_d0.005mM_t+030m_vs_NRC-1h1.sig
+sDura3D1179_pZn_d0.005mM_t+060m_vs_NRC-1h1.sig
+sDura3D1179_pZn_d0.005mM_t+180m_vs_NRC-1h1.sig
+sDura3D1179_pZn_d0.005mM_t-015m_vs_NRC-1h1.sig
+sDura3D1179_pZn_d0.020mM_t+015m_vs_NRC-1h1.sig
+sDura3D1179_pZn_d0.020mM_t+030m_vs_NRC-1h1.sig
+sDura3D1179_pZn_d0.020mM_t+060m_vs_NRC-1h1.sig
+sDura3D1179_pZn_d0.020mM_t+180m_vs_NRC-1h1.sig
+sDura3D1179_pZn_d0.020mM_t-015m_vs_NRC-1h1.sig
+sDura3D1179_pZn_d0.050mM_t+015m_vs_NRC-1h1.sig
+sDura3D1179_pZn_d0.050mM_t+030m_vs_NRC-1h1.sig
+sDura3D1179_pZn_d0.050mM_t+060m_vs_NRC-1h1.sig
+sDura3D1179_pZn_d0.050mM_t+180m_vs_NRC-1h1.sig
+sDura3D1179_pZn_d0.050mM_t-015m_vs_NRC-1h1.sig
+sDura3_pCu_d0.100mM_t+015m_vs_NRC-1h1.sig
+sDura3_pCu_d0.100mM_t+030m_vs_NRC-1h1.sig
+sDura3_pCu_d0.100mM_t+060m_vs_NRC-1h1.sig
+sDura3_pCu_d0.100mM_t+180m_vs_NRC-1h1.sig
+sDura3_pCu_d0.100mM_t-015m_vs_NRC-1h1.sig
+sDura3_pCu_d0.700mM_t+015m_vs_NRC-1h1.sig
+sDura3_pCu_d0.700mM_t+030m_vs_NRC-1h1.sig
+sDura3_pCu_d0.700mM_t+060m_vs_NRC-1h1.sig
+sDura3_pCu_d0.700mM_t+180m_vs_NRC-1h1.sig
+sDura3_pCu_d0.700mM_t-015m_vs_NRC-1h1.sig
+sDura3_pCu_d1.000mM_t+015m_vs_NRC-1h1.sig
+sDura3_pCu_d1.000mM_t+030m_vs_NRC-1h1.sig
+sDura3_pCu_d1.000mM_t+060m_vs_NRC-1h1.sig
+sDura3_pCu_d1.000mM_t+180m_vs_NRC-1h1.sig
+sDura3_pCu_d1.000mM_t-015m_vs_NRC-1h1.sig
+sDura3_pNULL_d0.000mM_t+015m_vs_NRC-1h1.sig
+sDura3_pNULL_d0.000mM_t+030m_vs_NRC-1h1.sig
+sDura3_pNULL_d0.000mM_t+060m_vs_NRC-1h1.sig
+sDura3_pNULL_d0.000mM_t+180m_vs_NRC-1h1.sig
+sDura3_pNULL_d0.000mM_t-015m_vs_NRC-1h1.sig
+sDura3_pZn_d0.005mM_t+015m_vs_NRC-1h1.sig
+sDura3_pZn_d0.005mM_t+030m_vs_NRC-1h1.sig
+sDura3_pZn_d0.005mM_t+060m_vs_NRC-1h1.sig
+sDura3_pZn_d0.005mM_t+180m_vs_NRC-1h1.sig
+sDura3_pZn_d0.005mM_t-015m_vs_NRC-1h1.sig
+sDura3_pZn_d0.020mM_t+015m_vs_NRC-1h1.sig
+sDura3_pZn_d0.020mM_t+030m_vs_NRC-1h1.sig
+sDura3_pZn_d0.020mM_t+060m_vs_NRC-1h1.sig
+sDura3_pZn_d0.020mM_t+180m_vs_NRC-1h1.sig
+sDura3_pZn_d0.020mM_t-015m_vs_NRC-1h1.sig
+sDura3_pZn_d0.050mM_t+015m_vs_NRC-1h1.sig
+sDura3_pZn_d0.050mM_t+030m_vs_NRC-1h1.sig
+sDura3_pZn_d0.050mM_t+060m_vs_NRC-1h1.sig
+sDura3_pZn_d0.050mM_t+180m_vs_NRC-1h1.sig
+sDura3_pZn_d0.050mM_t-015m_vs_NRC-1h1.sig 
+EOF
+  @conds = cond_names.split("\n")
+  
+end
 
 
   

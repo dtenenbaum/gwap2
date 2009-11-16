@@ -33,3 +33,49 @@ FIELDSET {
 	padding: 0px;
 	border: none;
 }
+
+/*.draggable  { width: 300px; height: 50px; padding: 0.5em; float: left; margin: 10px 10px 10px 0; } */
+
+
+#droppable { width: 300px; height: 150px; padding: 0.5em; float: left; margin: 10px; }
+
+.leftcontent {
+    position: absolute;
+    left:10px;
+    top:300px;
+    width:400px;
+    background:#fff;
+    border:1px solid #000;  
+    z-index: 100;
+}
+
+.centercontent {
+    position:absolute;
+    background:#fff;
+    top:300px;
+    margin-left: 399px;
+    border:1px solid #000;
+    voice-family: "\"}\"";
+    voice-family: inherit;
+    margin-left: 401px;
+	}
+
+html>body .centercontent {
+margin-left: 401px;
+	}
+
+
+.sidebar {
+    float:left;
+    width:400px;
+}
+
+.main {
+    width:600px;
+    float:right;
+}
+
+.wrap {
+    width:1000px;
+    margin:0 auto;
+}
