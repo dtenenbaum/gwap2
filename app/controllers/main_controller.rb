@@ -135,7 +135,18 @@ end
   
   def swf
     redirect_to "/gwap2_take2.html"
-  end   
+  end  
+  
+  def ie_debug
+    if (params[:id].nil? || params[:id] != 'false')
+      session[:ie_debug] = true
+    else
+      session[:ie_debug] = false
+    end          
+    render :text => "IE Debugging Set"
+  end
+  
+   
   
   def all_exps
     render :text => Experiment.find(:all, :order => 'id').to_json

@@ -10,8 +10,8 @@ Name of condition group: <input id="cg_name" name="cg_name"/><br/>
     </div>
 
     <div class="main">
-        <% 50.times do %>
-                <div class="droppable ui-widget-header">
+        <% 50.times do |i| %>
+                <div id="droppable_<%=i%>" class="droppable ui-widget-header">
                     <p>Drag Conditions Here</p>
                 </div>
         <% end %>

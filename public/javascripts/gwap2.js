@@ -652,6 +652,44 @@ var conditionChooserClickHandler = function(event) {
     }
 }
 
+var parseConditionName = function(name) {
+    //sDura3D1179_pCu_d0.100mM_t+015m_vs_NRC-1h1.sig
+    var segs = name.replace(/_vs_NRC-1h1.sig$/,"").split("_");
+    var result = {};
+    for (var i = 0; i < segs.length; i++) {
+        var id = segs[i].substr(0,1);
+        var seg = segs[i].substring(1, segs[i].length);        
+        log ("id = " + id + ", seg = " + seg);
+        switch (id) {
+            case "s":
+                result['strain'] = seg;
+                break;
+            case "p":
+                result['perturbation'] = seg;
+                break;
+            case "t":
+                result['time'] = seg;
+                break;
+            case "d":
+                result['dosage'] = seg;
+                break;
+        }
+    }
+    return result;
+}
+
+var getFormattedConditionDescription = function(name) {
+    var s = "";
+    s += name;
+    var hsh = parseConditionName(name);
+    s += "\n<ul>\n";
+    s += "<li>Strain: " + hsh['strain'] + "</li>\n";
+    s += "<li>Perturbation: " + hsh['perturbation'] + "</li>\n";
+    s += "<li>Time: " + hsh['time'] + "</li>\n";
+    s += "<li>Dosage: " + hsh['dosage'] + "</li>\n";
+    s += "</ul>\n";
+    return s;
+}
 
 var initializeDragDropMockup = function() {
     jQuery(".draggable").draggable({helper: 'clone'});
@@ -663,7 +701,7 @@ var initializeDragDropMockup = function() {
 		drop: function(event, ui) {
 		    log("in drop function");
 			var txt = jQuery(ui.draggable).text();
-			jQuery(this).addClass('ui-state-highlight').find('p').html(txt); 
+			jQuery(this).addClass('ui-state-highlight').find('p').html(getFormattedConditionDescription(txt)); 
 		}
 	});
 	
