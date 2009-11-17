@@ -36,7 +36,9 @@ var exp_cond_nums;
 
 var full_ratios_xml;    
 
-var searchString;
+var searchString;   
+
+var conditionGroupNames = [];
 
 function clearAjaxError() {
     jQuery("#ajax_error").empty();
@@ -659,7 +661,6 @@ var parseConditionName = function(name) {
     for (var i = 0; i < segs.length; i++) {
         var id = segs[i].substr(0,1);
         var seg = segs[i].substring(1, segs[i].length);        
-        log ("id = " + id + ", seg = " + seg);
         switch (id) {
             case "s":
                 result['strain'] = seg;
@@ -691,6 +692,15 @@ var getFormattedConditionDescription = function(name) {
     return s;
 }
 
+var addConditionGroup = function() {
+    conditionGroupNames[conditionGroupNames.length]   = document.getElementById("cg_name").value;
+    log("value is " + document.getElementById("cg_name").value);
+    document.getElementById("cg_name").value = "";
+    jQuery(".droppable").html("<span class=droppable ui-widget-header'><p>Drag Conditions Here</p></span>");
+    jQuery(".droppable").removeClass("ui-state-highlight");
+}
+
+
 var initializeDragDropMockup = function() {
     jQuery(".draggable").draggable({helper: 'clone'});
     jQuery(".droppable").droppable({ 
@@ -705,12 +715,61 @@ var initializeDragDropMockup = function() {
 		}
 	});
 	
-	jQuery("#add_new_condition_group").click(function(){    
-	    log("value is " + document.getElementById("cg_name").value);
-	    document.getElementById("cg_name").value = "";
-	    jQuery(".droppable").html("<span class=droppable ui-widget-header'><p>Drag Conditions Here</p></span>");
-	    jQuery(".droppable").removeClass("ui-state-highlight");
-	});
+	jQuery("#add_new_condition_group").click(addConditionGroup);
+	jQuery("#done_adding_condition_groups").click(function(){
+	    addConditionGroup();      
+	    jQuery("#condition_relator").load("relate_condition_groups", {groupNames: conditionGroupNames.join(",")}, function(){
+	        jQuery("#condition_wrapper").hide();   
+            jQuery("#condition_relator").show();
+	        
+        	jQuery("#back_to_condition_grouper").click(function(){
+                jQuery("#condition_relator").hide();
+                jQuery("#condition_wrapper").show();
+        	});
+        	
+        	var has_1 =  has_2 = has_relationship = false;  
+        	var one, two, relationship;
+        	var virginal = true;
+        	
+        	jQuery(".condition_group_1").draggable({helper:'clone'});
+        	jQuery(".condition_group_2").draggable({helper:'clone'});
+        	jQuery(".relationship").draggable({helper:'clone'});
+        	jQuery("#condition_group_combiner").droppable({
+        	   accept: function(){return true;},
+        	   tolerance: 'pointer',
+        	   activeClass: 'ui-state-hover',
+        	   hoverClass: 'ui-state-active',
+        	   drop: function(event, ui) {
+        	       if (virginal) {
+        	           virginal = false
+        	           jQuery(this).empty();
+        	       }
+        	       if(ui.draggable.hasClass("condition_group_1")) {
+        	           has_1 = true;
+        	           one = ui.draggable.text();
+           			   jQuery(this).addClass('ui-state-highlight').append("Condition from left column: " + one + "<br/>"); 
+        	       } else if (ui.draggable.hasClass("condition_group_2")) {
+        	           has_2 = true;
+        	           two = ui.draggable.text();
+           			   jQuery(this).addClass('ui-state-highlight').append("Condition from right column: " + two + "<br/>"); 
+        	       } else if (ui.draggable.hasClass("relationship")) {
+        	           has_relationship = true;
+        	           relationship = ui.draggable.text();
+           			   jQuery(this).addClass('ui-state-highlight').append("relationship: " + relationship + "<br/>"); 
+        	       }
+        	       log("has_1: " + has_1 + ", has_2: " + has_2 + ", has_relationship: " + has_relationship);
+        	       if (has_1 && has_2 && has_relationship) {
+        	           log("trifecta");
+        	           has_1 = has_2 = has_relationship = false;
+        	           jQuery(this).removeClass('ui-state-highlight');
+        	           jQuery(this).html("Drag Items Here");
+        	           virginal = true;
+        	           jQuery("#combiner_results").append(one + " " + relationship + " " + two + "<br/>\n");
+        	       }
+        	   }
+        	});
+	    });
+	});   
 	
 	
 	

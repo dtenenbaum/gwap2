@@ -1,6 +1,6 @@
-Name of condition group: <input id="cg_name" name="cg_name"/><br/>
-<a id="add_new_condition_group" href="#">Add New Condition Group</a><br/>
-<div class="wrap">
+<div class="wrap" id="condition_wrapper">
+    Name of condition group: <input id="cg_name" name="cg_name"/><br/>  
+    <a id="add_new_condition_group" href="#">Add New Condition Group</a> | <a id="done_adding_condition_groups" href="#">Done</a><br/>
     <div class="sidebar">
                 <ul>           
                     <% @conds.each_with_index do |cond, i|%>
@@ -18,3 +18,4 @@ Name of condition group: <input id="cg_name" name="cg_name"/><br/>
 
     </div>
 </div>
+<div id="condition_relator"></div>

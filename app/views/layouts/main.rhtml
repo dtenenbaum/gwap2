@@ -29,7 +29,11 @@
    
 	<% if session[:ie_debug] # and request.port == 3000 and request.user_agent =~ /MSIE/   %>
 		<script type='text/javascript' 
-		        src='http://getfirebug.com/releases/lite/1.2/firebug-lite-compressed.js'></script>   
+		        src='http://getfirebug.com/releases/lite/1.2/firebug-lite-compressed.js'>
+		</script>   
+		<script type='text/javascript'>
+		    log("Loaded IE Debugger");
+		</script>
 	<% end %>
 
 </head>

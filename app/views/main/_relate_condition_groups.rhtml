@@ -1,0 +1,35 @@
+<a id="back_to_condition_grouper" href="#">Back</a><br/>
+
+<ul class="test3col">
+  <li>
+    <div class="r_column" id="column1">
+        <% for name in @group_names%>
+            <span class="condition_group_1"><%= name%><br/></span><br/>
+        <% end %>
+    </div>
+  </li>
+  <li>
+    <div class="r_column" id="column2">
+        <span class="relationship">control &lt;--&gt; treated</span></br>
+        <span class="relationship">treated &lt;--&gt; control</span></br>
+    </div>
+  </li>
+  <li>
+    <div class="r_column" id="column3">
+        <% for name in @group_names%>
+            <span class="condition_group_2"><%= name%><br/></span><br/>
+        <% end %>
+    </div>
+  </li>
+</ul><br clear="all"><br />       
+
+<div style="width:33%" align="center" id="condition_group_combiner" class="ui-widget-header">Drag Items Here</div>
+
+<br/>
+
+<p>Results:</p>
+<div id="combiner_results"></div>
+
+<p>Name this set of experiments:</p>
+<input/>
+<a href="#">Save</a>

@@ -34,6 +34,13 @@ FIELDSET {
 	border: none;
 }
 
+
+ul.test3col { clear:both;}
+ul.test3col li { 	padding: 0; margin: 0; display: inline; list-style:none; }
+.r_column { margin: 0 5px; display: block; float:left; width: 12em; /*border: 1px solid #333*/} 
+
+
+
 /*.draggable  { width: 300px; height: 50px; padding: 0.5em; float: left; margin: 10px 10px 10px 0; } */
 
 
@@ -75,7 +82,36 @@ margin-left: 401px;
     float:right;
 }
 
-.wrap {
+.wrap { 
+    position:relative;
     width:1000px;
     margin:0 auto;
 }
+
+.threecolwrap {
+    width:100%;   
+    margin:0 auto;
+}
+
+.col1 {
+    top:1px;
+    width:33%;     
+    margin-left:0%;
+    margin-right:33%;
+	float:left; 
+}
+.col2 {
+    top:1px;
+	width:33%;
+	margin-left:33%;
+	margin-right:66%;
+/*	float:none; */
+}
+.col3 {
+    top:1px;
+/*	width:33%;*/
+	margin-left:66%;  
+/*	float:right;*/
+}
+
+

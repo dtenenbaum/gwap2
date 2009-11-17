@@ -128,7 +128,6 @@ sDura3_pZn_d0.050mM_t+180m_vs_NRC-1h1.sig
 sDura3_pZn_d0.050mM_t-015m_vs_NRC-1h1.sig 
 EOF
   @conds = cond_names.split("\n")
-  
 end
 
 
@@ -158,6 +157,11 @@ end
  
  def spark
    render(:template => "main/sparky", :layout => false) and return false
+ end
+ 
+ def relate_condition_groups
+   @group_names = params[:groupNames].split(",")
+   render :partial => 'relate_condition_groups'
  end
     
  def sparkline()
