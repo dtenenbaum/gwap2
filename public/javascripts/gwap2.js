@@ -153,7 +153,7 @@ var enterDetect = function(elem, func) {
          if(code == 13) { //Enter keycode 
              var search = this.value.trim();
              if (search == "") {
-                 alert("You must enter some text to search on.");
+                 alert("You must enter some text.");
                  jQuery(elem).focus();
                  return;
              }
@@ -715,10 +715,11 @@ var initializeDragDropMockup = function() {
 		}
 	});
 	
-	jQuery("#add_new_condition_group").click(addConditionGroup);
+	jQuery("#add_new_condition_group").click(addConditionGroup);      
+	
 	jQuery("#done_adding_condition_groups").click(function(){
 	    addConditionGroup();      
-	    jQuery("#condition_relator").load("relate_condition_groups", {groupNames: conditionGroupNames.join(",")}, function(){
+	    jQuery("#condition_relator").load("relate_condition_groups", {groupNames: conditionGroupNames.join("~~")}, function(){
 	        jQuery("#condition_wrapper").hide();   
             jQuery("#condition_relator").show();
 	        
@@ -757,14 +758,13 @@ var initializeDragDropMockup = function() {
         	           relationship = ui.draggable.text();
            			   jQuery(this).addClass('ui-state-highlight').append("relationship: " + relationship + "<br/>"); 
         	       }
-        	       log("has_1: " + has_1 + ", has_2: " + has_2 + ", has_relationship: " + has_relationship);
         	       if (has_1 && has_2 && has_relationship) {
-        	           log("trifecta");
         	           has_1 = has_2 = has_relationship = false;
         	           jQuery(this).removeClass('ui-state-highlight');
         	           jQuery(this).html("Drag Items Here");
         	           virginal = true;
         	           jQuery("#combiner_results").append(one + " " + relationship + " " + two + "<br/>\n");
+        	           jQuery("#combiner_results").effect('shake');
         	       }
         	   }
         	});

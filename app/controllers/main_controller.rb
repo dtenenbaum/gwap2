@@ -160,7 +160,7 @@ end
  end
  
  def relate_condition_groups
-   @group_names = params[:groupNames].split(",")
+   @group_names = params[:groupNames].split("~~").reject{|x|x.empty?}
    render :partial => 'relate_condition_groups'
  end
     
