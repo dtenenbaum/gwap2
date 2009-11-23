@@ -54,6 +54,7 @@ def logout
   redirect_to :action => "login"
 end
 
+
 def mockup
   cond_names = <<"EOF"
 sDura3D1179_pCu_d0.100mM_t+015m_vs_NRC-1h1.sig

@@ -118,7 +118,8 @@ class AutoTag
         ########add_tag(k.first, tag, "Manually Tagged", false)
       end
       
-      
+      ld = Experiment.find 430
+      add_tag(ld, "Lee/Deep 2009 Cu/Zn", "Other")
       
     rescue Exception => ex
       puts ex.message
