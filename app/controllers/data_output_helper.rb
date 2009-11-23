@@ -5,7 +5,7 @@ class DataOutputHelper < ApplicationController
   
   require 'pp'
   
-  def self.as_matrix(data) # todo - improve performance
+  def self.as_matrix(data) 
     out = "GENE\t"
     cond_list = []
     cond_hash = {}
@@ -23,23 +23,29 @@ class DataOutputHelper < ApplicationController
     puts "count = #{count}" 
     puts "rows_per_sample = #{rows_per_sample}"
    
-    #data = data[0..11]#remove me
+    line = ""
+    count = 1
+    
+    output = []
+    output.push(out)
     
     data.inject("_nothing_") do |memo, i|
       unless i.gene_name == memo
-        out.gsub!(/\t$/,"") # use substr here instead to improve performance?
-        out += "\n"
-        out += i.gene_name
-        out += "\t" 
+        line << "\n"
+        line << i.gene_name
+        line << "\t"
+        output.push(line)
+        line = ""
       end
-      out += "#{i.value}"
-      out += "\t"
+      line << "#{i.value}"
+      line << "\t"
+      if (count == data.size)
+        output.push(line)
+      end
+      count += 1
       i.gene_name
     end
-    out.gsub!(/\t$/,"")
-    out += "\n"
-    out
-#    "done"
+    output.join ""
   end  
   
   
