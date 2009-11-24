@@ -31,6 +31,7 @@ class DataOutputHelper < ApplicationController
     
     data.inject("_nothing_") do |memo, i|
       unless i.gene_name == memo
+        line.gsub!(/\t$/,"")
         line << "\n"
         line << i.gene_name
         line << "\t"
